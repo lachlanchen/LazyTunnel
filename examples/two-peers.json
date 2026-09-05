@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "edge": {
+    "host": "edge.example.invalid",
+    "port": 2222,
+    "host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB"
+  },
+  "peers": [
+    {
+      "name": "alpha",
+      "user": "alice",
+      "home": "/home/alice",
+      "ssh_port": 22,
+      "relay_port": 23000,
+      "host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC",
+      "tunnel_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoK",
+      "jump_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsLCwsL",
+      "login_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM"
+    },
+    {
+      "name": "beta",
+      "user": "alice",
+      "home": "/home/alice",
+      "ssh_port": 22,
+      "relay_port": 23001,
+      "host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD",
+      "tunnel_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0N",
+      "jump_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4O",
+      "login_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8P"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use LazyTunnel, please cite this repository."
+type: software
+title: "LazyTunnel: independent private SSH relays"
+version: 0.1.0
+date-released: 2026-09-05
+abstract: "Small operator-reviewed OpenSSH and systemd relays independent of desktop-control sessions."
+authors:
+  - family-names: Chen
+    given-names: Lachlan
+    alias: lachlanchen
+repository-code: "https://github.com/lachlanchen/LazyTunnel"
+url: "https://lazying.art"
+keywords:
+  - ssh
+  - reverse tunnels
+  - systemd
+  - remote access

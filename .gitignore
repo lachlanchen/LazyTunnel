@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+private/
+runtime/
+generated/
+*.pem
+*.key
+*credentials*
+*known_hosts*
+__pycache__/
+*.pyc
+.pytest_cache/
