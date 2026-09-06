@@ -38,6 +38,18 @@ python3 -m unittest discover -s tests -v
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## プライベートな Web アクセス
+
+beta から、既存の SSH 接続で alpha のローカルサービスを開けます。以下を実行し、beta のブラウザーで `http://127.0.0.1:6144/wechat` を開いてください。待受先はループバックのみで、デスクトップサービスは変更しません。
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[常駐転送・相手側 LAN・SOCKS・トラブルシューティング](../docs/private-web.md).
+
+
 ## 検証と状態
 
 運用者のレビューを前提とした初期版です。生成器のテストとクラウド管理アクセスの初期設定は確認済みですが、実際の導入ごとに双方向シェル、ファイル転送、障害復旧、権限制限の拒否テストが必要です。起動時の有効化は再起動試験の証拠ではありません。systemd が復旧するのは接続であり失われたシェルではないため、長い作業にはリモート tmux を使います。

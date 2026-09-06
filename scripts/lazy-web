@@ -1,0 +1,199 @@
+#!/usr/bin/python3
+"""Private web/TCP access through an existing, pinned LazyTunnel SSH peer."""
+import argparse
+import ipaddress
+import os
+from pathlib import Path
+import re
+import shlex
+import socket
+import subprocess
+import sys
+
+MARKER = '# Managed by LazyTunnel lazy-web v1\n'
+NAME = re.compile(r'[a-z][a-z0-9-]{0,47}\Z')
+PEER = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9.-]{0,252}\Z')
+
+
+def port(value):
+    number = int(value)
+    if not 1 <= number <= 65535:
+        raise argparse.ArgumentTypeError('port must be in 1..65535')
+    return number
+
+
+def target_host(value):
+    try:
+        address = ipaddress.ip_address(value)
+        return f'[{address}]' if address.version == 6 else str(address)
+    except ValueError:
+        if not PEER.fullmatch(value):
+            raise ValueError('Use a hostname or IP address, without a URL/path')
+        return value
+
+
+def ssh_command(config, peer, local_port, remote_port=None, host='127.0.0.1'):
+    if not PEER.fullmatch(peer):
+        raise ValueError('Invalid SSH peer name')
+    if not 1024 <= local_port <= 65535:
+        raise ValueError('Local port must be in 1024..65535')
+    config = Path(config).expanduser().absolute()
+    if not config.is_file():
+        raise ValueError(f'SSH configuration is missing: {config}')
+    command = ['/usr/bin/ssh', '-F', str(config), '-NT', '-S', 'none']
+    for option in ['BatchMode=yes', 'StrictHostKeyChecking=yes',
+                   'ExitOnForwardFailure=yes', 'ServerAliveInterval=15',
+                   'ServerAliveCountMax=3', 'ConnectTimeout=10',
+                   'ConnectionAttempts=1', 'ForwardAgent=no', 'ForwardX11=no']:
+        command += ['-o', option]
+    if remote_port is None:
+        command += ['-D', f'127.0.0.1:{local_port}']
+    else:
+        if not 1 <= remote_port <= 65535:
+            raise ValueError('Remote port must be in 1..65535')
+        command += ['-L', f'127.0.0.1:{local_port}:{target_host(host)}:{remote_port}']
+    return command + [peer]
+
+
+def unit_name(name):
+    if not NAME.fullmatch(name):
+        raise ValueError('Name must start with a lowercase letter; use letters, digits and hyphens')
+    return f'lazytunnel-web-{name}.service'
+
+
+def unit_argument(value):
+    if any(ord(c) < 32 for c in value):
+        raise ValueError('Control characters are not allowed')
+    return '"' + value.replace('\\', '\\\\').replace('"', '\\"').replace('%', '%%').replace('$', '$$') + '"'
+
+
+def render_unit(name, command):
+    unit_name(name)
+    return MARKER + f'''[Unit]
+Description=LazyTunnel private web forward ({name})
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart={' '.join(unit_argument(arg) for arg in command)}
+Restart=always
+RestartSec=15
+TimeoutStopSec=10
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
+'''
+
+
+def control(*args, check=True, capture=False):
+    return subprocess.run(['/usr/bin/systemctl', '--user', *args],
+                          check=check, text=True, capture_output=capture)
+
+
+def check_port(local_port):
+    with socket.socket() as sock:
+        try:
+            sock.bind(('127.0.0.1', local_port))
+        except OSError as error:
+            raise ValueError(f'127.0.0.1:{local_port} is occupied; choose --local-port instead') from error
+
+
+def ensure_endpoint(command):
+    # Reject accidental use of the restricted carrier/jump identity. The final
+    # endpoint's sshd, not the cloud jump, must open the requested application.
+    parsed = subprocess.run(command[:4] + ['-G', command[-1]],
+                            check=True, capture_output=True, text=True, timeout=10)
+    settings = dict(line.split(' ', 1) for line in parsed.stdout.splitlines() if ' ' in line)
+    if settings.get('user', '').startswith(('lt-tun-', 'lt-hop-')):
+        raise ValueError('Choose an endpoint peer, not the cloud carrier/jump account')
+
+
+def install_forward(name, command, local_port):
+    unit = unit_name(name)
+    folder = Path.home() / '.config/systemd/user'
+    folder.mkdir(mode=0o700, parents=True, exist_ok=True)
+    path = folder / unit
+    expected = render_unit(name, command)
+    if path.is_symlink():
+        raise ValueError('Refusing symlink unit')
+    if path.exists() and path.read_text() != expected:
+        raise ValueError('That name already has different settings; use a new name')
+    active = control('is-active', '--quiet', unit, check=False).returncode == 0
+    if not active:
+        check_port(local_port)
+    if not path.exists():
+        with path.open('x') as stream:
+            os.chmod(path, 0o600)
+            stream.write(expected)
+        control('daemon-reload')
+    control('enable', '--now', unit)
+    print(f'Enabled {unit}. A matching rerun preserves its running connection.')
+    print('Connection health is separate from unit activation; verify the URL.')
+    print(f'Status: lazy-web status {name}    Stop: lazy-web stop {name}')
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    actions = parser.add_subparsers(dest='action', required=True)
+    for action in ('run', 'start', 'socks'):
+        sub = actions.add_parser(action)
+        if action == 'start':
+            sub.add_argument('name', help='persistent service name, e.g. workstation-wechat')
+        sub.add_argument('peer', help='endpoint name from LazyTunnel SSH config')
+        sub.add_argument('--ssh-config', default=str(Path.home() / '.config/lazytunnel/ssh_config'))
+        if action == 'socks':
+            sub.add_argument('--local-port', type=port, default=1080)
+        else:
+            sub.add_argument('remote_port', type=port)
+            sub.add_argument('--local-port', type=port)
+            sub.add_argument('--host', default='127.0.0.1', help='target as seen from the remote peer')
+        sub.add_argument('--print-command', action='store_true', help='inspect the command without starting it')
+    status = actions.add_parser('status')
+    status.add_argument('name', nargs='?')
+    stop = actions.add_parser('stop')
+    stop.add_argument('name')
+    args = parser.parse_args(argv)
+    if args.action == 'status':
+        if args.name:
+            return control('status', '--no-pager', unit_name(args.name), check=False).returncode
+        return control('list-units', '--all', '--no-pager', 'lazytunnel-web-*.service', check=False).returncode
+    if args.action == 'stop':
+        unit = unit_name(args.name)
+        path = Path.home() / '.config/systemd/user' / unit
+        if path.is_symlink() or not path.is_file() or not path.read_text().startswith(MARKER):
+            raise ValueError('Refusing to stop an unowned unit')
+        control('disable', '--now', unit)
+        print('Stopped this forward only. Its saved settings remain available for start.')
+        return 0
+    remote_port = getattr(args, 'remote_port', None)
+    local_port = args.local_port or remote_port
+    command = ssh_command(args.ssh_config, args.peer, local_port,
+                          remote_port, getattr(args, 'host', '127.0.0.1'))
+    if args.print_command:
+        print(shlex.join(command))
+        return 0
+    ensure_endpoint(command)
+    if remote_port is not None:
+        print(f'Local address: http://127.0.0.1:{local_port}/ (keep the original path)', flush=True)
+    else:
+        print(f'SOCKS5: 127.0.0.1:{local_port}; only apps explicitly using this proxy are forwarded.', flush=True)
+    if args.action == 'start':
+        install_forward(args.name, command, local_port)
+    else:
+        check_port(local_port)
+        print('Keep this terminal open; Ctrl+C stops only this forward.', flush=True)
+        os.execv(command[0], command)
+    return 0
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main())
+    except (ValueError, OSError, subprocess.SubprocessError) as error:
+        print(f'lazy-web: {error}', file=sys.stderr)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit(130)

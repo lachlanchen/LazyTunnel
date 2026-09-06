@@ -38,6 +38,18 @@ python3 -m unittest discover -s tests -v
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## 私有网页访问
+
+在 beta 上，通过已有 SSH 连接访问 alpha 的本地服务。运行以下命令，然后在 beta 的浏览器打开 `http://127.0.0.1:6144/wechat`。监听端口仅绑定本机回环地址，不更改远程桌面服务。
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[常驻转发、对端局域网、SOCKS 与故障排查](../docs/private-web.md).
+
+
 ## 验证与状态
 
 当前是需要运维人员审查的早期版本。配置生成测试和云端管理员接入初始化已经检查；每次实际部署仍需验证双向终端、文件传输、故障恢复及越权拒绝。配置开机启用不等于通过重启测试。systemd 能恢复连接，但不能恢复已断开的 shell；长任务请使用远程 tmux。

@@ -38,6 +38,18 @@ Lesen Sie Architektur und Betriebshandbuch. Die Registrierung behält private Sc
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## Privater Webzugriff
+
+Öffne auf beta einen lokalen Dienst von alpha über die vorhandene SSH-Verbindung. Führe die folgenden Befehle aus und öffne auf beta `http://127.0.0.1:6144/wechat`. Der Port bleibt auf die lokale Loopback-Adresse beschränkt; Desktop-Dienste werden nicht verändert.
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[Dauerhafte Weiterleitungen, entferntes LAN, SOCKS und Fehlersuche](../docs/private-web.md).
+
+
 ## Prüfung und Status
 
 Frühe Version mit Prüfung durch den Betreiber. Generatortests und die anfängliche Cloud-Administration wurden geprüft; jede reale Installation braucht weiterhin beidseitige Shell-, Datei-, Wiederherstellungs- und Negativtests der Berechtigungen. Startaktivierung ist kein Neustarttest. Systemd stellt Verbindungen wieder her, nicht verlorene Shells; nutzen Sie entferntes tmux.

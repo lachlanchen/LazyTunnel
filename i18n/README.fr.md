@@ -38,6 +38,18 @@ Consultez l’architecture et le guide d’exploitation. L’enrôlement garde l
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## Accès web privé
+
+Sur beta, accédez à un service local hébergé sur alpha par la connexion SSH existante. Exécutez les commandes suivantes, puis ouvrez `http://127.0.0.1:6144/wechat` sur beta. Le port reste privé et les services de bureau ne sont pas modifiés.
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[Transferts persistants, réseau local distant, SOCKS et dépannage](../docs/private-web.md).
+
+
 ## Validation et état
 
 Version initiale soumise à la revue de l’opérateur. Les tests de génération et l’accès administratif initial au cloud ont été vérifiés ; chaque déploiement exige encore des tests bidirectionnels du terminal, des fichiers, de reprise et de refus d’autorisations. L’activation au démarrage n’est pas un test de redémarrage. Systemd rétablit une connexion, pas une session perdue ; utilisez tmux distant.

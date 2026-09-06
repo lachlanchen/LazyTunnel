@@ -38,6 +38,18 @@ Read the architecture and operator runbook. The enrollment helper keeps private 
 
 [docs/design.md](docs/design.md) · [docs/operations.md](docs/operations.md) · [scripts/](scripts/) · [tests/](tests/)
 
+## Private web access
+
+On beta, open a local service hosted on alpha through the existing SSH route. Run the commands below, then browse `http://127.0.0.1:6144/wechat` on beta. The listener stays private and does not change desktop services.
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[Persistent forwards, remote LAN targets, SOCKS and troubleshooting](docs/private-web.md).
+
+
 ## Validation and status
 
 Early operator-reviewed release. Renderer tests and cloud administration bootstrap have been checked; every actual deployment still needs bidirectional shell, file-transfer, failure-recovery and negative-permission tests. Boot enablement is not a reboot test. Systemd can restore a connection, not a lost shell; use remote tmux.

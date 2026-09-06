@@ -38,6 +38,18 @@ python3 -m unittest discover -s tests -v
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## Truy cập web riêng tư
+
+Trên beta, mở dịch vụ cục bộ chạy trên alpha qua kết nối SSH hiện có. Chạy các lệnh dưới đây rồi mở `http://127.0.0.1:6144/wechat` trên beta. Cổng chỉ lắng nghe trên loopback và không thay đổi dịch vụ màn hình từ xa.
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[Chuyển tiếp thường trực, thiết bị LAN từ xa, SOCKS và xử lý sự cố](../docs/private-web.md).
+
+
 ## Kiểm tra và trạng thái
 
 Bản đầu cần người vận hành rà soát. Kiểm thử bộ tạo cấu hình và truy cập quản trị đám mây ban đầu đã được kiểm tra; mỗi lần triển khai vẫn cần thử terminal, truyền tệp hai chiều, phục hồi và từ chối quyền sai. Bật tự khởi động không có nghĩa đã thử khởi động lại. Systemd phục hồi kết nối, không phục hồi phiên shell đã mất; hãy dùng tmux từ xa.

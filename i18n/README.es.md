@@ -38,6 +38,18 @@ Consulta la arquitectura y el manual operativo. El registro conserva las claves 
 
 [docs/design.md](../docs/design.md) · [docs/operations.md](../docs/operations.md) · [scripts/](../scripts/) · [tests/](../tests/)
 
+## Acceso web privado
+
+En beta, abre un servicio local alojado en alpha mediante la conexión SSH existente. Ejecuta estos comandos y abre `http://127.0.0.1:6144/wechat` en beta. El puerto de escucha sigue siendo privado y no se modifican los servicios de escritorio.
+
+```bash
+install -D -m 0755 scripts/lazy-web "$HOME/.local/bin/lazy-web"
+lazy-web run alpha 6144
+```
+
+[Túneles persistentes, destinos de la LAN remota, SOCKS y diagnóstico](../docs/private-web.md).
+
+
 ## Validación y estado
 
 Versión temprana con revisión del operador. Se comprobaron las pruebas del generador y el acceso administrativo inicial al servidor; cada despliegue requiere verificar terminal, archivos, recuperación y denegación de permisos en ambas direcciones. Habilitar el arranque no equivale a probar un reinicio. Systemd recupera conexiones, no terminales perdidas; usa tmux remoto.
