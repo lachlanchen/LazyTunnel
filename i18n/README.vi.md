@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 Bản đầu cần người vận hành rà soát. Kiểm thử bộ tạo cấu hình và truy cập quản trị đám mây ban đầu đã được kiểm tra; mỗi lần triển khai vẫn cần thử terminal, truyền tệp hai chiều, phục hồi và từ chối quyền sai. Bật tự khởi động không có nghĩa đã thử khởi động lại. Systemd phục hồi kết nối, không phục hồi phiên shell đã mất; hãy dùng tmux từ xa.
 
+## Tên SSH dùng chung giữa các thiết bị
+
+Các công cụ áp dụng cấu hình đã được xem xét giữ nguyên thiết lập SSH hiện có và cài cùng tên thiết bị riêng trên Linux, macOS và Windows. Mỗi thiết bị giữ khóa riêng của mình.
+
+[Đăng ký thiết bị, định tuyến và hoàn tác](../docs/device-ssh.md).
+
+
 ## Trích dẫn
 
 Nếu dùng LazyTunnel, hãy trích dẫn kho này. GitHub đọc CITATION.cff để hiển thị bảng trích dẫn. [CITATION.cff](../CITATION.cff)

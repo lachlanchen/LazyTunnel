@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 Frühe Version mit Prüfung durch den Betreiber. Generatortests und die anfängliche Cloud-Administration wurden geprüft; jede reale Installation braucht weiterhin beidseitige Shell-, Datei-, Wiederherstellungs- und Negativtests der Berechtigungen. Startaktivierung ist kein Neustarttest. Systemd stellt Verbindungen wieder her, nicht verlorene Shells; nutzen Sie entferntes tmux.
 
+## Einheitliche SSH-Namen für Geräte
+
+Die Werkzeuge für geprüfte Endpunktkonfigurationen erhalten bestehende SSH-Einstellungen und richten dieselben privaten Gerätenamen unter Linux, macOS und Windows ein. Jedes Gerät behält seine eigenen privaten Schlüssel.
+
+[Geräteaufnahme, Routen und Wiederherstellung](../docs/device-ssh.md).
+
+
 ## Zitieren
 
 Wenn Sie LazyTunnel verwenden, zitieren Sie dieses Repository. GitHub liest CITATION.cff für sein Zitationsfeld. [CITATION.cff](../CITATION.cff)

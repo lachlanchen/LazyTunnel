@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 目前是需要維運人員審查的早期版本。組態生成測試與雲端管理員接入初始化已經檢查；每次實際部署仍須驗證雙向終端、檔案傳輸、故障復原及越權拒絕。設定開機啟用不等於通過重新啟動測試。systemd 能恢復連線，但不能恢復中斷的 shell；長任務請使用遠端 tmux。
 
+## 跨裝置統一 SSH 名稱
+
+經過審閱的端點設定工具保留現有 SSH 設定，在 Linux、macOS 和 Windows 上安裝相同的私有裝置名稱。每台裝置獨立保管自己的私鑰。
+
+[裝置註冊、連線路徑與回復](../docs/device-ssh.md).
+
+
 ## 引用
 
 使用 LazyTunnel 時可引用本儲存庫。GitHub 讀取 CITATION.cff，顯示儲存庫引用資訊。 [CITATION.cff](../CITATION.cff)

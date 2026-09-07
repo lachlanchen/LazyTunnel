@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 Version initiale soumise à la revue de l’opérateur. Les tests de génération et l’accès administratif initial au cloud ont été vérifiés ; chaque déploiement exige encore des tests bidirectionnels du terminal, des fichiers, de reprise et de refus d’autorisations. L’activation au démarrage n’est pas un test de redémarrage. Systemd rétablit une connexion, pas une session perdue ; utilisez tmux distant.
 
+## Noms SSH entre appareils
+
+Les outils de configuration préservent les réglages SSH existants et installent les mêmes noms privés sur Linux, macOS et Windows. Chaque appareil conserve ses propres clés privées.
+
+[Inscription, routes et retour arrière](../docs/device-ssh.md).
+
+
 ## Citation
 
 Si vous utilisez LazyTunnel, citez ce dépôt. GitHub lit CITATION.cff pour afficher son panneau de citation. [CITATION.cff](../CITATION.cff)

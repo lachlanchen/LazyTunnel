@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 Versión temprana con revisión del operador. Se comprobaron las pruebas del generador y el acceso administrativo inicial al servidor; cada despliegue requiere verificar terminal, archivos, recuperación y denegación de permisos en ambas direcciones. Habilitar el arranque no equivale a probar un reinicio. Systemd recupera conexiones, no terminales perdidas; usa tmux remoto.
 
+## Nombres SSH entre dispositivos
+
+Las herramientas de configuración conservan los ajustes SSH existentes e instalan los mismos nombres privados en Linux, macOS y Windows. Cada dispositivo conserva sus propias claves privadas.
+
+[Registro, rutas y reversión](../docs/device-ssh.md).
+
+
 ## Cita
 
 Si utilizas LazyTunnel, cita este repositorio. GitHub lee CITATION.cff para mostrar su panel de citas. [CITATION.cff](../CITATION.cff)

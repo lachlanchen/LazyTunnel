@@ -54,6 +54,13 @@ lazy-web run alpha 6144
 
 Early operator-reviewed release. Renderer tests and cloud administration bootstrap have been checked; every actual deployment still needs bidirectional shell, file-transfer, failure-recovery and negative-permission tests. Boot enablement is not a reboot test. Systemd can restore a connection, not a lost shell; use remote tmux.
 
+## SSH names across devices
+
+Reviewed endpoint helpers preserve existing SSH settings and install the same private device names on Linux, macOS and Windows. Each device keeps its own private keys.
+
+[Device enrollment, routes and rollback](docs/device-ssh.md).
+
+
 ## Citation
 
 If you use LazyTunnel, cite this repository. GitHub reads CITATION.cff for its citation panel. [CITATION.cff](CITATION.cff)
