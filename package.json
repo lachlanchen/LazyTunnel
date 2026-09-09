@@ -1,6 +1,6 @@
 {
   "name": "@lazyingart/lazytunnel",
-  "version": "0.2.1-bootstrap.0",
+  "version": "0.2.1",
   "description": "LazyRemote's independent SSH relay, cross-platform fleet client and private noVNC controller.",
   "type": "module",
   "license": "MIT",
