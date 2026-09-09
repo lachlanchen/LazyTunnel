@@ -1,6 +1,6 @@
 # LazyRemote Network Fit Review — project-owned sample
 
-Date: 9 September 2026  
+Date: 9 September 2026
 Scope: one synthetic Linux workstation behind CGNAT, one existing relay, and two owner-operated clients
 
 > This is not a customer result. The names, addresses, ports, and findings are synthetic. The structure shows the report a buyer receives; it contains no private fleet data.
