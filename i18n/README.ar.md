@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [التثبيت والتسجيل وتسجيل الدخول والتحديثات وإصلاحات Windows والوصول الخاص عبر noVNC](../docs/fleet.md).
 
 
+## واجهة رسومية خاصة اختيارية
+
+تجمع وحدة تحكم خفيفة في المتصفح الأجهزة المسجلة وفحوص SSH عند الطلب وعارضات noVNC المحفوظة. تدعم البحث وعرض الشبكة أو القائمة والسمة الفاتحة أو الداكنة وشاشات الهاتف. في Linux، تعمل عمليات توجيه العارضات بخدمات systemd مستقلة وتستمر عند إعادة تشغيل الواجهة. تبقى المفاتيح ورموز الوصول خاصة، وتُحفظ جلسات سطح المكتب وأنفاق SSH الحالية.
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[التثبيت وفتح الواجهة برمز الوصول والمتصفحات البعيدة وحدود الأمان](../docs/gui.md).
+
+
 ## الاستشهاد
 
 إذا استخدمت LazyTunnel فاستشهد بهذا المستودع. يقرأ GitHub ملف CITATION.cff لعرض معلومات الاستشهاد. [CITATION.cff](../CITATION.cff)

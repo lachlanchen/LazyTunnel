@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [安裝、裝置註冊與登入、更新、Windows 修復及私人 noVNC 存取](../docs/fleet.md).
 
 
+## 可選的私有圖形介面
+
+輕量的瀏覽器控制台集中顯示已註冊的電腦、按需 SSH 檢查與儲存的 noVNC 檢視器。支援搜尋、網格與清單、淺色與深色主題，以及手機版面。在 Linux 上，檢視器轉發由獨立的 systemd 服務管理，重新啟動 GUI 不會中斷轉發。金鑰與存取碼保存在私有位置，既有桌面和 SSH 通道保持不變。
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[安裝、存取碼解鎖、遠端瀏覽器與安全邊界](../docs/gui.md).
+
+
 ## 引用
 
 使用 LazyTunnel 時可引用本儲存庫。GitHub 讀取 CITATION.cff，顯示儲存庫引用資訊。 [CITATION.cff](../CITATION.cff)

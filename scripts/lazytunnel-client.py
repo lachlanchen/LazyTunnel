@@ -29,9 +29,18 @@ def main():
     p=sub.add_parser('ssh');p.add_argument('device');p.add_argument('args',nargs=argparse.REMAINDER)
     p=sub.add_parser('web');p.add_argument('device');p.add_argument('port',type=int)
     p.add_argument('--local-port',type=int);p.add_argument('--path',default='/')
+    p=sub.add_parser('gui',help='optional local browser console')
+    p.add_argument('action',nargs='?',default='open',choices=['open','serve','install','stop','status','code','rotate-code'])
+    p.add_argument('--port',type=int,default=17765)
     a=ap.parse_args();os.umask(0o077)
     if a.command in ('install','update'):
+        candidate=(a.source/'scripts/lazytunnel-client.py').resolve()
+        if candidate != Path(__file__).resolve():
+            # Let the reviewed new release define its complete file set.
+            # Otherwise an old installer silently drops newly added modules.
+            os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())])
         names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web']
+        names+=['gui/'+n for n in ('server.py','index.html','app.js','style.css','icon.svg')]
         texts={n:(a.source/n).read_bytes() for n in names}
         digest=hashlib.sha256(b''.join(texts[n] for n in sorted(texts))).hexdigest()[:16]
         release=CODE/'releases'/digest
@@ -61,6 +70,8 @@ def main():
                 profile.write_text(old+'\n'+pathline+'\n')
         print('Client code installed:',digest,'— credentials and running carrier unchanged.');return
     code=Path(__file__).resolve().parent
+    if a.command=='gui':
+        os.execv(sys.executable,[sys.executable,str(code.parent/'gui/server.py'),a.action,'--port',str(a.port)])
     if a.command=='prepare':
         run(sys.executable,str(code/'fleet-prepare.py'),a.name);return
     if a.command in ('login','sync'):

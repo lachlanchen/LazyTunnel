@@ -205,6 +205,10 @@ no automatic Git updater or tight background polling loop.
 
 ## noVNC, WeChat, WeCom and existing desktops
 
+An [optional private browser console](gui.md) provides device cards,
+on-demand SSH checks and saved viewer controls. It runs separately on an
+enrolled client; it does not add a public management service to the cloud.
+
 Any enrolled endpoint can forward an existing HTTP/WebSocket noVNC service:
 
 ```bash

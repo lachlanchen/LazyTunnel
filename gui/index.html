@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LazyTunnel · Your private connections</title>
+  <link rel="icon" href="/icon.svg"><link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="rail">
+    <a class="brand" href="/" aria-label="LazyTunnel home"><img src="/icon.svg" alt=""><span>LazyTunnel<small>YOUR OWN CONNECTION</small></span></a>
+    <div class="rail-label">WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <button class="nav selected" data-tab="devices"><span>▦</span> Computers <b id="nav-count">—</b></button>
+      <button class="nav" data-tab="viewers"><span>▣</span> Desktop & web</button>
+      <button class="nav" data-tab="guide"><span>⌘</span> Quick guide</button>
+    </nav>
+    <div class="rail-foot"><span class="dot"></span> Privately connected<p>Own your relay.<br>Keep your desktop.</p><small>OpenSSH + noVNC</small></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><span class="crumb">Workspace <span>/</span> <b id="crumb">Computers</b></span><div class="top-actions"><span class="privacy">◉ Local access</span><button id="theme" class="icon-button" title="Switch light and dark theme" aria-label="Switch theme">◐</button><button id="lock" class="quiet" hidden>Lock</button></div></header>
+    <main>
+      <section id="unlock" class="unlock">
+        <img src="/icon.svg" alt=""><p class="eyebrow">A SMALL CONSOLE. YOUR OWN SERVER.</p>
+        <h1>Your computers, closer.</h1><p class="muted">SSH and private desktop viewers, together in one quiet workspace.</p>
+        <form id="login-form"><label for="access-code">Local access code</label><div class="login-row"><input id="access-code" type="password" autocomplete="off" required placeholder="Paste your access code"><button class="primary" type="submit">Unlock →</button></div></form>
+        <p class="muted small">On the computer running this console, get your code with:</p><button class="code copy" data-command="lazytunnel gui code">lazytunnel gui code <span>Copy</span></button>
+        <p class="small muted">The code stays in this browser tab. No cloud account or password is sent.</p>
+      </section>
+      <div id="app" hidden>
+        <section class="hero"><div><p class="eyebrow">YOUR PRIVATE WORKSPACE</p><h1>Less distance. More connection.</h1><p>Reach your computers. Open a shell. Pick up your desktop.</p></div><div class="hero-mark" aria-hidden="true"><i></i><b>↗</b><i></i></div></section>
+        <div class="stats"><div><span>Enrolled computers</span><strong id="device-count">—</strong></div><div><span>Last SSH checks passed</span><strong id="online-count">—</strong></div><div><span>Saved viewers</span><strong id="viewer-count">—</strong></div><div><span>Connection privacy</span><strong class="privacy-stat">Loopback only <span>↗</span></strong></div></div>
+        <section id="devices" class="panel">
+          <div class="section-heading"><div><h2>Your computers <span class="tag">SSH</span></h2><p>Checks run when you ask. Your active sessions stay independent.</p></div><button id="check-all" class="secondary">↻ Check connections</button></div>
+          <div class="toolbar"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Find a computer or alias" aria-label="Find a computer"></label><div class="view-switch" aria-label="Card layout"><button id="grid-mode" class="selected" title="Grid view" aria-label="Grid view">▦</button><button id="list-mode" title="List view" aria-label="List view">☰</button></div></div>
+          <div id="device-grid" class="device-grid"></div><p id="no-results" class="empty" hidden>No matching computers.</p>
+          <p class="footnote">“Reachable” means an authenticated SSH check passed at the displayed time. It is not a continuous health guarantee.</p>
+        </section>
+        <section id="viewers" class="panel" hidden>
+          <div class="section-heading"><div><h2>Desktop & web <span class="tag">noVNC</span></h2><p>Reuse a viewer you already have. Open it only when you need it.</p></div><button id="add-viewer" class="primary">＋ Add viewer</button></div>
+          <div class="notice">Viewers open on <b>this browser's computer</b>. Run the console on that computer, or forward both the console port and the viewer ports to it.</div>
+          <div id="viewer-grid" class="viewer-grid"></div>
+          <div id="empty-viewers" class="empty"><span>▣</span><h3>A place for your desktops.</h3><p>Add an existing noVNC or web app. LazyTunnel carries the connection over SSH.</p><button class="secondary" id="add-empty">Add your first viewer</button></div>
+          <p class="footnote">Forward active means the service is running; the viewer may still be unavailable. Original viewer login and control permissions still apply.</p>
+        </section>
+        <section id="guide" class="panel" hidden>
+          <div class="section-heading"><div><h2>Small tools. Familiar commands.</h2><p>The console is optional. Everything important keeps its own service.</p></div></div>
+          <div class="guide-grid"><article><span class="step">01</span><h3>Open a shell</h3><p>Copy a computer's SSH command, then paste it into your terminal. Use tmux on the destination for long jobs.</p><code>ssh-lazy DEVICE</code></article><article><span class="step">02</span><h3>Bring a viewer closer</h3><p>Select the computer serving noVNC, its HTTP port and viewer path. If a host serves a VM's viewer, select the host.</p><code>/vnc.html?resize=scale</code></article><article><span class="step">03</span><h3>Leave it connected</h3><p>Start a saved forward once. Its service reconnects after network interruptions and starts at boot when user lingering is enabled.</p><code>lazytunnel boot</code></article><article><span class="step">04</span><h3>Update independently</h3><p>Update the client code, then restart only this console to load it. SSH carriers, keys and web forwards stay separate.</p><code>lazytunnel sync</code></article></div>
+          <div class="notice">This console manages enrolled connections. It does not create desktops, run arbitrary remote commands, install VNC servers or expose public desktop ports.</div>
+        </section>
+      </div>
+    </main><footer>LazyTunnel <span>·</span> A lighter way to stay connected.<span class="footer-right">Own server. Native SSH. No background video.</span></footer>
+  </div>
+  <dialog id="viewer-dialog"><form id="viewer-form"><div class="dialog-heading"><div><p class="eyebrow">DESKTOP & WEB</p><h2>Add a viewer</h2></div><button type="button" id="close-dialog" class="icon-button" aria-label="Close dialog">×</button></div><p class="muted">Save the address of an existing noVNC or web service. Saving does not start a connection.</p>
+    <label for="viewer-name">Name</label><input id="viewer-name" name="name" required maxlength="64" placeholder="Work desktop, WeCom, or VM console">
+    <label for="viewer-device">Computer serving the viewer</label><select id="viewer-device" name="device" required></select>
+    <label class="checkbox"><input id="viewer-local" type="checkbox"> Use an existing local viewer; don't create a forward</label>
+    <div class="form-grid"><div><label for="remote-port">Viewer HTTP port</label><input id="remote-port" name="remote_port" type="number" min="1" max="65535" value="6080" required></div><div><label for="local-port">Open locally on port</label><input id="local-port" name="local_port" type="number" min="1024" max="65535" value="16080" required></div></div>
+    <label for="viewer-path">Viewer path</label><input id="viewer-path" name="path" required value="/vnc.html?resize=scale" maxlength="1024"><p class="small muted">For example /wechat or /wecom. Use the full noVNC viewer with resize=scale; no credentials in the URL.</p><button type="submit" class="primary wide">Save viewer</button>
+  </form></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+</body></html>

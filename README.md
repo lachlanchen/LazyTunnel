@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [Installation, enrollment/login, updates, Windows fixes and private noVNC access](docs/fleet.md).
 
 
+## Optional private GUI
+
+A lightweight browser console brings enrolled computers, on-demand SSH checks and saved noVNC viewers together. It includes search, grid/list layouts, light/dark themes and a phone-sized layout. On Linux, viewer forwards have their own systemd services and survive a GUI restart. Keys and access codes remain private; existing desktops and SSH carriers are preserved.
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[Installation, access-code unlock, remote browsers and security boundaries](docs/gui.md).
+
+
 ## Citation
 
 If you use LazyTunnel, cite this repository. GitHub reads CITATION.cff for its citation panel. [CITATION.cff](CITATION.cff)

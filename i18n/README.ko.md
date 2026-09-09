@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [설치, 장치 등록과 로그인, 업데이트, Windows 수정 및 비공개 noVNC 접속](../docs/fleet.md).
 
 
+## 선택 사항인 비공개 GUI
+
+가벼운 브라우저 콘솔에서 등록된 컴퓨터, 요청 시 수행하는 SSH 연결 확인, 저장된 noVNC 뷰어를 관리합니다. 검색, 그리드와 목록, 밝고 어두운 테마, 휴대전화 화면을 지원합니다. Linux에서는 뷰어 전달이 별도의 systemd 서비스로 실행되므로 GUI를 재시작해도 연결이 유지됩니다. 키와 접근 코드는 비공개로 보관하며 기존 데스크톱과 SSH 터널은 그대로 유지합니다.
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[설치, 접근 코드 잠금 해제, 원격 브라우저와 보안 경계](../docs/gui.md).
+
+
 ## 인용
 
 LazyTunnel을 사용한다면 이 저장소를 인용해 주세요. GitHub는 CITATION.cff를 읽어 인용 정보를 표시합니다. [CITATION.cff](../CITATION.cff)

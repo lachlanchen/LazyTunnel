@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [Cài đặt, đăng ký và đăng nhập, cập nhật, sửa lỗi Windows và truy cập noVNC riêng](../docs/fleet.md).
 
 
+## GUI riêng tư tùy chọn
+
+Bảng điều khiển trình duyệt gọn nhẹ tập hợp các máy đã đăng ký, kiểm tra SSH theo yêu cầu và trình xem noVNC đã lưu. Giao diện có tìm kiếm, dạng lưới và danh sách, nền sáng và tối, cùng bố cục cho điện thoại. Trên Linux, các kết nối chuyển tiếp chạy bằng dịch vụ systemd riêng và tiếp tục khi GUI khởi động lại. Khóa và mã truy cập vẫn được giữ riêng; máy tính để bàn và đường hầm SSH hiện tại được bảo toàn.
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[Cài đặt, mở khóa bằng mã, trình duyệt từ xa và giới hạn bảo mật](../docs/gui.md).
+
+
 ## Trích dẫn
 
 Nếu dùng LazyTunnel, hãy trích dẫn kho này. GitHub đọc CITATION.cff để hiển thị bảng trích dẫn. [CITATION.cff](../CITATION.cff)

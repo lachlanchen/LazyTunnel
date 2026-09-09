@@ -24,3 +24,10 @@ macOS and Windows endpoints, with all 49 directed SSH hostname checks passing.
 Read docs/fleet.md and the operator's private acceptance record for limits.
 Enabling units is not a reboot test. Preserve legacy lt-* carriers while
 updating separately owned lf-* fleet policy and client configuration.
+
+The optional browser console is documented in docs/gui.md. It owns only
+lazytunnel-gui.service and its generated lazytunnel-web-gui-* forwards.
+Keep the GUI on loopback with its private
+access code; never put keys in API responses or expose a shell-execution API.
+Existing viewer bookmarks have no service-control ownership. GUI restarts must
+preserve fleet carriers, web forwards and all remote desktops.

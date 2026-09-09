@@ -78,6 +78,21 @@ lazytunnel web alpha 6144 --local-port 16144 --path /wecom
 [インストール、端末登録とログイン、更新、Windows 対策、非公開 noVNC 接続](../docs/fleet.md).
 
 
+## 任意のプライベートGUI
+
+軽量なブラウザーコンソールで、登録済みコンピューター、手動のSSH接続確認、保存したnoVNCビューアーをまとめて管理できます。検索、グリッドとリスト、ライトとダークのテーマ、スマートフォン向け表示に対応しています。Linuxでは転送が独立したsystemdサービスとして動作し、GUIを再起動しても継続します。鍵とアクセスコードは非公開のまま、既存のデスクトップとSSHトンネルも維持されます。
+
+```bash
+cd /path/to/LazyTunnel
+python3 scripts/lazytunnel-client.py update --source .
+lazytunnel gui install
+lazytunnel gui code
+lazytunnel gui
+```
+
+[インストール、コードによるロック解除、リモートブラウザーとセキュリティ境界](../docs/gui.md).
+
+
 ## 引用
 
 LazyTunnel を利用する場合は、このリポジトリを引用してください。GitHub は CITATION.cff から引用情報を表示します。 [CITATION.cff](../CITATION.cff)
