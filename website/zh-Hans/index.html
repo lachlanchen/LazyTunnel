@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LazyRemote — 你的电脑，近在手边</title>
+  <meta name="description" content="开源、自托管的远程电脑入口。通过原生应用使用 SSH 终端和私有查看器，由独立的 LazyTunnel 核心与你自己的中继驱动。">
+  <meta name="theme-color" content="#f6f5ef"><link rel="canonical" href="https://remote.lazying.art/zh-Hans/">
+  <link rel="alternate" hreflang="en" href="https://remote.lazying.art/"><link rel="alternate" hreflang="zh-Hans" href="https://remote.lazying.art/zh-Hans/"><link rel="alternate" hreflang="x-default" href="https://remote.lazying.art/">
+  <meta property="og:type" content="website"><meta property="og:title" content="LazyRemote — 你的电脑，近在手边">
+  <meta property="og:description" content="自己的中继，自己的电脑，一个清静的连接入口。"><meta property="og:url" content="https://remote.lazying.art/zh-Hans/">
+  <meta property="og:image" content="https://remote.lazying.art/assets/social-card.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/lazyremote-logo.png"><link rel="apple-touch-icon" href="../assets/lazyremote-logo.png">
+  <link rel="stylesheet" href="../style.css"><script src="../app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<header class="nav wrap">
+  <a class="brand" href="./" aria-label="LazyRemote 首页"><img src="../assets/lazyremote-logo.png" width="42" height="42" alt=""><span>LazyRemote<span class="brand-dot">.</span></span></a>
+  <nav aria-label="主导航"><a href="#experience">看看应用</a><a href="#how">工作方式</a><a href="#downloads">下载</a><a href="#review">网络评估</a></nav>
+  <div class="nav-actions"><div class="language-switch" aria-label="语言"><a href="../" hreflang="en" lang="en">English</a><span aria-hidden="true">/</span><span aria-current="page">简体中文</span></div><a class="nav-source" href="https://github.com/lachlanchen/LazyTunnel">GitHub <span aria-hidden="true">↗</span></a></div>
+</header>
+<main id="main">
+<section class="hero wrap">
+  <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> 无论身在何处，都是你的空间</p>
+    <h1>你的电脑，<br><em>近在手边。</em></h1>
+    <p class="lede">家里的工作站，工作室的服务器，都放进一个清静的入口。需要时打开 SSH、私有网页或桌面查看器。</p>
+    <div class="actions"><a class="button primary" href="#downloads">选择你的平台 <span aria-hidden="true">↗</span></a><a class="text-link" href="#experience">先看看界面 <span aria-hidden="true">↓</span></a></div>
+    <p class="hero-note">开源、自托管，无需注册托管账户。</p>
+  </div>
+  <div class="hero-aside" aria-hidden="true"><div class="portal"><img src="../assets/lazyremote-logo.png" width="310" height="310" alt=""></div><span class="orbit orbit-a">⌘ <span>你的 Mac</span></span><span class="orbit orbit-b">&gt;_ <span>你的服务器</span></span><span class="orbit orbit-c">▦ <span>你的桌面</span></span><span class="portal-label">距离很远，仍是自己的工作空间。</span></div>
+</section>
+<section class="product-stage wrap" id="experience" aria-labelledby="experience-title">
+  <div class="stage-head"><h2 id="experience-title">看看你的远程工作空间</h2><span class="version-tag">原生预览版 · 0.2</span></div>
+  <div class="stage-canvas">
+    <div class="stage-grid" aria-hidden="true"></div>
+    <button class="desktop-shot screenshot-button" data-image="../assets/native-desktop.png" data-caption="Ubuntu 原生客户端 · 真实应用、示例设备组" aria-label="放大原生桌面版截图"><span class="window-chrome"><i></i><i></i><i></i><span>LazyRemote / 原生客户端</span></span><img src="../assets/native-desktop.png" width="1440" height="1000" alt="LazyTunnel 原生应用，显示六台示例电脑和私有查看器" fetchpriority="high"></button>
+    <button class="phone-shot screenshot-button" data-image="../assets/native-android.png" data-caption="Android 原生客户端 · 真实应用、示例设备组" aria-label="放大 Android 截图"><img src="../assets/native-android.png" width="1080" height="2400" alt="Android 原生应用中的自适应电脑卡片" loading="lazy"></button>
+    <span class="stage-sticker">同一个核心，<br><em>适合每块屏幕。</em></span>
+  </div>
+  <div class="stage-foot"><span>真实应用截图，使用示例电脑，不含私人连接信息。</span><a href="#features">了解能做什么 ↗</a></div>
+</section>
+<section class="platform-strip wrap" aria-label="支持的应用平台"><span>原生预览平台</span><span>Ubuntu</span><span>macOS</span><span>Windows</span><span>iOS</span><span>Android</span></section>
+<section class="features wrap section" id="features">
+  <div class="section-intro"><p class="eyebrow">少一点打扰</p><h2>保留熟悉的工具，<br><em>多一个顺手的入口。</em></h2><p>LazyRemote 不接管电脑，只把你已经信任的 SSH 和私有查看器整理到一起。</p></div>
+  <div class="feature-grid">
+    <article class="feature"><span class="feature-icon">&gt;_</span><h3>随手打开真正的 SSH 终端</h3><p>终端通过 SSH 连接；主机指纹必须匹配，变化的密钥会被拒绝。</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md#everyday-use">阅读终端说明 ↗</a></article>
+    <article class="feature"><span class="feature-icon">▧</span><h3>私有应用，点一下就到</h3><p>通过各自的转发打开现有 noVNC 桌面和网页工具，不改动原有远程访问。</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/gui.md">阅读查看器说明 ↗</a></article>
+    <article class="feature"><span class="feature-icon">⌁</span><h3>中继和密钥都在你手里</h3><p>选择自己的可达服务器，使用 OpenSSH；关闭界面后，持久连接仍由独立核心维护。</p><a href="#how">认识底层核心 ↗</a></article>
+  </div>
+</section>
+<section class="architecture section" id="how"><div class="wrap architecture-inner">
+  <div><p class="eyebrow">不被某家服务绑定</p><h2>LazyRemote 是产品，<br><em>LazyTunnel 是独立核心。</em></h2><p>LazyRemote 是单独的产品体验；它由开源、自托管、与供应商无关的 <strong>LazyTunnel</strong> 驱动。底层包括 SSH 中继、端点客户端和小型控制代理。</p><p>你可以使用原生应用、可选的私有网页控制台，或直接使用命令行。它不会替换或接管现有的 UU、RDP、VNC 服务。</p><a class="text-link" href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md#the-core-is-independent">阅读架构说明 <span aria-hidden="true">↗</span></a></div>
+  <div class="connection-map" aria-label="原生应用、网页控制台和命令行通过独立核心连接到你的电脑"><div class="map-clients"><span>原生应用</span><span>网页控制台</span><span>命令行</span></div><div class="map-line"></div><div class="map-core"><img src="../assets/lazyremote-logo.png" width="54" height="54" alt=""><div><strong>LazyTunnel 核心</strong><small>你的中继 · 经验证的 SSH</small></div><span class="status-dot"></span></div><div class="map-line"></div><div class="map-clients map-targets"><span>电脑</span><span>终端</span><span>私有查看器</span></div><p>界面负责连接，独立核心继续工作。</p></div>
+</div></section>
+<section class="downloads wrap section" id="downloads"><div class="download-intro"><p class="eyebrow">带上自己的工作空间</p><h2>下一次连接，<br><em>从这里开始。</em></h2><p>0.2 是早期原生预览版，当前应用仍名为 LazyTunnel。它连接到你自己注册的 LazyTunnel 控制器，不会替你创建托管账户。</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md">第一次使用？从安装与连接文档开始 ↗</a></div>
+  <div class="download-panel"><div class="os-tabs" role="tablist" aria-label="选择平台"><button role="tab" id="tab-linux" aria-controls="download-detail" aria-selected="true" data-os="linux">Ubuntu</button><button role="tab" id="tab-macos" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="macos">macOS</button><button role="tab" id="tab-windows" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="windows">Windows</button><button role="tab" id="tab-ios" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="ios">iOS</button><button role="tab" id="tab-android" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="android">Android</button></div>
+  <div id="download-detail" role="tabpanel" aria-labelledby="tab-linux" tabindex="0"><span class="download-badge" id="download-badge">LINUX · x64</span><h3 id="download-title">在桌面上，回到自己的电脑。</h3><p id="download-description">原生 GTK 桌面应用。完整压缩包内含用户级安装程序。</p><a id="download-link" class="button primary" href="https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0">下载 Ubuntu 版本 <span aria-hidden="true">↓</span></a><p class="download-note" id="download-note">已在 Ubuntu 24.04 验证；应用本身无需管理员权限。</p></div>
+  <div class="download-bottom"><a href="https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0">发行说明与校验值 ↗</a><span>五个平台均提供源码</span></div></div>
+</section>
+<section class="trust wrap"><div><span>01 / 验证连接对象</span><h3>清楚自己连向哪里</h3><p>必须固定 SSH 主机指纹，密钥一旦变化便拒绝连接。</p></div><div><span>02 / 私密信息留在本地</span><h3>密钥不交给托管平台</h3><p>可选的已保存连接使用系统密钥存储，不降级为明文保存。</p></div><div><span>03 / 默认开放透明</span><h3>看得懂正在运行什么</h3><p>源码可读、构建过程有文档，中继也由你自己运营。</p></div></section>
+<section class="network-review section" id="review"><div class="wrap review-inner">
+  <div class="review-copy"><p class="eyebrow">先看清网络，再决定动手</p><h2>开放端口之前，<br><em>先拿到一份可执行的判断。</em></h2><p>如果你已经有一台可连接的中继服务器和最多三台现有电脑，我可以先审查连接路径。固定价格 USD 250，梳理监听位置、核对信任与恢复前提，并给出实际可执行的“可以进行／不建议进行”方案。</p><p class="review-note">LazyRemote 仍然免费、开源。这只是针对某一套现有环境的可选软件评估服务。</p></div>
+  <div class="review-card"><span class="review-price">USD 250 · 固定范围</span><h3>LazyRemote 网络适配评估</h3><ul><li>网络拓扑与监听暴露图</li><li>密钥角色与主机验证审查</li><li>恢复、回滚与验收清单</li></ul><div class="review-actions"><a class="button primary" href="mailto:contact@lazying.art?subject=LazyRemote%20network%20fit%20check&amp;body=Hi%20LazyingArt%2C%0A%0AI%20would%20like%20a%20free%20fit%20check%20for%20the%20LazyRemote%20Network%20Fit%20Review.%0A%0AWhat%20I%20need%20to%20reach%3A%0AEndpoint%20operating%20systems%20(up%20to%20three)%3A%0AReachable%20relay%20already%20available%3A%20yes%2Fno%0ANAT%2FCGNAT%20or%20port%20constraints%3A%0ASSH%2C%20noVNC%2C%20or%20private-web%20goal%3A%0AOwnership%20and%20network-policy%20permission%20confirmed%3A%20yes%2Fno%0A%0AI%20will%20not%20attach%20passwords%2C%20private%20keys%2C%20or%20unredacted%20configuration%20yet.">先确认是否适合 <span aria-hidden="true">↗</span></a><a class="review-sample" href="../sample-report.html" hreflang="en">查看完整英文样例报告 <span aria-hidden="true">↗</span></a></div><small>第一封邮件只写环境元数据，请勿附上密码、私钥或未经隐去敏感信息的配置包。</small>
+    <details><summary>范围与条款</summary><p>书面确认范围并付款后十个工作日内交付。交付后七个自然日内，可集中提交一次、最多十项事实性更正。部署、硬件、中继托管、路由器或防火墙改动、网络唤醒、桌面捕获和持续支持均不在本评估范围内。工作开始前取消可全额退款；开始后仅退还尚未开展阶段的费用。临时收到且已隐去敏感信息的配置摘录，会在交付、取消或退款后十四个自然日内删除。本评估不保证未实地检查的网络能通过所有连通性或重启测试。</p></details>
+  </div>
+</div></section>
+<section class="faq wrap section"><div><p class="eyebrow">连接之前</p><h2>几个重要边界，<br><em>先说清楚。</em></h2></div><div class="questions">
+<details><summary>LazyRemote 是又一个远程桌面服务吗？</summary><p>不是。它是你自有远程访问设施的原生控制入口。LazyTunnel 负责 SSH 与转发，现有 noVNC 服务提供桌面画面。它不安装屏幕捕获或输入驱动，也不会改动 UU、RDP 或 VNC 会话。</p></details>
+<details><summary>是否需要自己的服务器？</summary><p>跨越不同私有网络连接时，需要一台可达服务器运行 LazyTunnel 中继。可选控制器目前运行于 Linux/systemd。应用可通过验证主机身份的 SSH 访问它，也支持经过一台云端跳板机。</p></details>
+<details><summary>可以从应用商店安装吗？</summary><p>目前是源码与构建预览，不是 App Store 或 Play Store 正式发布。Android 提供已签名 APK，桌面版提供安装说明。iOS 需要自己的 Apple 签名与设备配置，目前不承诺公开安装。</p></details>
+<details><summary>这个网站会连接我的设备吗？</summary><p>不会。这是一个没有登录、跟踪脚本或私有代理连接的静态介绍网站。实际连接请打开已安装的应用或你自己的私有网页控制台。</p></details>
+</div></section>
+<section class="closing wrap"><img src="../assets/lazyremote-logo.png" width="90" height="90" alt=""><h2>少一点距离，<br><em>多一点自主。</em></h2><a class="button primary" href="#downloads">选择你的版本 ↗</a></section>
+</main>
+<footer class="wrap"><a class="brand" href="./"><img src="../assets/lazyremote-logo.png" width="30" height="30" alt=""><span>LazyRemote.</span></a><p>由 <a href="https://lazying.art">LazyingArt</a> 用心制作。<br>底层由独立的 LazyTunnel 核心驱动。</p><div><a href="https://github.com/lachlanchen/LazyTunnel">源码 ↗</a><a href="https://github.com/lachlanchen/LazyTunnel/issues">反馈 ↗</a><a href="https://chat.lazying.art/donate">支持 ↗</a></div></footer>
+<dialog id="screenshot-dialog" aria-labelledby="screenshot-caption"><button id="close-screenshot" aria-label="关闭截图">×</button><img id="screenshot-full" alt=""><p id="screenshot-caption"></p></dialog>
+</body></html>

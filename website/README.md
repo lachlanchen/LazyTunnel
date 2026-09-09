@@ -5,6 +5,12 @@ identity; LazyTunnel remains the independent core, repository, CLI and current
 native preview application name. No installed identifiers or SSH aliases are
 renamed by publishing this website.
 
+The Simplified Chinese route is **https://remote.lazying.art/zh-Hans/**. Both
+pages expose a visible language switch and reciprocal `hreflang` metadata. The
+Chinese route reuses the same local assets, stylesheet and locale-aware download
+tab script; keep its Network Fit Review scope and terms aligned with the English
+source when editing either page.
+
 The site is plain HTML, CSS and JavaScript. There is no server runtime, package
 manager, tracking script, remote font, cookie banner, private API connection or
 credential form. All images are local files. Download tabs work with pointer

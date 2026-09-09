@@ -7,3 +7,5 @@
 @media(max-width:1000px){.review-inner{gap:40px}.review-copy h2{font-size:34px}}
 @media(max-width:720px){.review-inner{grid-template-columns:1fr;gap:36px}.review-copy h2{font-size:37px}.review-card{padding:25px}}
 .review-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.review-sample{font-size:11px;font-weight:650;color:#075aeb;border-bottom:1px solid #a9c4f4;padding:5px 0}.review-sample:hover{color:#074acd;border-color:#074acd}
+.nav-actions{display:flex;align-items:center;gap:12px}.language-switch{display:flex;align-items:center;gap:6px;font-size:11px;color:#7a817c;white-space:nowrap}.language-switch a{color:#38413c}.language-switch a:hover{color:#0053e8}.language-switch [aria-current=page]{font-weight:650;color:#202526}
+@media(max-width:720px){.nav-actions .nav-source{display:none}.language-switch{font-size:10px}}
