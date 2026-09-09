@@ -224,6 +224,20 @@ The installer uses `~/Applications`, preserves one timestamped previous app on
 replacement, and asks you to close an already running LazyTunnel window first.
 It never disables Gatekeeper globally.
 
+To run an already built iOS simulator bundle through Flutter's debugger, boot
+your chosen simulator in Xcode, then run from `apps/lazytunnel`:
+
+```bash
+/path/to/flutter/bin/flutter devices
+/path/to/flutter/bin/flutter run -d YOUR_SIMULATOR_ID --debug --no-pub \
+  --use-application-binary=build/ios/iphonesimulator/Runner.app
+```
+
+Use `q` in the Flutter terminal to stop only that app. If a simulator capture
+is black, compare it with a system app before changing the application. On the
+review host, Flutter reported its first frame while both app and Safari
+captures were black; see the [verification record](native-verification-2026-09-09.md).
+
 ### iOS signing
 
 The last iOS command produces an **unsigned iOS device build**, not an installable
