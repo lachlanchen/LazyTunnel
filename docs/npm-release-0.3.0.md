@@ -32,3 +32,26 @@ Publication uses the existing npm trusted publisher and GitHub provenance,
 tag `npm-v0.3.0`. The CI workflow repeats the real SSH integration test before
 running the exact-artifact release helper. npm CLI and native-app release
 versions are independent; this is not a new App Store or native binary release.
+
+## Published artifact
+
+Published successfully on 2026-09-09 with npm provenance:
+[release workflow](https://github.com/lachlanchen/LazyTunnel/actions/runs/34332460875).
+Source commit: `f0bed1a49b407daca04952d78cd270e4ebc41508`.
+The registry tarball has 37 files and is 73,663 bytes compressed.
+
+```text
+sha512-6T3YlsAhOm/AH5UIlU0WYk8A9kFmciVT+QgukqiK8nnbU1rTG1r2wcV+foZXW30ItrbBf/8KdjPUueVARui46Q==
+```
+
+All published members and modes matched the committed source; a canonical pack
+using Git file modes reproduced the exact tarball. A first pack of the private
+worktree differed only because its files had owner-only permissions. Compare
+member contents and canonical modes before treating a local archive mismatch
+as a source discrepancy; do not relax permissions on private workstation files.
+
+The public package was installed on the operator's Linux client. Account help
+and version checks passed, and client code updated without changing enrollment,
+keys or carrier configuration. Existing agent/browser/XRDP process IDs stayed
+unchanged. The older `lazytunnel` launcher remains preserved on PATH; use the
+unambiguous `lazytunnel-client` and `lazytunnel-server` npm commands there.
