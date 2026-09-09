@@ -61,6 +61,23 @@ Les outils de configuration préservent les réglages SSH existants et installen
 [Inscription, routes et retour arrière](../docs/device-ssh.md).
 
 
+## Serveur et clients indépendants
+
+L’extension de parc prend en charge Linux, macOS et Windows, avec des mises à jour distinctes du serveur et des clients. Les clés et la configuration privée restent hors de Git ; un registre SSH à identité épinglée permet de rafraîchir la liste des appareils sans identifiants administrateur. Le déploiement réel sur sept appareils a réussi les 49 vérifications SSH dirigées ; le démarrage a été inspecté sans redémarrage.
+
+Sur un client Linux/macOS inscrit :
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[Installation, inscription et connexion, mises à jour, correctifs Windows et accès privé noVNC](../docs/fleet.md).
+
+
 ## Citation
 
 Si vous utilisez LazyTunnel, citez ce dépôt. GitHub lit CITATION.cff pour afficher son panneau de citation. [CITATION.cff](../CITATION.cff)

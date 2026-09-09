@@ -19,5 +19,8 @@ deploy a tunnel.
 - Preserve unrelated worktree changes. Test with `python3 -m unittest discover
   -s tests -v` and `git diff --check`.
 
-Operational state: preparation, not a verified deployment. Replace this status
-only with actual acceptance evidence. Enabling units is not a reboot test.
+Operational state: the fleet extension has been deployed across seven Linux,
+macOS and Windows endpoints, with all 49 directed SSH hostname checks passing.
+Read docs/fleet.md and the operator's private acceptance record for limits.
+Enabling units is not a reboot test. Preserve legacy lt-* carriers while
+updating separately owned lf-* fleet policy and client configuration.

@@ -61,6 +61,23 @@ Die Werkzeuge für geprüfte Endpunktkonfigurationen erhalten bestehende SSH-Ein
 [Geräteaufnahme, Routen und Wiederherstellung](../docs/device-ssh.md).
 
 
+## Unabhängige Server und Clients
+
+Die Flottenerweiterung unterstützt Linux, macOS und Windows mit getrennten Updates für Server und Clients. Geräteschlüssel und private Konfiguration bleiben außerhalb von Git. Ein SSH-Verzeichnis mit fest hinterlegtem Hostschlüssel aktualisiert die Geräteliste ohne Administrator-Zugangsdaten. Die reale Installation auf sieben Geräten bestand alle 49 gerichteten SSH-Prüfungen; die Starteinstellungen wurden ohne Neustart geprüft.
+
+Auf einem registrierten Linux/macOS-Client:
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[Installation, Registrierung und Anmeldung, Updates, Windows-Korrekturen und privater noVNC-Zugriff](../docs/fleet.md).
+
+
 ## Zitieren
 
 Wenn Sie LazyTunnel verwenden, zitieren Sie dieses Repository. GitHub liest CITATION.cff für sein Zitationsfeld. [CITATION.cff](../CITATION.cff)

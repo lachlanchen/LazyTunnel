@@ -61,6 +61,23 @@ lazy-web run alpha 6144
 [デバイス登録・経路・ロールバック](../docs/device-ssh.md).
 
 
+## 独立したサーバーとクライアント
+
+端末群の拡張機能は Linux、macOS、Windows に対応し、サーバーとクライアントを個別に更新できます。端末の鍵と非公開設定は Git の外に保存し、ホスト鍵を固定した SSH レジストリから管理者認証情報なしで端末一覧を更新します。実際の7台構成では全49方向の SSH 検査に成功しました。起動設定は確認済みですが、再起動試験は行っていません。
+
+登録済みの Linux/macOS クライアントで実行します。
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[インストール、端末登録とログイン、更新、Windows 対策、非公開 noVNC 接続](../docs/fleet.md).
+
+
 ## 引用
 
 LazyTunnel を利用する場合は、このリポジトリを引用してください。GitHub は CITATION.cff から引用情報を表示します。 [CITATION.cff](../CITATION.cff)

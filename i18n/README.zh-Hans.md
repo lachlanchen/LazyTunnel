@@ -61,6 +61,23 @@ lazy-web run alpha 6144
 [设备注册、连接路径与回滚](../docs/device-ssh.md).
 
 
+## 独立的服务端与客户端
+
+设备群扩展支持 Linux、macOS 和 Windows，服务端与客户端可分别更新。设备密钥和私有配置保存在 Git 之外；客户端通过固定主机密钥的 SSH 配置目录刷新设备列表，无需持有云端管理员凭据。实际七台设备已通过全部 49 个方向的 SSH 检查；已检查开机设置，但未重启测试。
+
+在已注册的 Linux/macOS 客户端运行：
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[安装、设备注册与登录、更新、Windows 修复及私有 noVNC 访问](../docs/fleet.md).
+
+
 ## 引用
 
 使用 LazyTunnel 时可引用本仓库。GitHub 读取 CITATION.cff，显示仓库引用信息。 [CITATION.cff](../CITATION.cff)

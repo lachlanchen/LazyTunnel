@@ -61,6 +61,23 @@ lazy-web run alpha 6144
 [تسجيل الأجهزة والمسارات والتراجع](../docs/device-ssh.md).
 
 
+## خادم وعملاء مستقلون
+
+يدعم امتداد الأجهزة Linux وmacOS وWindows، مع تحديث الخادم والعملاء بشكل مستقل. تبقى مفاتيح الأجهزة والإعدادات الخاصة خارج Git، ويتيح سجل SSH ذو هوية مثبتة تحديث قائمة الأجهزة دون بيانات اعتماد المدير. اجتاز النشر الفعلي على سبعة أجهزة جميع اختبارات SSH الموجهة البالغ عددها 49، وفُحصت إعدادات بدء التشغيل دون إعادة تشغيل الأجهزة.
+
+على عميل Linux أو macOS مسجل:
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[التثبيت والتسجيل وتسجيل الدخول والتحديثات وإصلاحات Windows والوصول الخاص عبر noVNC](../docs/fleet.md).
+
+
 ## الاستشهاد
 
 إذا استخدمت LazyTunnel فاستشهد بهذا المستودع. يقرأ GitHub ملف CITATION.cff لعرض معلومات الاستشهاد. [CITATION.cff](../CITATION.cff)

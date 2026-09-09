@@ -107,7 +107,7 @@ def ensure_endpoint(command):
     parsed = subprocess.run(command[:4] + ['-G', command[-1]],
                             check=True, capture_output=True, text=True, timeout=10)
     settings = dict(line.split(' ', 1) for line in parsed.stdout.splitlines() if ' ' in line)
-    if settings.get('user', '').startswith(('lt-tun-', 'lt-hop-')):
+    if settings.get('user', '').startswith(('lt-tun-', 'lt-hop-', 'lf-tun-', 'lf-hop-', 'lf-info-')):
         raise ValueError('Choose an endpoint peer, not the cloud carrier/jump account')
 
 

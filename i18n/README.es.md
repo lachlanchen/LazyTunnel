@@ -61,6 +61,23 @@ Las herramientas de configuración conservan los ajustes SSH existentes e instal
 [Registro, rutas y reversión](../docs/device-ssh.md).
 
 
+## Servidor y clientes independientes
+
+La extensión de dispositivos admite Linux, macOS y Windows, con actualizaciones independientes del servidor y los clientes. Las claves y la configuración privada quedan fuera de Git; un registro SSH con identidad fijada permite actualizar la lista de dispositivos sin credenciales de administrador. El despliegue real de siete dispositivos superó las 49 pruebas SSH dirigidas; se inspeccionó el arranque sin reiniciar.
+
+En un cliente Linux/macOS registrado:
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[Instalación, registro e inicio de sesión, actualizaciones, soluciones para Windows y acceso privado con noVNC](../docs/fleet.md).
+
+
 ## Cita
 
 Si utilizas LazyTunnel, cita este repositorio. GitHub lee CITATION.cff para mostrar su panel de citas. [CITATION.cff](../CITATION.cff)

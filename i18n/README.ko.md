@@ -61,6 +61,23 @@ lazy-web run alpha 6144
 [기기 등록, 경로 및 롤백](../docs/device-ssh.md).
 
 
+## 독립적인 서버와 클라이언트
+
+장치 확장은 Linux, macOS, Windows를 지원하며 서버와 클라이언트를 따로 업데이트합니다. 장치 키와 비공개 설정은 Git 외부에 보관합니다. 호스트 키를 고정한 SSH 레지스트리를 통해 관리자 인증 정보 없이 장치 목록을 갱신할 수 있습니다. 실제 장치 7대에서 49개 방향의 SSH 검사를 모두 통과했으며, 재부팅 없이 시작 설정을 확인했습니다.
+
+등록된 Linux/macOS 클라이언트에서 실행합니다.
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[설치, 장치 등록과 로그인, 업데이트, Windows 수정 및 비공개 noVNC 접속](../docs/fleet.md).
+
+
 ## 인용
 
 LazyTunnel을 사용한다면 이 저장소를 인용해 주세요. GitHub는 CITATION.cff를 읽어 인용 정보를 표시합니다. [CITATION.cff](../CITATION.cff)

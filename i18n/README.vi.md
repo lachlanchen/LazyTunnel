@@ -61,6 +61,23 @@ Các công cụ áp dụng cấu hình đã được xem xét giữ nguyên thi�
 [Đăng ký thiết bị, định tuyến và hoàn tác](../docs/device-ssh.md).
 
 
+## Máy chủ và máy khách độc lập
+
+Phần mở rộng đội thiết bị hỗ trợ Linux, macOS và Windows, với bản cập nhật máy chủ và máy khách tách biệt. Khóa thiết bị và cấu hình riêng được giữ ngoài Git; danh bạ SSH có khóa máy chủ được ghim cho phép cập nhật danh sách thiết bị mà không cần thông tin xác thực quản trị viên. Triển khai thực tế trên bảy thiết bị đã vượt qua cả 49 phép kiểm tra SSH có hướng; cấu hình khởi động được kiểm tra mà không khởi động lại.
+
+Trên máy khách Linux/macOS đã đăng ký:
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[Cài đặt, đăng ký và đăng nhập, cập nhật, sửa lỗi Windows và truy cập noVNC riêng](../docs/fleet.md).
+
+
 ## Trích dẫn
 
 Nếu dùng LazyTunnel, hãy trích dẫn kho này. GitHub đọc CITATION.cff để hiển thị bảng trích dẫn. [CITATION.cff](../CITATION.cff)

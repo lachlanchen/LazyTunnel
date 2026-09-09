@@ -61,6 +61,23 @@ Reviewed endpoint helpers preserve existing SSH settings and install the same pr
 [Device enrollment, routes and rollback](docs/device-ssh.md).
 
 
+## Independent server and clients
+
+The fleet extension supports Linux, macOS and Windows with separate server and client updates. Device keys and private configuration stay outside Git; a pinned SSH registry lets an enrolled client refresh its device list without administrator credentials. The live seven-device deployment passed all 49 directed SSH checks; boot settings were inspected without rebooting.
+
+On an enrolled Linux/macOS client:
+
+```bash
+lazytunnel status
+lazytunnel devices
+ssh-lazy-alpha
+lazytunnel sync
+lazytunnel web alpha 6144 --local-port 16144 --path /wecom
+```
+
+[Installation, enrollment/login, updates, Windows fixes and private noVNC access](docs/fleet.md).
+
+
 ## Citation
 
 If you use LazyTunnel, cite this repository. GitHub reads CITATION.cff for its citation panel. [CITATION.cff](CITATION.cff)
