@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "name": "LazyRemote",
+  "bundle_id": "art.lazying.lazytunnel",
+  "version": "0.2.0",
+  "build_number": "2",
+  "team_id": "Q8M2S2FY77",
+  "app_id": null,
+  "build_id": null,
+  "source_commit": null,
+  "ipa_sha256": null,
+  "release_type": "MANUAL",
+  "locales": ["en-US"],
+  "requirements": {
+    "distribution_artifact_qa": "pending",
+    "native_iphone_ipad_screenshots": "pending",
+    "privacy_declaration": "pending",
+    "encryption_declaration": "pending",
+    "age_rating": "pending",
+    "pricing_and_availability": "pending",
+    "reviewer_access": "pending"
+  }
+}

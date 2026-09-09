@@ -22,6 +22,8 @@ LazyTunnel은 클라우드 중계 서버를 통해 사설 컴퓨터를 연결하
 
 [설치, 연결, 빌드 및 서명 안내](../docs/native-apps.md).
 
+[Apple 배포 가이드](../docs/apple-publication.md): EchoMind에서 배운 절차, 명시적인 출시 계획, 읽기 전용 준비 상태 확인 명령을 제공합니다. iOS 미리보기 버전은 아직 TestFlight에 업로드하거나 App Review에 제출하지 않았습니다.
+
 
 ## 설계
 

@@ -22,6 +22,8 @@ LazyTunnel 是一个基于 OpenSSH 和 systemd 的小型工具集，通过云服
 
 [安装、连接、构建和签名指南](../docs/native-apps.md).
 
+[Apple 发布指南](../docs/apple-publication.md)：整理了从 EchoMind 学到的流程、明确的发布计划和只读就绪检查命令。iOS 预览版尚未上传至 TestFlight，也未提交 App Review。
+
 
 ## 设计
 

@@ -22,6 +22,8 @@ The optional native app supports Ubuntu, macOS, Windows, iOS and Android with re
 
 [Native installation, connection setup, builds and signing](docs/native-apps.md).
 
+[Apple release guide](docs/apple-publication.md): the workflow learned from EchoMind, an explicit release plan and a read-only readiness command. The iOS preview has not yet been uploaded to TestFlight or submitted to App Review.
+
 
 [![Native LazyTunnel app with a sample fleet](website/assets/native-desktop.png)](https://remote.lazying.art)
 

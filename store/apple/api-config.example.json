@@ -1,0 +1,5 @@
+{
+  "key_id": "YOUR_APP_STORE_CONNECT_KEY_ID",
+  "issuer_id": "YOUR_APP_STORE_CONNECT_ISSUER_ID",
+  "private_key": "/private/existing/AuthKey_YOUR_KEY_ID.p8"
+}

@@ -22,6 +22,8 @@ Die optionale native App unterstützt Ubuntu, macOS, Windows, iOS und Android mi
 
 [Installation, Verbindungen, Builds und Signierung](../docs/native-apps.md).
 
+[Apple-Veröffentlichungsanleitung](../docs/apple-publication.md): der aus EchoMind übernommene Ablauf, ein konkreter Veröffentlichungsplan und eine rein lesende Statusprüfung. Die iOS-Vorschau wurde noch nicht zu TestFlight hochgeladen oder bei App Review eingereicht.
+
 
 ## Entwurf
 

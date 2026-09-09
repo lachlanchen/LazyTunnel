@@ -22,6 +22,8 @@ LazyTunnel は、クラウド中継サーバー経由でプライベートな端
 
 [インストール、接続、ビルド、署名のガイド](../docs/native-apps.md).
 
+[Apple 公開ガイド](../docs/apple-publication.md)：EchoMind から学んだ手順、明示的なリリース計画、読み取り専用の準備状況確認コマンドをまとめています。iOS プレビュー版はまだ TestFlight にアップロードされておらず、App Review にも提出されていません。
+
 
 ## 設計
 

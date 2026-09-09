@@ -22,6 +22,8 @@ LazyTunnel là bộ công cụ nhỏ dùng OpenSSH và systemd để nối các 
 
 [Hướng dẫn cài đặt, kết nối, biên dịch và ký ứng dụng](../docs/native-apps.md).
 
+[Hướng dẫn phát hành trên Apple](../docs/apple-publication.md): quy trình học từ EchoMind, kế hoạch phát hành rõ ràng và lệnh kiểm tra mức độ sẵn sàng chỉ đọc. Bản xem trước iOS chưa được tải lên TestFlight hoặc gửi đến App Review.
+
 
 ## Thiết kế
 

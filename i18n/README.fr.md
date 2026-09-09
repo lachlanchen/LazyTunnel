@@ -22,6 +22,8 @@ L’application facultative prend en charge Ubuntu, macOS, Windows, iOS et Andro
 
 [Installation, connexions, compilation et signature](../docs/native-apps.md).
 
+[Guide de publication Apple](../docs/apple-publication.md) : le processus appris d’EchoMind, un plan de publication explicite et une commande de vérification en lecture seule. La version préliminaire iOS n’a pas encore été envoyée à TestFlight ni soumise à App Review.
+
 
 ## Conception
 

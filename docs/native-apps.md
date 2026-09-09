@@ -240,6 +240,11 @@ captures were black; see the [verification record](native-verification-2026-09-0
 
 ### iOS signing
 
+For internal TestFlight and formal App Store distribution, use the
+[Apple publication workflow learned from EchoMind](apple-publication.md).
+It includes a read-only status command and an explicit first-release plan;
+the current preview has not been uploaded to TestFlight or App Review.
+
 The last iOS command produces an **unsigned iOS device build**, not an installable
 IPA. Device installation requires a valid Apple team, signing identity and
 provisioning profile; App Store/TestFlight distribution additionally requires

@@ -22,6 +22,8 @@ LazyTunnel مجموعة أدوات صغيرة تعتمد على OpenSSH وsystem
 
 [دليل التثبيت والاتصال والبناء والتوقيع](../docs/native-apps.md).
 
+[دليل النشر على Apple](../docs/apple-publication.md): سير العمل المستفاد من EchoMind، وخطة إصدار واضحة، وأمر لفحص الجاهزية للقراءة فقط. لم تُرفع معاينة iOS بعد إلى TestFlight ولم تُرسل إلى App Review.
+
 
 ## التصميم
 

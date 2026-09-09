@@ -22,6 +22,8 @@ La aplicación opcional funciona en Ubuntu, macOS, Windows, iOS y Android, con p
 
 [Instalación, conexiones, compilación y firma](../docs/native-apps.md).
 
+[Guía de publicación en Apple](../docs/apple-publication.md): el proceso aprendido de EchoMind, un plan de lanzamiento explícito y un comando de comprobación de solo lectura. La versión preliminar de iOS todavía no se ha subido a TestFlight ni enviado a App Review.
+
 
 ## Diseño
 
