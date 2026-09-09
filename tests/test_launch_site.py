@@ -44,6 +44,8 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("十四个自然日内删除", page)
         self.assertIn("不保证未实地检查的网络", page)
         self.assertIn('href="../sample-report.html" hreflang="en"', page)
+        self.assertIn("3819/small-team-remote-access-role-matrix.html", page)
+        self.assertIn("role_matrix_zh", page)
         self.assertIn("https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0", page)
         self.assertNotIn("buy.stripe.com", page)
 
@@ -86,6 +88,8 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("does not guarantee", page)
         self.assertIn("mailto:contact@lazying.art?subject=LazyRemote%20network%20fit%20check", page)
         self.assertIn('href="sample-report.html"', page)
+        self.assertIn("3819/small-team-remote-access-role-matrix.html", page)
+        self.assertIn("role_matrix_en", page)
         self.assertNotIn("stripe-buy-button", page)
         self.assertNotIn("buy.stripe.com", page)
 
