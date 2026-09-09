@@ -20,7 +20,26 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("Deployment, hardware, relay hosting", page)
         self.assertIn("does not guarantee", page)
         self.assertIn("mailto:contact@lazying.art?subject=LazyRemote%20network%20fit%20check", page)
+        self.assertIn('href="sample-report.html"', page)
         self.assertNotIn("stripe-buy-button", page)
+        self.assertNotIn("buy.stripe.com", page)
+
+    def test_network_fit_sample_is_complete_and_truthful(self):
+        page = (ROOT / "website" / "sample-report.html").read_text(encoding="utf-8")
+        markdown = (ROOT / "website" / "sample-report.md").read_text(encoding="utf-8")
+
+        for text in (page, markdown):
+            self.assertIn("Conditional go", text)
+            self.assertIn("Listener exposure map", text)
+            self.assertIn("Identity and trust map", text)
+            self.assertIn("Acceptance checklist", text)
+            self.assertIn("Rollback", text)
+            self.assertIn("not a customer result", text)
+            self.assertIn("no private fleet data", text)
+            self.assertIn("127.0.0.1", text)
+        self.assertIn("sample-report.md", page)
+        self.assertIn("utm_source=sample_report", page)
+        self.assertNotIn("0.0.0.0:</code>", page)
         self.assertNotIn("buy.stripe.com", page)
 
 

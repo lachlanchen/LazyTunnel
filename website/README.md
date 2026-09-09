@@ -12,6 +12,11 @@ and keyboard input; screenshot dialogs close with Escape; reduced-motion
 preferences are respected. The main information and links remain readable
 without JavaScript.
 
+`sample-report.html` and its downloadable Markdown counterpart show the full
+shape of the optional Network Fit Review. They use a synthetic project-owned
+topology, are explicitly not a customer result, and contain no real endpoint,
+listener, account, or credential data.
+
 ## Run locally
 
 ```bash

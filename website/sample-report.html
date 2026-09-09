@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sample Network Fit Review — LazyRemote</title>
+  <meta name="description" content="A complete project-owned sample of the topology, exposure, identity, recovery, and acceptance report included in a LazyRemote Network Fit Review.">
+  <meta name="theme-color" content="#162c2a"><link rel="canonical" href="https://remote.lazying.art/sample-report.html">
+  <meta property="og:type" content="article"><meta property="og:title" content="Sample Network Fit Review — LazyRemote">
+  <meta property="og:description" content="See the report before deciding whether the fixed-scope review fits your network."><meta property="og:url" content="https://remote.lazying.art/sample-report.html">
+  <meta property="og:image" content="https://remote.lazying.art/assets/social-card.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/lazyremote-logo.png"><link rel="stylesheet" href="sample-report.css">
+</head>
+<body>
+<a class="skip" href="#report">Skip to report</a>
+<header class="report-nav">
+  <a class="brand" href="./"><img src="assets/lazyremote-logo.png" width="38" height="38" alt=""><span>LazyRemote<span>.</span></span></a>
+  <div><a href="sample-report.md" download>Download Markdown</a><a class="back" href="./#review">Network review</a></div>
+</header>
+<main id="report">
+  <section class="report-hero">
+    <p class="eyebrow">PROJECT-OWNED SAMPLE · 9 SEPTEMBER 2026</p>
+    <h1>Network Fit<br><em>Review.</em></h1>
+    <p class="lede">A worked example for one Linux workstation behind CGNAT, one existing relay, and two owner-operated clients.</p>
+    <div class="sample-boundary"><strong>This is not a customer result.</strong> The names, addresses, ports, and findings are synthetic. The structure shows the report a buyer receives; it contains no private fleet data.</div>
+  </section>
+
+  <section class="decision panel">
+    <div><p class="eyebrow">DECISION</p><h2>Conditional go.</h2></div>
+    <p>The route is a reasonable fit if every reverse listener remains on relay loopback, the tunnel and jump roles use separate restricted identities, host keys are pinned, and an independent administrator path survives the test. Do not deploy if any of those gates cannot be met.</p>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>01</span><h2>Scope and stated need</h2></div>
+    <div class="section-body two-col">
+      <div class="card"><h3>Need</h3><p>Reach a home Linux workstation from a laptop and phone for SSH and a private browser viewer. The home connection is behind CGNAT, so it cannot accept a normal inbound port forward.</p></div>
+      <div class="card"><h3>Existing pieces</h3><p>One owner-controlled relay with public SSH, one workstation that can make outbound SSH connections, and two owner-controlled client devices. No hardware purchase or relay hosting is part of the review.</p></div>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>02</span><h2>Proposed route</h2></div>
+    <div class="section-body">
+      <div class="route" aria-label="Client reaches a public SSH boundary, then a loopback reverse listener, then a private workstation service">
+        <div><b>Laptop / phone</b><small>owner-controlled client</small></div><i>→</i><div><b>Relay SSH</b><small>public, patched, authenticated</small></div><i>→</i><div><b>Relay loopback</b><small>reverse listener, never wildcard</small></div><i>→</i><div><b>Workstation loopback</b><small>SSH or private viewer</small></div>
+      </div>
+      <p class="note">The route is end-to-end SSH through reviewed identities. A successful carrier alone does not authorize a user, and a browser viewer does not become public merely because the relay is public.</p>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>03</span><h2>Listener exposure map</h2></div>
+    <div class="section-body table-wrap">
+      <table><thead><tr><th>Boundary</th><th>Intended bind</th><th>Who can reach it</th><th>Decision</th></tr></thead><tbody>
+        <tr><td>Relay SSH</td><td>Reviewed public address</td><td>Approved SSH clients</td><td><span class="conditional">Conditional</span></td></tr>
+        <tr><td>Reverse listener</td><td><code>127.0.0.1</code> on relay</td><td>Relay-local jump path only</td><td><span class="required">Required</span></td></tr>
+        <tr><td>Endpoint controller</td><td><code>127.0.0.1</code> on workstation</td><td>Local app or declared forward</td><td><span class="required">Required</span></td></tr>
+        <tr><td>Private browser viewer</td><td><code>127.0.0.1</code> on workstation</td><td>Its dedicated reviewed forward</td><td><span class="required">Required</span></td></tr>
+        <tr><td>Raw VNC / RDP</td><td>No public listener</td><td>No Internet source</td><td><span class="stop">Stop if exposed</span></td></tr>
+      </tbody></table>
+      <p class="caption">Illustrative labels only. The paid report records the buyer’s observed bind addresses and listener owners without copying secrets.</p>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>04</span><h2>Identity and trust map</h2></div>
+    <div class="section-body identity-grid">
+      <article><span>A</span><h3>Relay administrator</h3><p>Independent recovery only. It is not the everyday jump or tunnel identity.</p></article>
+      <article><span>B</span><h3>Tunnel identity</h3><p>No shell, TTY, X11, agent forwarding, wildcard listener, or arbitrary target.</p></article>
+      <article><span>C</span><h3>Jump identity</h3><p>Separate client key and a pinned relay host key; access ends at declared loopback routes.</p></article>
+      <article><span>D</span><h3>Endpoint identity</h3><p>Separate host identity and permissions for each enrolled computer.</p></article>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>05</span><h2>Findings</h2></div>
+    <div class="section-body findings">
+      <article><span class="stop">Stop</span><div><h3>Wildcard reverse listening</h3><p>If the relay shows a reverse listener on <code>0.0.0.0</code> or <code>::</code>, stop the candidate and correct the SSH policy before any client test.</p></div></article>
+      <article><span class="required">Required</span><div><h3>Role separation</h3><p>Do not reuse the relay administrator key for the persistent carrier or for everyday client access.</p></div></article>
+      <article><span class="required">Required</span><div><h3>Host verification</h3><p>Pin the relay and endpoint host identities. A changed fingerprint fails closed and requires an independent check.</p></div></article>
+      <article><span class="conditional">Open</span><div><h3>Reboot recovery</h3><p>A running service is not reboot evidence. Prove one controlled restart and one authorized reboot before calling persistence verified.</p></div></article>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>06</span><h2>Acceptance checklist</h2></div>
+    <div class="section-body checks">
+      <label><input type="checkbox" disabled> Every service and reverse listener has a named owner and intended bind address.</label>
+      <label><input type="checkbox" disabled> Missing, wrong, revoked, and changed identities fail closed.</label>
+      <label><input type="checkbox" disabled> SSH and the private viewer work through their declared routes; raw desktop ports remain unreachable.</label>
+      <label><input type="checkbox" disabled> Stopping the carrier removes the relay loopback route and produces a bounded failure.</label>
+      <label><input type="checkbox" disabled> Restarting one component does not start a duplicate listener or disturb another remote-access service.</label>
+      <label><input type="checkbox" disabled> The independent administrator path and exact rollback steps were tested.</label>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>07</span><h2>Rollback and open questions</h2></div>
+    <div class="section-body two-col">
+      <div class="card"><h3>Rollback order</h3><ol><li>Close the client session.</li><li>Stop only the candidate carrier.</li><li>Confirm its relay loopback listener is gone.</li><li>Restore the reviewed prior unit or configuration.</li><li>Re-probe the existing path.</li></ol></div>
+      <div class="card"><h3>Answer before payment</h3><ul><li>Who owns the relay and network policy?</li><li>Which operating systems are in scope?</li><li>Which exact SSH, noVNC, or private-web path is needed?</li><li>Is there an independent recovery route?</li><li>What must continue working during the change?</li></ul></div>
+    </div>
+  </section>
+
+  <section class="next panel">
+    <div><p class="eyebrow">FREE FIT CHECK FIRST</p><h2>Bring the shape of the network,<br>not its secrets.</h2></div>
+    <div><p>Send the endpoint operating systems, whether a reachable relay already exists, the NAT or port constraint, and the intended access path. Do not attach passwords, private keys, access codes, or unredacted configuration.</p><a class="button" href="./?utm_source=sample_report&amp;utm_medium=owned_proof&amp;utm_campaign=lazyremote_network_review&amp;utm_content=complete_sample#review">Review the fixed scope <span aria-hidden="true">↗</span></a></div>
+  </section>
+</main>
+<footer><a class="brand" href="./"><img src="assets/lazyremote-logo.png" width="30" height="30" alt=""><span>LazyRemote.</span></a><p>Project-owned sample by LazyingArt. No customer data or result.</p><a href="https://github.com/lachlanchen/LazyTunnel">Source ↗</a></footer>
+</body>
+</html>
