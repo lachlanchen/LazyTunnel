@@ -1,6 +1,5 @@
 from pathlib import Path
 import unittest
-from urllib.parse import parse_qs, unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,7 +35,7 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("一台可连接的中继服务器和最多三台现有电脑", page)
         self.assertIn("USD 250 · 固定范围", page)
         self.assertIn("可选软件评估服务", page)
-        self.assertIn("第一封邮件只写环境元数据", page)
+        self.assertIn("在线表单只收集环境元数据", page)
         self.assertIn("书面确认范围并付款后十个工作日内交付", page)
         self.assertIn("最多十项事实性更正", page)
         self.assertIn("路由器或防火墙改动", page)
@@ -49,20 +48,14 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0", page)
         self.assertNotIn("buy.stripe.com", page)
 
-    def test_simplified_chinese_fit_check_opens_a_chinese_template(self):
+    def test_simplified_chinese_fit_check_uses_the_reviewed_web_form(self):
         page = (ROOT / "website" / "zh-Hans" / "index.html").read_text(
             encoding="utf-8"
         )
-        prefix = 'href="mailto:contact@lazying.art?'
-        encoded = page.split(prefix, 1)[1].split('"', 1)[0].replace("&amp;", "&")
-        query = parse_qs(urlsplit(f"mailto:contact@lazying.art?{encoded}").query)
-
-        self.assertEqual(unquote(query["subject"][0]), "LazyRemote 网络适配确认")
-        body = unquote(query["body"][0])
-        self.assertIn("需要访问的设备或服务", body)
-        self.assertIn("终端操作系统（最多三台）", body)
-        self.assertIn("NAT、CGNAT 或端口限制", body)
-        self.assertIn("我不会在第一封邮件中附上密码、私钥", body)
+        self.assertIn("https://lazying.art/lazyremote/fit-check/", page)
+        self.assertIn("utm_campaign=lazyremote_network_review", page)
+        self.assertIn("utm_content=review_cta_zh_hans", page)
+        self.assertIn("在线确认是否适合", page)
 
     def test_simplified_chinese_readme_promotes_localized_route(self):
         readme = (ROOT / "i18n" / "README.zh-Hans.md").read_text(encoding="utf-8")
@@ -86,7 +79,8 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("Cancel before work begins for a full refund", page)
         self.assertIn("Deployment, hardware, relay hosting", page)
         self.assertIn("does not guarantee", page)
-        self.assertIn("mailto:contact@lazying.art?subject=LazyRemote%20network%20fit%20check", page)
+        self.assertIn("https://lazying.art/lazyremote/fit-check/", page)
+        self.assertIn("utm_content=review_cta_en", page)
         self.assertIn('href="sample-report.html"', page)
         self.assertIn("3819/small-team-remote-access-role-matrix.html", page)
         self.assertIn("role_matrix_en", page)
