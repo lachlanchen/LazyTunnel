@@ -39,3 +39,7 @@ __pycache__/
 *.mobileprovision
 *.provisionprofile
 release-artifacts/
+node_modules/
+*.tgz
+.npmrc
+npm-debug.log*

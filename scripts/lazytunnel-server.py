@@ -17,6 +17,7 @@ def main():
     sub=ap.add_subparsers(dest='command',required=True)
     for cmd in ('install','update'):
         p=sub.add_parser(cmd);p.add_argument('--source',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--apply',action='store_true')
+        p.add_argument('--no-launcher',action='store_true',help='Keep the npm-managed command unchanged')
     p=sub.add_parser('apply');p.add_argument('--manifest',required=True,type=Path);p.add_argument('--apply',action='store_true')
     p=sub.add_parser('enroll');p.add_argument('--packet',required=True,type=Path);p.add_argument('--port',required=True,type=int)
     p.add_argument('--alias',action='append',default=[]);p.add_argument('--apply',action='store_true')
@@ -36,6 +37,8 @@ def main():
         link=base/'next'
         assert not link.exists() and not link.is_symlink(),'Pending update exists'
         link.symlink_to(release);os.replace(link,base/'current')
+        if a.no_launcher:
+            print('Code updated. npm launcher, identity registry and live SSH unchanged.');return
         launcher=Path('/usr/local/bin/lazytunnel-server')
         text='#!/bin/sh\nexec /usr/bin/python3 /usr/local/lib/lazytunnel/server/current/scripts/lazytunnel-server.py "$@"\n'
         if launcher.exists():assert 'lazytunnel/server/current' in launcher.read_text(),'Unowned launcher'

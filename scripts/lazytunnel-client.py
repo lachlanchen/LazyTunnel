@@ -21,6 +21,7 @@ def main():
     sub=ap.add_subparsers(dest='command',required=True)
     for name in ('install','update'):
         p=sub.add_parser(name);p.add_argument('--source',type=Path,default=Path(__file__).resolve().parents[1])
+        p.add_argument('--no-launcher',action='store_true',help='Keep npm-managed commands and shell profiles unchanged')
     p=sub.add_parser('prepare');p.add_argument('--name',required=True)
     p=sub.add_parser('login',help='activate a reviewed private enrollment bundle')
     p.add_argument('--bundle',type=Path,required=True)
@@ -41,7 +42,8 @@ def main():
         if candidate != Path(__file__).resolve():
             # Let the reviewed new release define its complete file set.
             # Otherwise an old installer silently drops newly added modules.
-            os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())])
+            extra=['--no-launcher'] if a.no_launcher else []
+            os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())]+extra)
         names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web']
         names+=['gui/'+n for n in ('server.py','index.html','app.js','style.css','icon.svg')]
         names+=['lazytunnel_core/'+n for n in ('__init__.py','controller.py','http_api.py','agent.py')]
@@ -54,6 +56,8 @@ def main():
         link=CODE/'next'
         if link.exists() or link.is_symlink():raise RuntimeError('An update is already staged')
         link.symlink_to(release);os.replace(link,CODE/'current')
+        if a.no_launcher:
+            print('Client code installed:',digest,'— npm launchers, credentials and running carrier unchanged.');return
         bindir=Path.home()/'.local/bin';bindir.mkdir(parents=True,exist_ok=True)
         launcher=bindir/'lazytunnel'
         if launcher.is_symlink():raise RuntimeError('Refusing unrelated launcher symlink')

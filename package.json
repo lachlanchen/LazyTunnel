@@ -1,0 +1,75 @@
+{
+  "name": "@lazyingart/lazytunnel",
+  "version": "0.2.1-bootstrap.0",
+  "description": "LazyRemote's independent SSH relay, cross-platform fleet client and private noVNC controller.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://remote.lazying.art",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lachlanchen/LazyTunnel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lachlanchen/LazyTunnel/issues"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "lazytunnel": "bin/lazytunnel.mjs",
+    "lazytunnel-client": "bin/lazytunnel-client.mjs",
+    "lazytunnel-server": "bin/lazytunnel-server.mjs"
+  },
+  "files": [
+    "bin/*.mjs",
+    "lib/*.mjs",
+    "LICENSE",
+    "README.md",
+    "AGENTS.md",
+    "lazytunnel.py",
+    "fleet.py",
+    "lazytunnel_core/*.py",
+    "gui/server.py",
+    "gui/index.html",
+    "gui/app.js",
+    "gui/style.css",
+    "gui/icon.svg",
+    "scripts/lazytunnel-client.py",
+    "scripts/lazytunnel-server.py",
+    "scripts/lazytunnel.ps1",
+    "scripts/fleet-prepare.py",
+    "scripts/fleet-prepare.ps1",
+    "scripts/fleet-install-posix.py",
+    "scripts/fleet-install-windows.ps1",
+    "scripts/fleet-install-edge.py",
+    "scripts/lazy-web",
+    "docs/npm.md",
+    "docs/fleet.md",
+    "docs/gui.md",
+    "docs/private-web.md"
+  ],
+  "scripts": {
+    "test": "node --test tests/npm.test.mjs",
+    "test:core": "python3 -m unittest discover -s tests -v",
+    "pack:dry-run": "npm pack --dry-run",
+    "verify:package": "node scripts/verify-npm-package.mjs",
+    "release:npm": "node scripts/npm-release.mjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "lazying-art",
+    "lazyremote",
+    "ssh",
+    "reverse-tunnel",
+    "self-hosted",
+    "remote-access",
+    "novnc",
+    "fleet",
+    "linux",
+    "macos",
+    "windows"
+  ]
+}

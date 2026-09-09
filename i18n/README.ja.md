@@ -25,6 +25,25 @@ LazyTunnel は、クラウド中継サーバー経由でプライベートな端
 [Apple 公開ガイド](../docs/apple-publication.md)：EchoMind から学んだ手順、明示的なリリース計画、読み取り専用の準備状況確認コマンドをまとめています。iOS プレビュー版はまだ TestFlight にアップロードされておらず、App Review にも提出されていません。
 
 
+## npm で CLI をインストール
+
+小さなパッケージ一つでクライアントと Linux リレーの管理コマンドを利用できます。npm のインストールではサービスを起動せず、登録情報、認証情報、リモートデスクトップも変更しません。ネイティブ GUI アプリは別途ダウンロードします。
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+Linux リレー上では：
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[npm のインストール、登録、更新の詳しいガイド](../docs/npm.md)。
+
 ## 設計
 
 逆向き転送の待受先はクラウドのループバックだけです。トンネル用・踏み台用・ログイン用の鍵を分離し、ホスト鍵を固定します。VPN、コンテナ、デフォルト経路変更、デスクトップ用ポートの公開は不要です。LazyEdge を補完する仕組みであり、その HTTP 保護を迂回しません。

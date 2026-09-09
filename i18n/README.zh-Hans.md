@@ -25,6 +25,25 @@ LazyTunnel 是一个基于 OpenSSH 和 systemd 的小型工具集，通过云服
 [Apple 发布指南](../docs/apple-publication.md)：整理了从 EchoMind 学到的流程、明确的发布计划和只读就绪检查命令。iOS 预览版尚未上传至 TestFlight，也未提交 App Review。
 
 
+## 通过 npm 安装命令行工具
+
+一个小型软件包提供客户端和 Linux 中继管理命令。npm 安装不会启动服务，也不会更改设备注册、凭据或远程桌面。原生图形应用仍需单独下载。
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+在 Linux 中继服务器上：
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[完整的 npm 安装、注册和更新指南](../docs/npm.md)。
+
 ## 设计
 
 反向转发仅监听云端 loopback。隧道、跳板、终端登录分别使用独立密钥，并固定验证主机公钥。无需 VPN、容器、默认路由变更，也不公开桌面端口。它补充 LazyEdge 的使用场景，不绕过其 HTTP 安全防护。

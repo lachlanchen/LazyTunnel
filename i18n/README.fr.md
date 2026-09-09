@@ -25,6 +25,25 @@ L’application facultative prend en charge Ubuntu, macOS, Windows, iOS et Andro
 [Guide de publication Apple](../docs/apple-publication.md) : le processus appris d’EchoMind, un plan de publication explicite et une commande de vérification en lecture seule. La version préliminaire iOS n’a pas encore été envoyée à TestFlight ni soumise à App Review.
 
 
+## Installer la CLI avec npm
+
+Un petit paquet fournit les commandes du client et d’administration du relais Linux. L’installation npm ne démarre aucun service et préserve l’inscription des appareils, les identifiants et les bureaux distants. L’application graphique native reste un téléchargement séparé.
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+Sur le relais Linux :
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[Guide complet d’installation, d’inscription et de mise à jour avec npm](../docs/npm.md).
+
 ## Conception
 
 Les ports inverses écoutent uniquement sur le loopback du cloud. Les clés du tunnel, du relais et de connexion sont distinctes ; les clés des hôtes sont épinglées. Aucun VPN, conteneur, changement de route par défaut ni port de bureau public n’est nécessaire. Le projet complète LazyEdge sans contourner ses protections HTTP.

@@ -1,6 +1,7 @@
 param([Parameter(Position=0)][ValidateSet('install','update','prepare','login','sync','status','devices','boot','ssh','web')][string]$Command='status',
       [string]$Name, [string]$Bundle, [string]$Source=$PSScriptRoot,
       [string]$Device, [string]$Output, [int]$Port=0, [int]$LocalPort=0, [string]$Path='/',
+      [switch]$NoLauncher,
       [Parameter(ValueFromRemainingArguments=$true)][string[]]$Rest)
 $ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue'
 $state=Join-Path $env:USERPROFILE '.config\lazytunnel-fleet'
@@ -13,8 +14,10 @@ if($Command -in @('install','update')) {
         $from=Join-Path $Source $file;$to=Join-Path $code $file
         if($from -ne $to) {Copy-Item -LiteralPath $from -Destination $to -Force}
     }
-    $bin=Join-Path $env:USERPROFILE '.local\bin';New-Item -ItemType Directory -Force $bin|Out-Null
-    [IO.File]::WriteAllText((Join-Path $bin 'lazytunnel.cmd'),('@echo off'+"`r`n"+'powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "'+$code+'\lazytunnel.ps1" %*'+"`r`n"),$utf8)
+    if(!$NoLauncher) {
+        $bin=Join-Path $env:USERPROFILE '.local\bin';New-Item -ItemType Directory -Force $bin|Out-Null
+        [IO.File]::WriteAllText((Join-Path $bin 'lazytunnel.cmd'),('@echo off'+"`r`n"+'powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "'+$code+'\lazytunnel.ps1" %*'+"`r`n"),$utf8)
+    }
     'Client code installed; private identity and active task unchanged.';return
 }
 if($Command -eq 'prepare') {

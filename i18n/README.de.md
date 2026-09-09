@@ -25,6 +25,25 @@ Die optionale native App unterstützt Ubuntu, macOS, Windows, iOS und Android mi
 [Apple-Veröffentlichungsanleitung](../docs/apple-publication.md): der aus EchoMind übernommene Ablauf, ein konkreter Veröffentlichungsplan und eine rein lesende Statusprüfung. Die iOS-Vorschau wurde noch nicht zu TestFlight hochgeladen oder bei App Review eingereicht.
 
 
+## CLI mit npm installieren
+
+Ein kleines Paket enthält die Befehle für den Client und die Verwaltung des Linux-Relays. Die npm-Installation startet keine Dienste und lässt Geräteregistrierung, Zugangsdaten und Remote-Desktops unverändert. Die native grafische App wird separat heruntergeladen.
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+Auf dem Linux-Relay:
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[Vollständige Anleitung zu npm-Installation, Registrierung und Updates](../docs/npm.md).
+
 ## Entwurf
 
 Rückwärtige Listener binden ausschließlich an Cloud-Loopback. Tunnel-, Sprung- und Anmeldeschlüssel sind getrennt; Hostschlüssel werden fest hinterlegt. VPN, Container, Änderungen der Standardroute oder öffentliche Desktop-Ports sind nicht nötig. Das Projekt ergänzt LazyEdge, ohne dessen HTTP-Schutz zu umgehen.

@@ -25,6 +25,25 @@ LazyTunnel là bộ công cụ nhỏ dùng OpenSSH và systemd để nối các 
 [Hướng dẫn phát hành trên Apple](../docs/apple-publication.md): quy trình học từ EchoMind, kế hoạch phát hành rõ ràng và lệnh kiểm tra mức độ sẵn sàng chỉ đọc. Bản xem trước iOS chưa được tải lên TestFlight hoặc gửi đến App Review.
 
 
+## Cài CLI bằng npm
+
+Một gói nhỏ cung cấp lệnh cho máy khách và quản trị máy chủ chuyển tiếp Linux. Cài đặt bằng npm không khởi động dịch vụ hay thay đổi đăng ký thiết bị, thông tin xác thực hoặc màn hình từ xa. Ứng dụng giao diện gốc vẫn được tải riêng.
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+Trên máy chủ chuyển tiếp Linux:
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[Hướng dẫn đầy đủ về cài đặt, đăng ký và cập nhật qua npm](../docs/npm.md).
+
 ## Thiết kế
 
 Các cổng chuyển tiếp ngược chỉ lắng nghe trên loopback của máy chủ. Khóa đường hầm, khóa bước nhảy và khóa đăng nhập được tách riêng; khóa máy chủ được ghim. Không cần VPN, container, đổi tuyến mặc định hay công khai cổng màn hình. Công cụ bổ sung cho LazyEdge chứ không bỏ qua lớp bảo vệ HTTP.

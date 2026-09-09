@@ -1,0 +1,44 @@
+name: Publish npm package
+on:
+  push:
+    tags: ['npm-v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact npm package version
+        required: true
+        type: string
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Use verified npm version and install without hooks
+        run: |
+          npm install --global npm@11.10.0
+          npm ci --ignore-scripts
+      - name: Check release identity
+        env:
+          EXPECTED_VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const pkg=JSON.parse(fs.readFileSync('package.json'));
+          if(pkg.version !== process.env.EXPECTED_VERSION.replace(/^npm-v/, '')) throw new Error('Release version does not match package.json');
+          JS
+      - name: Test, publish once and verify exact bytes
+        run: npm run release:npm -- --publish --provenance

@@ -27,6 +27,25 @@ The optional native app supports Ubuntu, macOS, Windows, iOS and Android with re
 
 [![Native LazyTunnel app with a sample fleet](website/assets/native-desktop.png)](https://remote.lazying.art)
 
+## Install the CLI with npm
+
+One small package provides the client and Linux relay administration commands. npm installation starts no services and keeps enrollment, credentials and remote desktops unchanged. The native graphical app remains a separate download.
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+On the Linux relay:
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[Complete npm installation, enrollment and update guide](docs/npm.md).
+
 ## Design
 
 Reverse listeners stay on cloud loopback. Separate keys identify tunnel, jump and endpoint roles; host keys are pinned. No VPN, container, default-route change or public desktop port is required. This complements LazyEdge; it does not bypass its HTTP guards.

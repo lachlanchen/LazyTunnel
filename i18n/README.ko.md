@@ -25,6 +25,25 @@ LazyTunnel은 클라우드 중계 서버를 통해 사설 컴퓨터를 연결하
 [Apple 배포 가이드](../docs/apple-publication.md): EchoMind에서 배운 절차, 명시적인 출시 계획, 읽기 전용 준비 상태 확인 명령을 제공합니다. iOS 미리보기 버전은 아직 TestFlight에 업로드하거나 App Review에 제출하지 않았습니다.
 
 
+## npm으로 CLI 설치
+
+작은 패키지 하나에 클라이언트와 Linux 릴레이 관리 명령이 포함됩니다. npm 설치는 서비스를 시작하거나 등록 정보, 인증 정보, 원격 데스크톱을 변경하지 않습니다. 네이티브 GUI 앱은 별도로 다운로드합니다.
+
+```bash
+npm install -g @lazyingart/lazytunnel
+lazytunnel-client install
+lazytunnel-client doctor
+```
+
+Linux 릴레이에서:
+
+```bash
+lazytunnel-server install
+sudo lazytunnel-server install --apply
+```
+
+[npm 설치, 등록 및 업데이트 전체 가이드](../docs/npm.md).
+
 ## 설계
 
 역방향 포트는 클라우드의 루프백에서만 수신합니다. 터널, 점프, 로그인 역할의 키를 분리하고 호스트 키를 고정합니다. VPN, 컨테이너, 기본 경로 변경이나 공개 데스크톱 포트가 필요하지 않습니다. LazyEdge를 보완하며 HTTP 보호 계층을 우회하지 않습니다.
