@@ -1,5 +1,6 @@
 from pathlib import Path
 import unittest
+from urllib.parse import parse_qs, unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +46,21 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn('href="../sample-report.html" hreflang="en"', page)
         self.assertIn("https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0", page)
         self.assertNotIn("buy.stripe.com", page)
+
+    def test_simplified_chinese_fit_check_opens_a_chinese_template(self):
+        page = (ROOT / "website" / "zh-Hans" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        prefix = 'href="mailto:contact@lazying.art?'
+        encoded = page.split(prefix, 1)[1].split('"', 1)[0].replace("&amp;", "&")
+        query = parse_qs(urlsplit(f"mailto:contact@lazying.art?{encoded}").query)
+
+        self.assertEqual(unquote(query["subject"][0]), "LazyRemote 网络适配确认")
+        body = unquote(query["body"][0])
+        self.assertIn("需要访问的设备或服务", body)
+        self.assertIn("终端操作系统（最多三台）", body)
+        self.assertIn("NAT、CGNAT 或端口限制", body)
+        self.assertIn("我不会在第一封邮件中附上密码、私钥", body)
 
     def test_simplified_chinese_readme_promotes_localized_route(self):
         readme = (ROOT / "i18n" / "README.zh-Hans.md").read_text(encoding="utf-8")
