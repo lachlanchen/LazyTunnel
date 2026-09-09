@@ -16,9 +16,9 @@ from unittest import mock
 from fleet import bundle, validate
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('gui_server', ROOT / 'gui/server.py')
-gui = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(gui)
+from lazytunnel_core import controller as gui
+from lazytunnel_core.http_api import Server
+
 
 
 class GuiTests(unittest.TestCase):
@@ -35,7 +35,7 @@ class GuiTests(unittest.TestCase):
         b = bundle(validate(c), self.name)
         (self.state / 'bundle.json').write_text(json.dumps(b))
         (self.state / 'ssh_config').write_text(b['files']['ssh_config'])
-        self.console = gui.Console(self.state)
+        self.console = gui.Controller(self.state)
         self.data = dict(name='Test viewer', device=self.other, remote_port=6080,
                          local_port=16080, path='/vnc.html?resize=scale', mode='forward')
 
@@ -155,7 +155,7 @@ class GuiTests(unittest.TestCase):
 class HttpTests(GuiTests):
     def setUp(self):
         super().setUp()
-        self.server = gui.Server(('127.0.0.1', 0), self.console)
+        self.server = Server(('127.0.0.1', 0), self.console)
         self.port = self.server.server_port
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
@@ -186,11 +186,11 @@ class HttpTests(GuiTests):
         self.assertEqual(self.request('GET', '/api/state', headers={'Authorization':'Bearer old-code'})[0], 401)
 
     def test_static_allowlist_and_security_headers(self):
-        status, body, headers = self.request('GET', '/')
+        status, body, headers = self.request('GET', '/health')
         self.assertEqual(status, 200)
         self.assertEqual(headers['X-Frame-Options'], 'DENY')
         self.assertIn("script-src 'self'", headers['Content-Security-Policy'])
-        for path in ('/../server.py', '/server.py', '/access-code', '/api/state?token=abc', '/.config/lazytunnel-fleet/bundle.json'):
+        for path in ('/', '/app.js', '/style.css', '/../server.py', '/server.py', '/access-code', '/api/state?token=abc', '/.config/lazytunnel-fleet/bundle.json'):
             self.assertEqual(self.request('GET', path, headers=self.auth())[0], 404)
 
     def test_json_only_size_limit_and_no_shell_api(self):

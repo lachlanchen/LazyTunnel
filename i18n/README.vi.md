@@ -6,13 +6,22 @@
 
 *SSH giữa các máy riêng, độc lập với quyền điều khiển màn hình.*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel là bộ công cụ nhỏ dùng OpenSSH và systemd để nối các máy riêng qua máy chủ chuyển tiếp đám mây. Mỗi máy tự mở đường hầm đi ra. Việc chuyển quyền điều khiển UU, RDP hay VNC không sở hữu kết nối này. Terminal và truyền tệp vẫn dùng xác thực SSH gốc.
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## Ứng dụng gốc, lõi độc lập
+
+**LazyRemote** là trải nghiệm sản phẩm dựa trên lõi độc lập này. [Trang sản phẩm](https://remote.lazying.art) · [Tải xuống và ghi chú phát hành](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). Bản xem trước ứng dụng gốc hiện mang tên LazyTunnel; các lệnh và mã định danh ứng dụng hiện có không thay đổi.
+
+Ứng dụng tùy chọn hỗ trợ Ubuntu, macOS, Windows, iOS và Android với giao diện Flutter gốc, lưu kết nối an toàn, terminal SSH xác minh máy chủ và trình xem noVNC/web riêng tư. Agent Python và thư viện truyền tải Dart độc lập với cả giao diện ứng dụng lẫn trình duyệt.
+
+[Hướng dẫn cài đặt, kết nối, biên dịch và ký ứng dụng](../docs/native-apps.md).
+
 
 ## Thiết kế
 

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LazyRemote — Your computers. A little closer.</title>
+  <meta name="description" content="A small, open-source home for your remote computers. Native apps, SSH terminals and private noVNC viewers, powered by the independent LazyTunnel core and your own relay.">
+  <meta name="theme-color" content="#f6f5ef"><link rel="canonical" href="https://remote.lazying.art/">
+  <meta property="og:type" content="website"><meta property="og:title" content="LazyRemote — Your computers. A little closer.">
+  <meta property="og:description" content="Your relay. Your computers. One calm place to connect."><meta property="og:url" content="https://remote.lazying.art/">
+  <meta property="og:image" content="https://remote.lazying.art/assets/social-card.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/lazyremote-logo.png"><link rel="apple-touch-icon" href="assets/lazyremote-logo.png">
+  <link rel="stylesheet" href="style.css"><script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav wrap">
+  <a class="brand" href="#" aria-label="LazyRemote home"><img src="assets/lazyremote-logo.png" width="42" height="42" alt=""><span>LazyRemote<span class="brand-dot">.</span></span></a>
+  <nav aria-label="Main navigation"><a href="#experience">Experience</a><a href="#how">How it works</a><a href="#downloads">Downloads</a></nav>
+  <a class="nav-source" href="https://github.com/lachlanchen/LazyTunnel">GitHub <span aria-hidden="true">↗</span></a>
+</header>
+<main id="main">
+<section class="hero wrap">
+  <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> YOUR SPACE, FROM ANY PLACE</p>
+    <h1>Your computers.<br>A little <em>closer.</em></h1>
+    <p class="lede">The workstation at home. The server at the studio. Bring them into one calm place—with SSH, private web apps, and desktop viewers.</p>
+    <div class="actions"><a class="button primary" href="#downloads">Find your app <span aria-hidden="true">↗</span></a><a class="text-link" href="#experience">Take a look <span aria-hidden="true">↓</span></a></div>
+    <p class="hero-note">Open source. Self-hosted. Yours to keep.</p>
+  </div>
+  <div class="hero-aside" aria-hidden="true"><div class="portal"><img src="assets/lazyremote-logo.png" width="310" height="310" alt=""></div><span class="orbit orbit-a">⌘ <span>Your Mac</span></span><span class="orbit orbit-b">&gt;_ <span>Your server</span></span><span class="orbit orbit-c">▦ <span>Your desktop</span></span><span class="portal-label">Far away. Still your workspace.</span></div>
+</section>
+<section class="product-stage wrap" id="experience" aria-labelledby="experience-title">
+  <div class="stage-head"><h2 id="experience-title">A window into your world.</h2><span class="version-tag">NATIVE PREVIEW · 0.2</span></div>
+  <div class="stage-canvas">
+    <div class="stage-grid" aria-hidden="true"></div>
+    <button class="desktop-shot screenshot-button" data-image="assets/native-desktop.png" data-caption="Ubuntu native client · real application, sample fleet" aria-label="Enlarge native desktop screenshot"><span class="window-chrome"><i></i><i></i><i></i><span>LazyRemote / Native client</span></span><img src="assets/native-desktop.png" width="1440" height="1000" alt="Native LazyTunnel application showing a sample fleet of six computers and private viewers" fetchpriority="high"></button>
+    <button class="phone-shot screenshot-button" data-image="assets/native-android.png" data-caption="Android native client · real application, sample fleet" aria-label="Enlarge Android screenshot"><img src="assets/native-android.png" width="1080" height="2400" alt="Android native application with responsive computer cards" loading="lazy"></button>
+    <span class="stage-sticker">Same core.<br><em>Your kind of screen.</em></span>
+  </div>
+  <div class="stage-foot"><span>Real app captures. Sample computers. No private connection details.</span><a href="#gallery">More screenshots ↗</a></div>
+</section>
+<section class="platform-strip wrap" aria-label="Supported app platforms"><span>AT HOME ON</span><span>Ubuntu</span><span>macOS</span><span>Windows</span><span>iOS</span><span>Android</span></section>
+<section class="features wrap section" id="features">
+  <div class="section-intro"><p class="eyebrow">LESS IN THE WAY</p><h2>Small app.<br><em>Wide-open possibilities.</em></h2><p>Keep the tools you already trust. Add a comfortable place to reach them.</p></div>
+  <div class="feature-grid">
+    <article class="feature"><span class="feature-icon">&gt;_</span><h3>A real shell, within reach.</h3><p>Open SSH terminals, paste a command, and get back to work. UTF-8 streams carry your languages without changing the desktop’s keyboard layout.</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md#everyday-use">Explore terminals ↗</a></article>
+    <article class="feature"><span class="feature-icon">▧</span><h3>Your private apps, a click away.</h3><p>Keep noVNC desktops and web tools together. Open a private viewer through its own forward, alongside your existing remote-access setup.</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/gui.md">Explore viewers ↗</a></article>
+    <article class="feature"><span class="feature-icon">⌁</span><h3>Your infrastructure. Your pace.</h3><p>A small server you choose, familiar OpenSSH, and a core that keeps working when you close the interface. No desktop takeover required.</p><a href="#how">Meet the core ↗</a></article>
+  </div>
+</section>
+<section class="architecture section" id="how"><div class="wrap architecture-inner">
+  <div><p class="eyebrow">INDEPENDENCE, BUILT IN</p><h2>The connection stays.<br><em>The interface is your choice.</em></h2><p>LazyRemote is the product experience. <strong>LazyTunnel</strong> is the independent engine underneath: a self-hosted SSH relay, endpoint clients, and a small controller agent.</p><p>Use the native app, the optional web console, or just your terminal. Your persistent carriers do not depend on an open GUI.</p><a class="text-link" href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md#the-core-is-independent">Read the architecture <span aria-hidden="true">↗</span></a></div>
+  <div class="connection-map" aria-label="Native app, browser console and command line connect through the independent core to your computers"><div class="map-clients"><span>Native app</span><span>Web console</span><span>CLI</span></div><div class="map-line"></div><div class="map-core"><img src="assets/lazyremote-logo.png" width="54" height="54" alt=""><div><strong>LazyTunnel core</strong><small>Your relay · Verified SSH</small></div><span class="status-dot"></span></div><div class="map-line"></div><div class="map-clients map-targets"><span>Computers</span><span>Terminals</span><span>Private viewers</span></div><p>Interfaces connect. The core carries on.</p></div>
+</div></section>
+<section class="gallery wrap section" id="gallery"><div class="section-heading"><div><p class="eyebrow">A CLOSER LOOK</p><h2>Made for the way <em>you work.</em></h2></div><p>Native controls. Light and dark.<br>A layout that makes room for you.</p></div><div class="gallery-grid">
+  <button class="gallery-card screenshot-button" data-image="assets/native-desktop.png" data-caption="Desktop overview · sample fleet"><div class="gallery-image"><img src="assets/native-desktop.png" width="1440" height="1000" loading="lazy" alt="Desktop overview with a sample fleet"></div><span><strong>The whole workspace</strong><small>Native desktop overview</small><b aria-hidden="true">↗</b></span></button>
+  <button class="gallery-card screenshot-button" data-image="assets/native-dark.png" data-caption="Native dark appearance · sample fleet"><div class="gallery-image dark-image"><img src="assets/native-dark.png" width="1440" height="1000" loading="lazy" alt="Native app in dark appearance"></div><span><strong>A quieter late shift</strong><small>Dark appearance</small><b aria-hidden="true">↗</b></span></button>
+  <button class="gallery-card screenshot-button" data-image="assets/native-android.png" data-caption="Android app · sample fleet"><div class="gallery-image mobile-image"><img src="assets/native-android.png" width="1080" height="2400" loading="lazy" alt="Android native client on a phone"></div><span><strong>A little more freedom</strong><small>Native mobile interface</small><b aria-hidden="true">↗</b></span></button>
+</div></section>
+<section class="downloads wrap section" id="downloads"><div class="download-intro"><p class="eyebrow">TAKE YOUR WORKSPACE WITH YOU</p><h2>Your next connection<br>starts <em>here.</em></h2><p>Version 0.2 is an early native preview. The app connects to your own enrolled LazyTunnel controller; it does not create a hosted account.</p><a href="https://github.com/lachlanchen/LazyTunnel/blob/main/docs/native-apps.md">First time? Start with the setup guide ↗</a></div>
+  <div class="download-panel"><div class="os-tabs" role="tablist" aria-label="Choose your platform"><button role="tab" id="tab-linux" aria-controls="download-detail" aria-selected="true" data-os="linux">Ubuntu</button><button role="tab" id="tab-macos" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="macos">macOS</button><button role="tab" id="tab-windows" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="windows">Windows</button><button role="tab" id="tab-ios" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="ios">iOS</button><button role="tab" id="tab-android" aria-controls="download-detail" aria-selected="false" tabindex="-1" data-os="android">Android</button></div>
+  <div id="download-detail" role="tabpanel" aria-labelledby="tab-linux" tabindex="0"><span class="download-badge" id="download-badge">LINUX · x64</span><h3 id="download-title">A home on your desktop.</h3><p id="download-description">A native GTK desktop application. Install the complete bundle with the included per-user installer.</p><a id="download-link" class="button primary" href="https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0">Get Ubuntu build <span aria-hidden="true">↓</span></a><p class="download-note" id="download-note">Ubuntu 24.04 verified. No administrator privileges required for the app.</p></div>
+  <div class="download-bottom"><a href="https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0">Release notes &amp; checksums ↗</a><span>Source available for all five platforms</span></div></div>
+</section>
+<section class="trust wrap"><div><span>01 / VERIFIED CONNECTIONS</span><h3>Know where you connect.</h3><p>SSH host fingerprints are required. A changed key is rejected.</p></div><div><span>02 / PRIVATE BY DESIGN</span><h3>Keys stay on your side.</h3><p>Optional saved profiles use the platform secret store, with no plaintext fallback.</p></div><div><span>03 / OPEN BY DEFAULT</span><h3>Understand what runs.</h3><p>Readable code, documented builds, and a relay you can operate yourself.</p></div></section>
+<section class="faq wrap section"><div><p class="eyebrow">GOOD TO KNOW</p><h2>A few things,<br><em>before you connect.</em></h2></div><div class="questions">
+<details><summary>Is LazyRemote another remote desktop service?</summary><p>It is a native control room for your own remote-access infrastructure. LazyTunnel handles SSH and forwarding; an existing noVNC service supplies the desktop. It does not install a screen-capture or input driver, and it leaves UU, RDP and VNC sessions alone.</p></details>
+<details><summary>Do I need my own server?</summary><p>For connections between separate private networks, use a reachable server running the LazyTunnel relay. The optional controller currently runs on Linux/systemd. The apps can reach it through verified SSH, including one cloud jump host.</p></details>
+<details><summary>Can I install it from the app stores?</summary><p>This is a source and build preview, not an App Store or Play Store launch. Android has signed APKs. Desktop bundles are available with installation instructions. iOS builds require your Apple signing and device provisioning; no public iOS install is promised.</p></details>
+<details><summary>What keeps running if I close the app?</summary><p>Your endpoint carriers, controller agent, and persistent managed forwards continue independently. The native app’s interactive SSH sessions and viewer connections end on disconnect. On phones, keep the app in the foreground while using those connections.</p></details>
+<details><summary>Does this website connect to my devices?</summary><p>No. This is a static launch site with no login, no tracking scripts, and no connection to your private agent. Open the installed app or your private web console to connect.</p></details>
+</div></section>
+<section class="closing wrap"><img src="assets/lazyremote-logo.png" width="90" height="90" alt=""><h2>A little less distance.<br><em>A lot more yours.</em></h2><a class="button primary" href="#downloads">Make yourself at home ↗</a></section>
+</main>
+<footer class="wrap"><a class="brand" href="#"><img src="assets/lazyremote-logo.png" width="30" height="30" alt=""><span>LazyRemote.</span></a><p>Made with care by <a href="https://lazying.art">LazyingArt</a>.<br>Powered by the independent LazyTunnel core.</p><div><a href="https://github.com/lachlanchen/LazyTunnel">Source ↗</a><a href="https://github.com/lachlanchen/LazyTunnel/issues">Feedback ↗</a><a href="https://chat.lazying.art/donate">Support ↗</a></div></footer>
+<dialog id="screenshot-dialog" aria-labelledby="screenshot-caption"><button id="close-screenshot" aria-label="Close screenshot">×</button><img id="screenshot-full" alt=""><p id="screenshot-caption"></p></dialog>
+</body></html>

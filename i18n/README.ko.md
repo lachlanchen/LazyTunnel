@@ -6,13 +6,22 @@
 
 *데스크톱 제어와 독립적인 사설 컴퓨터 간 SSH 연결.*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel은 클라우드 중계 서버를 통해 사설 컴퓨터를 연결하는 작은 OpenSSH 및 systemd 도구 모음입니다. 각 컴퓨터가 자신의 아웃바운드 터널을 시작하므로 UU, RDP, VNC의 제어권 전환이 이 연결을 소유하지 않습니다. 터미널과 파일 전송은 기본 SSH 인증을 유지합니다.
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## 네이티브 앱과 독립적인 코어
+
+**LazyRemote**는 이 독립 코어를 사용하는 제품입니다. [제품 웹사이트](https://remote.lazying.art) · [다운로드 및 릴리스 안내](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). 현재 네이티브 미리보기 앱 이름은 LazyTunnel이며 기존 명령과 앱 식별자는 변경되지 않습니다.
+
+선택형 네이티브 앱은 Ubuntu, macOS, Windows, iOS, Android를 지원합니다. Flutter 관리 화면, 안전한 연결 정보 저장, 호스트 신원을 확인하는 SSH 터미널, 비공개 noVNC 및 웹 뷰어를 제공합니다. Python 에이전트와 순수 Dart 전송 라이브러리는 네이티브 GUI 및 웹 GUI와 독립적으로 동작합니다.
+
+[설치, 연결, 빌드 및 서명 안내](../docs/native-apps.md).
+
 
 ## 설계
 

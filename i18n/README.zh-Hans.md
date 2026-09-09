@@ -6,13 +6,22 @@
 
 *独立于桌面控制的私有电脑双向 SSH。*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel 是一个基于 OpenSSH 和 systemd 的小型工具集，通过云服务器中转连接私有电脑。每台电脑独立发起自己的出站隧道，因此 UU、RDP 或 VNC 的桌面接管不再拥有这条连接。终端和文件传输仍使用原生 SSH 认证。
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## 原生应用，独立核心
+
+**LazyRemote** 是基于这一独立核心打造的产品体验。[产品网站](https://remote.lazying.art) · [下载与发行说明](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0)。当前原生预览版仍名为 LazyTunnel，既有命令和应用标识保持不变。
+
+可选的原生应用支持 Ubuntu、macOS、Windows、iOS 和 Android，提供真正的 Flutter 管理界面、安全保存的连接、验证主机身份的 SSH 终端，以及私有 noVNC 和网页查看器。独立 Python 代理与纯 Dart 通信库均不依赖原生 GUI 或网页 GUI；关闭界面不会停止现有的持久隧道。
+
+[安装、连接、构建和签名指南](../docs/native-apps.md).
+
 
 ## 设计
 

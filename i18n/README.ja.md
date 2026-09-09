@@ -6,13 +6,22 @@
 
 *デスクトップ操作から独立した、プライベート端末間の SSH 接続。*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel は、クラウド中継サーバー経由でプライベートな端末同士を接続する、小さな OpenSSH・systemd ツール集です。各端末が独自の外向きトンネルを開始するため、UU・RDP・VNC の操作先切り替えに接続の所有権が左右されません。シェル操作とファイル転送には通常の SSH 認証を使います。
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## ネイティブアプリと独立したコア
+
+**LazyRemote** は、この独立したコアを使う製品の名称です。[公式サイト](https://remote.lazying.art) · [ダウンロードとリリース情報](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0)。現在のネイティブプレビューのアプリ名は LazyTunnel です。既存のコマンドやアプリ識別子は変更しません。
+
+オプションのネイティブアプリは Ubuntu、macOS、Windows、iOS、Android に対応します。Flutter の管理画面、安全な接続情報の保存、ホスト認証付き SSH ターミナル、非公開の noVNC・Web ビューアーを提供します。Python エージェントと純粋な Dart の通信ライブラリは、ネイティブ GUI とブラウザー GUI のどちらからも独立しています。
+
+[インストール、接続、ビルド、署名のガイド](../docs/native-apps.md).
+
 
 ## 設計
 

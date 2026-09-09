@@ -32,6 +32,9 @@ def main():
     p=sub.add_parser('gui',help='optional local browser console')
     p.add_argument('action',nargs='?',default='open',choices=['open','serve','install','stop','status','code','rotate-code'])
     p.add_argument('--port',type=int,default=17765)
+    p=sub.add_parser('agent',help='independent core service, without either GUI')
+    p.add_argument('action',nargs='?',default='status',choices=['serve','install','stop','status','code','rotate-code'])
+    p.add_argument('--port',type=int,default=17766)
     a=ap.parse_args();os.umask(0o077)
     if a.command in ('install','update'):
         candidate=(a.source/'scripts/lazytunnel-client.py').resolve()
@@ -41,6 +44,7 @@ def main():
             os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())])
         names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web']
         names+=['gui/'+n for n in ('server.py','index.html','app.js','style.css','icon.svg')]
+        names+=['lazytunnel_core/'+n for n in ('__init__.py','controller.py','http_api.py','agent.py')]
         texts={n:(a.source/n).read_bytes() for n in names}
         digest=hashlib.sha256(b''.join(texts[n] for n in sorted(texts))).hexdigest()[:16]
         release=CODE/'releases'/digest
@@ -72,6 +76,8 @@ def main():
     code=Path(__file__).resolve().parent
     if a.command=='gui':
         os.execv(sys.executable,[sys.executable,str(code.parent/'gui/server.py'),a.action,'--port',str(a.port)])
+    if a.command=='agent':
+        os.execv(sys.executable,[sys.executable,str(code.parent/'lazytunnel_core/agent.py'),a.action,'--port',str(a.port)])
     if a.command=='prepare':
         run(sys.executable,str(code/'fleet-prepare.py'),a.name);return
     if a.command in ('login','sync'):

@@ -6,13 +6,22 @@
 
 *SSH между частными компьютерами независимо от управления рабочим столом.*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel — небольшой набор инструментов OpenSSH и systemd для связи частных компьютеров через облачный ретранслятор. Каждый узел сам открывает исходящий туннель. Переключение управления через UU, RDP или VNC не владеет этим соединением. Терминал и передача файлов сохраняют обычную аутентификацию SSH.
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## Нативные приложения и независимое ядро
+
+**LazyRemote** — продукт на основе этого независимого ядра. [Сайт продукта](https://remote.lazying.art) · [Загрузки и примечания к выпуску](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). Текущая нативная предварительная версия называется LazyTunnel; существующие команды и идентификаторы приложений не меняются.
+
+Необязательное приложение поддерживает Ubuntu, macOS, Windows, iOS и Android: нативные экраны Flutter, безопасное хранение подключений, SSH-терминалы с проверкой ключа сервера и приватный просмотр noVNC и веб-приложений. Агент Python и транспортная библиотека Dart не зависят ни от нативного, ни от браузерного интерфейса.
+
+[Установка, подключения, сборка и подпись](../docs/native-apps.md).
+
 
 ## Устройство
 

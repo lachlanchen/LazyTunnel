@@ -6,13 +6,22 @@
 
 *اتصال SSH بين الحواسيب الخاصة، مستقل عن التحكم بسطح المكتب.*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel مجموعة أدوات صغيرة تعتمد على OpenSSH وsystemd لربط الحواسيب الخاصة عبر خادم سحابي وسيط. يبدأ كل جهاز نفقه الصادر بنفسه، فلا يرتبط هذا الاتصال بتبديل التحكم عبر UU أو RDP أو VNC. تبقى جلسات الطرفية ونقل الملفات محمية بمصادقة SSH الأصلية.
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## تطبيقات أصلية ونواة مستقلة
+
+**LazyRemote** هو المنتج المبني على هذه النواة المستقلة. [موقع المنتج](https://remote.lazying.art) · [التنزيلات وملاحظات الإصدار](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). تحمل المعاينة الأصلية الحالية اسم LazyTunnel، وتبقى الأوامر ومعرّفات التطبيقات الحالية دون تغيير.
+
+يدعم التطبيق الاختياري Ubuntu وmacOS وWindows وiOS وAndroid بواجهات Flutter أصلية واتصالات محفوظة بأمان وطرفيات SSH موثقة الهوية وعرض noVNC والتطبيقات الخاصة. يبقى وكيل Python ومكتبة النقل المكتوبة بلغة Dart مستقلين عن واجهتي التطبيق والمتصفح.
+
+[دليل التثبيت والاتصال والبناء والتوقيع](../docs/native-apps.md).
+
 
 ## التصميم
 

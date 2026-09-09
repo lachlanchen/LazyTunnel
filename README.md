@@ -6,13 +6,24 @@
 
 *SSH between private computers, independent of desktop control.*
 
-[Website](https://lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
+[Website](https://remote.lazying.art) · [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
 
 LazyTunnel is a small OpenSSH and systemd toolkit for connecting private computers through a cloud relay. Each endpoint initiates its own tunnel. Switching UU, RDP or VNC control does not own that connection. Shell access and file transfers keep their native SSH authentication.
 
 | Donate | PayPal | Stripe |
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## Native apps, independent core
+
+Meet **LazyRemote**, the product experience powered by this independent core. [Launch website](https://remote.lazying.art) · [Downloads and release notes](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). The current native preview is named LazyTunnel; existing commands and application identifiers stay unchanged.
+
+The optional native app supports Ubuntu, macOS, Windows, iOS and Android with real Flutter management screens, secure saved connections, verified SSH terminals and private noVNC/web viewers. A standalone Python agent and a pure-Dart transport library remain independent of both native and browser GUIs.
+
+[Native installation, connection setup, builds and signing](docs/native-apps.md).
+
+
+[![Native LazyTunnel app with a sample fleet](website/assets/native-desktop.png)](https://remote.lazying.art)
 
 ## Design
 
