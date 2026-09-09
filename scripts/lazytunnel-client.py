@@ -123,6 +123,7 @@ def main():
         print('\n'.join('ssh-lazy-'+n for n in b['aliases']));return
     if a.command=='status':
         p=b['peer'];print('Device:',p['name']);print('User:',p['user']);print('Platform:',p['platform'])
+        print('Account:',p.get('account','default'))
         print('Private state:',STATE);print('Client code:',code)
         print('Carrier:', 'existing independently managed service' if p.get('external_carrier') else 'lazytunnel-fleet')
         print('Configured destinations:',len(b['aliases']));return

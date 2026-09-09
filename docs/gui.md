@@ -169,9 +169,12 @@ does not add a public mobile login gateway or a VPN.
   names. SSH retains pinned host keys, separate identities, loopback listeners
   and disabled agent/X11 forwarding.
 
-The code authorizes control as the local enrolled user. It is not a multi-user
-RBAC system. Someone with that user's filesystem access can read its code and
-SSH keys already. Keep it private, and rotate it after sharing it for support.
+The code authorizes control as the local enrolled user, separately from the
+[relay's account isolation](accounts.md). The console shows the enrolled account
+and its cached bundle; run client `sync` after membership changes. This console
+is not a shared multi-user login portal. Someone with that OS user's filesystem
+access can already read its code and SSH keys. Keep it private and rotate the
+local code after sharing it for support.
 
 ## State, updates and recovery
 

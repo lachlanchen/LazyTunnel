@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [npm のインストール、登録、更新の詳しいガイド](../docs/npm.md)。
 
+## 一つのリレーでアカウントを分離
+
+MIT ライセンスのコアを、自分の端末にも、複数アカウントを持つサービスにも利用できます。CLI 0.3.0 は、アカウントの鍵・パスワード認証、サーバー鍵を固定した招待、所有者による端末登録と失効に対応します。端末一覧と SSH 権限はアカウントごとに分離されます。既存のフリートは明示的に更新するまで従来の構成を維持します。
+
+サーバー管理者から招待を受け取った後：
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[アカウント設定、分離、制限、移行](../docs/accounts.md).
+
 ## 設計
 
 逆向き転送の待受先はクラウドのループバックだけです。トンネル用・踏み台用・ログイン用の鍵を分離し、ホスト鍵を固定します。VPN、コンテナ、デフォルト経路変更、デスクトップ用ポートの公開は不要です。LazyEdge を補完する仕組みであり、その HTTP 保護を迂回しません。

@@ -286,5 +286,6 @@ class Controller:
                 view['status'] = self.cache.get(view['unit'], 'inactive') if view['unit'] else 'existing'
                 view['url'] = 'http://127.0.0.1:' + str(row['local_port']) + row['path']
                 views.append(view)
-            return {'devices': peers, 'viewers': views, 'checking': self.checking,
+            account=json.loads((self.state/'bundle.json').read_text())['peer'].get('account','default')
+            return {'account': account, 'devices': peers, 'viewers': views, 'checking': self.checking,
                     'managed_forwards': sys.platform == 'linux', 'version': 1}

@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [Guía completa de instalación, registro y actualización con npm](../docs/npm.md).
 
+## Un servidor de enlace, cuentas separadas
+
+Utiliza el núcleo con licencia MIT para tus dispositivos o para un servicio con cuentas independientes. La CLI 0.3.0 añade acceso mediante clave o contraseña, invitaciones con clave de servidor fijada y registro y revocación de dispositivos exclusivos del propietario. Cada cuenta tiene su propia lista de dispositivos y permisos SSH. Las flotas existentes se conservan hasta realizar una actualización explícita.
+
+Tras recibir una invitación del administrador:
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[Configuración de cuentas, aislamiento, límites y migración](../docs/accounts.md).
+
 ## Diseño
 
 Los puertos inversos escuchan únicamente en loopback del servidor. Las claves de túnel, salto e inicio de sesión están separadas y se fijan las claves de los hosts. No requiere VPN, contenedores, cambios de ruta predeterminada ni puertos de escritorio públicos. Complementa LazyEdge sin eludir sus protecciones HTTP.

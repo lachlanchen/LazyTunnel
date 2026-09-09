@@ -14,7 +14,7 @@ const pack = JSON.parse(got.stdout)[0];
 const allowed = [...pkg.files, 'package.json'].map(pattern => new RegExp('^' + pattern.split('*')
   .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*') + '$'));
 const required = [
-  ...Object.values(pkg.bin), 'lib/cli.mjs', 'lazytunnel.py', 'fleet.py', 'LICENSE',
+  ...Object.values(pkg.bin), 'lib/cli.mjs', 'lib/accounts.mjs', 'accounts.py', 'scripts/account-admin.py', 'scripts/account-command.py', 'docs/accounts.md', 'lazytunnel.py', 'fleet.py', 'LICENSE',
   'scripts/lazytunnel-client.py', 'scripts/lazytunnel-server.py', 'scripts/lazytunnel.ps1',
   'scripts/fleet-install-posix.py', 'scripts/fleet-install-windows.ps1', 'scripts/fleet-install-edge.py',
   'scripts/fleet-prepare.py', 'scripts/fleet-prepare.ps1', 'scripts/lazy-web',

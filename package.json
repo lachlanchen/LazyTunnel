@@ -1,7 +1,7 @@
 {
   "name": "@lazyingart/lazytunnel",
-  "version": "0.2.1",
-  "description": "LazyRemote's independent SSH relay, cross-platform fleet client and private noVNC controller.",
+  "version": "0.3.0",
+  "description": "LazyRemote\u2019s self-hosted SSH relay with independent accounts, device enrollment and private noVNC access.",
   "type": "module",
   "license": "MIT",
   "homepage": "https://remote.lazying.art",
@@ -46,14 +46,19 @@
     "docs/npm.md",
     "docs/fleet.md",
     "docs/gui.md",
-    "docs/private-web.md"
+    "docs/private-web.md",
+    "accounts.py",
+    "scripts/account-admin.py",
+    "scripts/account-command.py",
+    "docs/accounts.md"
   ],
   "scripts": {
-    "test": "node --test tests/npm.test.mjs",
+    "test": "node --test tests/*.test.mjs",
     "test:core": "python3 -m unittest discover -s tests -v",
     "pack:dry-run": "npm pack --dry-run",
     "verify:package": "node scripts/verify-npm-package.mjs",
-    "release:npm": "node scripts/npm-release.mjs"
+    "release:npm": "node scripts/npm-release.mjs",
+    "test:accounts:integration": "python3 scripts/test-accounts-integration.py"
   },
   "publishConfig": {
     "access": "public",
@@ -70,6 +75,8 @@
     "fleet",
     "linux",
     "macos",
-    "windows"
+    "windows",
+    "multi-account",
+    "device-management"
   ]
 }

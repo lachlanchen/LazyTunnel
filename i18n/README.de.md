@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [Vollständige Anleitung zu npm-Installation, Registrierung und Updates](../docs/npm.md).
 
+## Ein Relay, getrennte Konten
+
+Der MIT-lizenzierte Kern eignet sich für eigene Geräte oder einen Dienst mit unabhängigen Konten. CLI 0.3.0 ergänzt die Anmeldung per Kontoschlüssel oder Passwort, Einladungen mit fest hinterlegtem Serverschlüssel sowie die Registrierung und den Widerruf eigener Geräte. Jedes Konto hat eine eigene Geräteliste und SSH-Berechtigungen. Bestehende Flotten bleiben bis zu einer ausdrücklichen Umstellung erhalten.
+
+Nach Erhalt einer Einladung vom Serverbetreiber:
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[Kontoeinrichtung, Trennung, Grenzen und Migration](../docs/accounts.md).
+
 ## Entwurf
 
 Rückwärtige Listener binden ausschließlich an Cloud-Loopback. Tunnel-, Sprung- und Anmeldeschlüssel sind getrennt; Hostschlüssel werden fest hinterlegt. VPN, Container, Änderungen der Standardroute oder öffentliche Desktop-Ports sind nicht nötig. Das Projekt ergänzt LazyEdge, ohne dessen HTTP-Schutz zu umgehen.

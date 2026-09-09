@@ -5,6 +5,11 @@ ordinary cloud SSH server. It does not depend on a UU desktop takeover, a
 Windows neighbor, a VPN, or a particular LAN address. A client can move networks
 and reconnect using its existing identity.
 
+CLI version 0.3.0 adds [independent accounts on one relay](accounts.md), with
+key/password login, invitations and owner-only enrollment/revocation. Version-2
+manifests scope the fleet below to the device's account. Version-1 fleets keep
+their existing shared trust until an explicit operator upgrade.
+
 ## Components and boundaries
 
 ```text
@@ -46,7 +51,7 @@ Updating code does not regenerate keys, log out UU, restart a desktop, or
 replace a healthy carrier. `sync` obtains the latest reviewed configuration
 from the pinned cloud registry. Carrier identity/port migrations are refused
 until an operator explicitly coordinates them. Registry expansion is additive;
-removing a device is a separate revocation operation.
+removing a device is a separate [revocation operation](accounts.md#4-revoke-a-device-or-disable-an-account).
 
 ## Install a client
 
@@ -108,8 +113,9 @@ the new destination and authorize its endpoint-login key.
 
 ## Login means device enrollment
 
-This release deliberately uses an administrator-approved enrollment bundle,
-not a new password database or a public web signup service. After the public
+This release uses an administrator-approved enrollment bundle or an
+[account invitation](accounts.md), without a public web signup service.
+For the manual bundle workflow, after the public
 packet is accepted, deliver the private bundle to its own device through the
 existing trusted channel. The client verifies that the bundle matches its
 user, host key and locally held private identities.

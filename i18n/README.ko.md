@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [npm 설치, 등록 및 업데이트 전체 가이드](../docs/npm.md).
 
+## 하나의 릴레이, 분리된 계정
+
+MIT 라이선스 코어를 개인 기기나 독립된 계정을 제공하는 서비스에 사용할 수 있습니다. CLI 0.3.0은 계정 키·비밀번호 인증, 서버 키가 고정된 초대, 소유자만 수행할 수 있는 기기 등록과 해지를 지원합니다. 기기 목록과 SSH 권한은 계정별로 분리됩니다. 기존 기기 그룹은 명시적으로 업그레이드하기 전까지 유지됩니다.
+
+서버 운영자에게 초대를 받은 뒤:
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[계정 설정, 격리, 제한 및 이전](../docs/accounts.md).
+
 ## 설계
 
 역방향 포트는 클라우드의 루프백에서만 수신합니다. 터널, 점프, 로그인 역할의 키를 분리하고 호스트 키를 고정합니다. VPN, 컨테이너, 기본 경로 변경이나 공개 데스크톱 포트가 필요하지 않습니다. LazyEdge를 보완하며 HTTP 보호 계층을 우회하지 않습니다.

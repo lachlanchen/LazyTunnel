@@ -29,6 +29,7 @@ def public_key(value):
     require(isinstance(value, str) and len(value) < 1000, "invalid public key")
     parts = value.split()
     require(len(parts) == 2 and parts[0] == "ssh-ed25519", "use a comment-free Ed25519 public key")
+    require(value == ' '.join(parts), 'use canonical single-line public keys')
     try:
         raw = base64.b64decode(parts[1], validate=True)
     except Exception as exc:
@@ -36,6 +37,7 @@ def public_key(value):
     # RFC 4253 strings: algorithm name followed by the 32-byte public key.
     require(len(raw) == 51 and raw[:19] == b"\x00\x00\x00\x0bssh-ed25519\x00\x00\x00\x20",
             "invalid Ed25519 public key blob")
+    require(base64.b64encode(raw).decode() == parts[1], 'use canonical key encoding')
     return value
 
 

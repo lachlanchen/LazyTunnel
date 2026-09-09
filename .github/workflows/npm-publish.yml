@@ -40,5 +40,7 @@ jobs:
           const pkg=JSON.parse(fs.readFileSync('package.json'));
           if(pkg.version !== process.env.EXPECTED_VERSION.replace(/^npm-v/, '')) throw new Error('Release version does not match package.json');
           JS
+      - name: Verify account isolation against real OpenSSH
+        run: npm run test:accounts:integration
       - name: Test, publish once and verify exact bytes
         run: npm run release:npm -- --publish --provenance

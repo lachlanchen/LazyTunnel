@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [完整的 npm 安裝、註冊與更新指南](../docs/npm.md)。
 
+## 一個中繼伺服器，多個獨立帳戶
+
+採用 MIT 授權的核心既可用於個人裝置，也可建立支援獨立帳戶的服務。CLI 0.3.0 新增帳戶金鑰或密碼登入、固定伺服器金鑰的邀請，以及僅允許擁有者執行的裝置註冊與撤銷。每個帳戶擁有獨立的裝置清單和 SSH 權限；現有裝置群組在明確升級前維持原狀。
+
+收到伺服器管理員的邀請後：
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[帳戶設定、隔離邊界、限制與移轉](../docs/accounts.md).
+
 ## 設計
 
 反向轉送只監聽雲端 loopback。隧道、跳板與終端登入分別使用獨立金鑰，並固定驗證主機公鑰。不需要 VPN、容器、預設路由變更，也不公開桌面連接埠。它補充 LazyEdge 的使用情境，不繞過其 HTTP 安全防護。

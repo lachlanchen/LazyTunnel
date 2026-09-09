@@ -13,19 +13,24 @@ from fleet import validate,bundle
 
 
 def main():
+    if len(sys.argv)>1 and sys.argv[1]=='account':
+        os.execv(sys.executable,[sys.executable,str(Path(__file__).with_name('account-admin.py'))]+sys.argv[2:])
     ap=argparse.ArgumentParser(description=__doc__)
     sub=ap.add_subparsers(dest='command',required=True)
+    sub.add_parser('account',help='create accounts, issue invitations and revoke access; account --help')
     for cmd in ('install','update'):
         p=sub.add_parser(cmd);p.add_argument('--source',type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument('--apply',action='store_true')
         p.add_argument('--no-launcher',action='store_true',help='Keep the npm-managed command unchanged')
     p=sub.add_parser('apply');p.add_argument('--manifest',required=True,type=Path);p.add_argument('--apply',action='store_true')
     p=sub.add_parser('enroll');p.add_argument('--packet',required=True,type=Path);p.add_argument('--port',required=True,type=int)
     p.add_argument('--alias',action='append',default=[]);p.add_argument('--apply',action='store_true')
+    p.add_argument('--account',default='default')
     p=sub.add_parser('export');p.add_argument('--name',required=True);p.add_argument('--output',required=True,type=Path)
     sub.add_parser('devices');sub.add_parser('status')
     a=ap.parse_args();os.umask(0o077)
     if a.command in ('install','update'):
-        files=['lazytunnel.py','fleet.py','scripts/lazytunnel-server.py','scripts/fleet-install-edge.py']
+        files=['lazytunnel.py','fleet.py','accounts.py','scripts/lazytunnel-server.py','scripts/fleet-install-edge.py',
+               'scripts/account-admin.py','scripts/account-command.py']
         contents={n:(a.source/n).read_bytes() for n in files}
         version=hashlib.sha256(b''.join(contents[n] for n in sorted(contents))).hexdigest()[:16]
         print('Server code release:',version)
@@ -52,6 +57,8 @@ def main():
     c=validate(json.loads(manifest.read_text()))
     if a.command=='enroll':
         p=json.loads(a.packet.read_text());p.update(relay_port=a.port,aliases=a.alias,external_carrier=False)
+        if c['version']==2:p['account']=a.account
+        elif a.account!='default':raise ValueError('Add the account before enrolling its devices')
         if any(q['name']==p['name'] for q in c['peers']):raise ValueError('Device already enrolled; review identity before modifying it')
         c['peers'].append(p);validate(c)
         print('Enroll:',p['name'],'loopback relay port:',p['relay_port'])

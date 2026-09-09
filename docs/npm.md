@@ -33,6 +33,19 @@ default routes, UU, RDP or VNC.
 
 ## Client: install, enroll, use
 
+For personal use or a server with independent user accounts, start with
+[one relay, separate accounts](accounts.md). CLI version 0.3.0 supports:
+
+```bash
+lazytunnel-client install
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+```
+
+Omit `--identity` for an operator-enabled account password. The manual bundle
+workflow below remains supported. Account mode is an explicit server upgrade;
+updating npm does not migrate a running fleet.
+
 ```bash
 lazytunnel-client install
 lazytunnel-client prepare --name alpha > alpha-enrollment.json

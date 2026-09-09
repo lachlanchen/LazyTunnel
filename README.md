@@ -46,6 +46,20 @@ sudo lazytunnel-server install --apply
 
 [Complete npm installation, enrollment and update guide](docs/npm.md).
 
+## One relay, separate accounts
+
+Use the MIT-licensed core for your own devices or a service with independent accounts. CLI 0.3.0 adds account keys/passwords, pinned invitations, owner-only enrollment and revocation. Each account gets its own device list and SSH permissions; existing fleets remain together until an explicit upgrade.
+
+After receiving an invitation from your server operator:
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[Account setup, isolation, limits and migration](docs/accounts.md).
+
 ## Design
 
 Reverse listeners stay on cloud loopback. Separate keys identify tunnel, jump and endpoint roles; host keys are pinned. No VPN, container, default-route change or public desktop port is required. This complements LazyEdge; it does not bypass its HTTP guards.

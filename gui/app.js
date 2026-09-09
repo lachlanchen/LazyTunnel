@@ -32,6 +32,7 @@ function button(text, cls, action) {
   return b;
 }
 function lock() {
+  $('.privacy').textContent = '◉ Local access';
   token = ''; sessionStorage.removeItem('lazytunnel-code');
   state = null; clearTimeout(checkTimer);
   $('#unlock').hidden = false; $('#app').hidden = true; $('#lock').hidden = true;
@@ -117,6 +118,7 @@ async function refresh() {
   refreshing = true;
   try {
     state = await api('/api/state');
+    $('.privacy').textContent = '◉ Account: ' + (state.account || 'default');
     $('#unlock').hidden = true; $('#app').hidden = false; $('#lock').hidden = false;
     $('#device-count').textContent = $('#nav-count').textContent = state.devices.length;
     $('#viewer-count').textContent = state.viewers.length;

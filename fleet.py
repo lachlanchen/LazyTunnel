@@ -6,27 +6,52 @@ import re
 import shlex
 from lazytunnel import public_key, require, port
 
+def account_of(peer):
+    return peer.get('account', 'default')
+
+
+def active(c, peer):
+    return not peer.get('revoked', False) and c.get('accounts', {}).get(account_of(peer), {}).get('enabled', True)
+
+
+def visible_peers(c, peer):
+    return [q for q in c['peers'] if active(c, q) and account_of(q) == account_of(peer)] if active(c, peer) else []
+
 
 def validate(c):
-    require(set(c)=={'version','edge','peers'},'Unexpected fleet fields')
-    require(c.get('version') == 1, 'Unsupported fleet version')
+    v2 = c.get('version') == 2
+    require(set(c)==({'version','edge','peers','accounts'} if v2 else {'version','edge','peers'}),'Unexpected fleet fields')
+    require(c.get('version') in (1, 2), 'Unsupported fleet version')
+    if v2:
+        require(type(c['accounts']) is dict and 1 <= len(c['accounts']) <= 64, 'Configure 1–64 accounts')
+        for name, a in c['accounts'].items():
+            require(re.fullmatch(r'[a-z][a-z0-9-]{0,19}', name), 'Invalid account name')
+            require(set(a) == {'enabled','login_keys','password_auth'}, 'Unexpected account fields')
+            require(type(a['enabled']) is bool and type(a['password_auth']) is bool, 'Invalid account flags')
+            require(type(a['login_keys']) is list and len(a['login_keys']) <= 8, 'Too many account login keys')
+            for key in a['login_keys']: public_key(key)
     e = c['edge']
     require(set(e)=={'host','port','host_key'},'Only public edge identity belongs in a fleet manifest')
     require(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9.-]+', e['host']), 'Invalid relay host')
-    port(e['port']); public_key(e['host_key'])
-    require(1 <= len(c['peers']) <= 32, 'Configure 1–32 enrolled peers')
+    require(type(e['port']) is int and 1 <= e['port'] <= 65535, 'Invalid edge SSH port'); public_key(e['host_key'])
+    require((0 if v2 else 1) <= len(c['peers']) <= (256 if v2 else 32), 'Fleet device limit exceeded')
     names, ports, keys, hosts, aliases = set(), set(), set(), {e['host_key']}, set()
     for p in c['peers']:
         required={'name','user','home','platform','ssh_port','relay_port','host_key','tunnel_key','jump_key','login_key'}
-        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier'}),
+        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier'}|({'account','revoked'} if v2 else set())),
                 'Unexpected peer fields: keep passwords and private keys outside enrollment packets')
+        if v2:
+            require(p.get('account') in c['accounts'], 'Device account must exist')
+            require(type(p.get('revoked', False)) is bool, 'Invalid revocation flag')
         require(re.fullmatch(r'[a-z0-9][a-z0-9-]{0,19}', p['name']), 'Invalid peer name')
         require(p['name'] not in names, 'Duplicate peer name'); names.add(p['name'])
         require(p['platform'] in ('linux','darwin','windows'), 'Unsupported platform')
         require(re.fullmatch(r'[A-Za-z_][A-Za-z0-9_-]{0,30}', p['user']), 'Invalid user')
         require(p['user'] != 'root', 'Use a non-root endpoint user')
-        require(re.fullmatch(r'(?:/|[A-Z]:/)[A-Za-z0-9_/.-]+', p['home']) and
+        require(type(p['home']) is str and len(p['home']) <= 256 and re.fullmatch(r'(?:/|[A-Z]:/)[A-Za-z0-9_/.-]+', p['home']) and
                 '..' not in p['home'].split('/'), 'Unsupported home path')
+        require(type(p.get('hostname','')) is str and len(p.get('hostname','')) <= 253, 'Invalid hostname label')
+        require(type(p.get('aliases',[])) is list and len(p.get('aliases',[])) <= 16, 'Too many aliases')
         port(p['relay_port'])
         require(p['relay_port'] not in ports and p['relay_port'] != e['port'], 'Duplicate port')
         ports.add(p['relay_port'])
@@ -36,11 +61,18 @@ def validate(c):
         require(type(p.get('external_carrier',False)) is bool, 'Invalid carrier ownership')
         for alias in [p['name']] + p.get('aliases',[]):
             require(re.fullmatch(r'[a-z0-9][a-z0-9-]{0,30}', alias), 'Invalid alias')
-            require(alias not in aliases, 'Duplicate alias'); aliases.add(alias)
+            scoped = (account_of(p), alias)
+            require(scoped not in aliases, 'Duplicate alias'); aliases.add(scoped)
         for role in ('tunnel','jump','login'):
             key = public_key(p[role+'_key'])
             require(key not in keys, 'Identities must be unique across hosts and roles'); keys.add(key)
     require(not keys.intersection(hosts), 'Host and client keys must be separate')
+    if v2:
+        for account in c['accounts']:
+            require(sum(account_of(p)==account for p in c['peers']) <= 32, 'Account device limit exceeded')
+        account_keys = [public_key(k) for a in c['accounts'].values() for k in a['login_keys']]
+        require(len(account_keys) == len(set(account_keys)), 'Account login keys must be unique')
+        require(not set(account_keys).intersection(keys | hosts), 'Account and device identities must be separate')
     return c
 
 
@@ -76,20 +108,32 @@ def edge_files(c):
                 opts='restrict,port-forwarding,permitlisten="'+dst+'"'
                 key=p['tunnel_key']
             else:
-                dsts=['127.0.0.1:'+str(q['relay_port']) for q in c['peers']]
-                lines += [' AllowTcpForwarding local',' PermitListen none',' PermitOpen '+' '.join(dsts)]
+                dsts=['127.0.0.1:'+str(q['relay_port']) for q in visible_peers(c, p)]
+                lines += [' AllowTcpForwarding local',' PermitListen none',' PermitOpen '+(' '.join(dsts) or 'none')]
                 opts='restrict,port-forwarding,'+','.join('permitopen="'+d+'"' for d in dsts)
                 key=p['jump_key']
-            result['keys/'+account]=opts+' '+key+'\n'
+            result['keys/'+account]=(opts+' '+key+'\n') if active(c, p) else ''
             lines.append('')
+    for name, a in c.get('accounts', {}).items():
+        user = 'lf-acct-'+name
+        lines += ['Match User '+user, ' AuthenticationMethods '+('publickey password' if a['enabled'] and a['password_auth'] else 'publickey'),
+                  ' PasswordAuthentication '+('yes' if a['enabled'] and a['password_auth'] else 'no'),
+                  ' KbdInteractiveAuthentication no', ' PubkeyAuthentication yes',
+                  ' AuthorizedKeysFile /etc/lazytunnel-fleet/keys/%u',
+                  ' PermitTTY no', ' AllowTcpForwarding no', ' AllowStreamLocalForwarding no',
+                  ' PermitOpen none', ' PermitListen none', ' AllowAgentForwarding no',
+                  ' X11Forwarding no', ' PermitTunnel no', ' MaxSessions 1',
+                  ' ForceCommand /usr/bin/sudo -n /usr/local/lib/lazytunnel/server/current/scripts/account-command.py', '']
+        result['keys/'+user] = ''.join('restrict '+k+'\n' for k in a['login_keys']) if a['enabled'] else ''
     result['70-lazytunnel-fleet.conf']='\n'.join(lines+['Match all',''])
     for p in c['peers']:
-        result['bundles/'+p['name']+'.json']=json.dumps(bundle(c,p['name']),indent=2)+'\n'
+        result['bundles/'+p['name']+'.json']=json.dumps(bundle(c,p['name']) if active(c,p) else {'error':'Device unavailable'},indent=2)+'\n'
     return result
 
 
 def worker_files(c, name):
     p=next(q for q in c['peers'] if q['name']==name)
+    peers=visible_peers(c,p)
     root=p['home']+'/.config/lazytunnel-fleet'
     windows=p['platform']=='windows'
     exe='C:/Windows/System32/OpenSSH/ssh.exe' if windows else '/usr/bin/ssh'
@@ -108,7 +152,7 @@ def worker_files(c, name):
          ' Port '+str(c['edge']['port']),' User lf-info-'+name,
          ' HostKeyAlias lazy-fleet-edge',' IdentityFile '+root+'/jump_ed25519',' RequestTTY no']+common+['']
     config=hop+registry
-    for q in c['peers']:
+    for q in peers:
         aliases=['lazy-'+s for s in [q['name']]+q.get('aliases',[])]
         config += ['Host '+' '.join(aliases),' HostName 127.0.0.1',' Port '+str(q['relay_port']),
                    ' User '+q['user'],' HostKeyAlias lazy-fleet-'+q['name'],
@@ -122,8 +166,8 @@ def worker_files(c, name):
              ' RemoteForward 127.0.0.1:'+str(p['relay_port'])+' 127.0.0.1:'+str(p['ssh_port'])]+common+['']
     result={'ssh_config':'\n'.join(config), 'carrier.conf':'\n'.join(carrier),
             'known_hosts':'\n'.join(['lazy-fleet-edge '+c['edge']['host_key']]+
-              ['lazy-fleet-'+q['name']+' '+q['host_key'] for q in c['peers']])+'\n',
-            'authorized_keys.append':'\n'.join(q['login_key']+' lazy-fleet-'+q['name'] for q in c['peers'])+'\n'}
+              ['lazy-fleet-'+q['name']+' '+q['host_key'] for q in peers])+'\n',
+            'authorized_keys.append':'\n'.join(q['login_key']+' lazy-fleet-'+q['name'] for q in peers)+'\n'}
     if not windows:
         result['scp-lazy']='#!/bin/sh\nexec /usr/bin/scp -F "'+root+'/ssh_config" "$@"\n'
         result['ssh-lazy']='''#!/bin/sh
@@ -167,6 +211,8 @@ WantedBy=default.target
 
 def bundle(c,name):
     validate(c)
-    return {'peer':next(p for p in c['peers'] if p['name']==name),
-            'aliases':[a for p in c['peers'] for a in [p['name']]+p.get('aliases',[])],
+    peer=next(p for p in c['peers'] if p['name']==name)
+    require(active(c,peer), 'Device unavailable')
+    return {'peer':peer,
+            'aliases':[a for p in visible_peers(c,peer) for a in [p['name']]+p.get('aliases',[])],
             'files':worker_files(c,name)}

@@ -12,6 +12,16 @@ import subprocess
 import tempfile
 
 
+def reconcile_authorized(old, prior, desired):
+    managed=set(prior.splitlines())
+    rows=[row for row in old.splitlines() if row not in managed]
+    for line in desired.splitlines():
+        if not line:continue
+        blob=line.split()[1]
+        if not any(blob in row.split() for row in rows):rows.append(line)
+    return '\n'.join(rows)+'\n'
+
+
 def write(path, text, mode=0o600):
     if path.is_symlink():
         raise RuntimeError('Refusing symlink target: '+str(path))
@@ -39,6 +49,10 @@ def main():
     if not args.apply:
         print('Plan:',p['name'],'aliases:',','.join(b['aliases'])); return
     os.umask(0o077)
+    previous=root/'bundle.json'
+    prior=json.loads(previous.read_text()) if previous.exists() else None
+    if prior and prior['peer'].get('account','default') != p.get('account','default'):
+        raise RuntimeError('Account transfer requires explicit identity migration')
     for role in ('tunnel','jump','login'):
         actual=subprocess.check_output(['/usr/bin/ssh-keygen','-y','-f',str(root/(role+'_ed25519'))],universal_newlines=True).strip()
         assert ' '.join(actual.split()[:2])==p[role+'_key'], 'Local identity mismatch'
@@ -57,11 +71,8 @@ def main():
         write(root/name,files[name])
     authorized=home/'.ssh/authorized_keys'
     old=authorized.read_text() if authorized.exists() else ''
-    rows=old.splitlines()
-    for line in files['authorized_keys.append'].splitlines():
-        blob=line.split()[1]
-        if not any(blob in row.split() for row in rows): rows.append(line)
-    write(authorized,'\n'.join(rows)+'\n')
+    managed=prior['files']['authorized_keys.append'] if prior else ''
+    write(authorized,reconcile_authorized(old,managed,files['authorized_keys.append']))
     config=home/'.ssh/config'
     old=config.read_text() if config.exists() else ''
     include='Include ~/.config/lazytunnel-fleet/ssh_config'
@@ -74,6 +85,10 @@ def main():
         if path.is_symlink() and os.readlink(path)=='ssh-lazy':continue
         if path.exists() or path.is_symlink():raise RuntimeError('Existing unrelated alias: '+str(path))
         path.symlink_to('ssh-lazy')
+    if prior:
+        for alias in set(prior['aliases'])-set(b['aliases']):
+            path=bindir/('ssh-lazy-'+alias)
+            if path.is_symlink() and os.readlink(path)=='ssh-lazy':path.unlink()
     if not p.get('external_carrier'):
         if p['platform']=='linux':
             unit=home/'.config/systemd/user/lazytunnel-fleet.service'

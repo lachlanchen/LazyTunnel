@@ -44,6 +44,20 @@ sudo lazytunnel-server install --apply
 
 [Hướng dẫn đầy đủ về cài đặt, đăng ký và cập nhật qua npm](../docs/npm.md).
 
+## Một máy chủ chuyển tiếp, các tài khoản riêng biệt
+
+Dùng phần lõi theo giấy phép MIT cho thiết bị cá nhân hoặc dịch vụ có nhiều tài khoản độc lập. CLI 0.3.0 bổ sung đăng nhập bằng khóa hoặc mật khẩu, lời mời ghim khóa máy chủ, cùng quyền đăng ký và thu hồi thiết bị chỉ dành cho chủ sở hữu. Mỗi tài khoản có danh sách thiết bị và quyền SSH riêng. Các nhóm thiết bị hiện có được giữ nguyên cho đến khi nâng cấp rõ ràng.
+
+Sau khi nhận lời mời từ người quản trị máy chủ:
+
+```bash
+lazytunnel-client login --invite alice.json --name laptop --identity ~/.ssh/lazytunnel-account
+lazytunnel-client account devices --identity ~/.ssh/lazytunnel-account
+lazytunnel-client sync
+```
+
+[Thiết lập tài khoản, cách ly, giới hạn và chuyển đổi](../docs/accounts.md).
+
 ## Thiết kế
 
 Các cổng chuyển tiếp ngược chỉ lắng nghe trên loopback của máy chủ. Khóa đường hầm, khóa bước nhảy và khóa đăng nhập được tách riêng; khóa máy chủ được ghim. Không cần VPN, container, đổi tuyến mặc định hay công khai cổng màn hình. Công cụ bổ sung cho LazyEdge chứ không bỏ qua lớp bảo vệ HTTP.

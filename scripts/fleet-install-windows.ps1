@@ -7,6 +7,14 @@ $ssh="$env:WINDIR\System32\OpenSSH\ssh.exe"
 $utf8=New-Object Text.UTF8Encoding($false)
 if ($p.home -cne $env:USERPROFILE.Replace('\','/') -or $p.user -ine $env:USERNAME) { throw 'Wrong endpoint user' }
 if (!$Apply) { 'Plan: '+$p.name; return }
+$previous=Join-Path $root 'bundle.json'
+$prior=$null
+if(Test-Path $previous) {
+    $prior=Get-Content $previous -Raw|ConvertFrom-Json
+    $oldAccount=if($prior.peer.account){$prior.peer.account}else{'default'}
+    $newAccount=if($p.account){$p.account}else{'default'}
+    if($oldAccount -cne $newAccount){throw 'Account transfer requires explicit identity migration'}
+}
 function Write-Owned([string]$Path,[string]$Text) {
     if (Test-Path $Path) {
         if ((Get-Item -LiteralPath $Path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing reparse point' }
@@ -47,6 +55,12 @@ $authorized=if ($isAdmin) { "$env:ProgramData\ssh\administrators_authorized_keys
 if ($isAdmin -and !(Test-Path $authorized)) { throw 'Review administrator key file ACL before creating it' }
 $rows=[Collections.Generic.List[string]]::new()
 if (Test-Path $authorized) { foreach ($line in ([IO.File]::ReadAllText($authorized) -split "`r?`n")) { if($line) {$rows.Add($line)} } }
+if($prior) {
+    $managed=@($prior.files.'authorized_keys.append' -split "`r?`n" | Where-Object {$_})
+    for($i=$rows.Count-1;$i -ge 0;$i--) {
+        if($managed -ccontains $rows[$i]){$rows.RemoveAt($i)}
+    }
+}
 foreach ($line in ($b.files.'authorized_keys.append' -split "`n")) {
     if (!$line) { continue };$blob=($line -split '\s+')[1];$found=$false
     foreach($row in $rows) { if (($row -split '\s+') -contains $blob) { $found=$true;break } }
