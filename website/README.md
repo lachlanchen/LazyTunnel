@@ -19,9 +19,11 @@ preferences are respected. The main information and links remain readable
 without JavaScript.
 
 `sample-report.html` and its downloadable Markdown counterpart show the full
-shape of the optional Network Fit Review. They use a synthetic project-owned
-topology, are explicitly not a customer result, and contain no real endpoint,
-listener, account, or credential data.
+shape of the optional Network Fit Review. The Simplified Chinese equivalents
+live at `zh-Hans/sample-report.html` and `zh-Hans/sample-report.md`; the HTML
+reports expose reciprocal `hreflang` links. Both editions use the same synthetic
+project-owned topology, are explicitly not a customer result, and contain no
+real endpoint, listener, account, or credential data.
 
 ## Run locally
 

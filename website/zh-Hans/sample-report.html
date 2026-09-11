@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>网络适配评估样例 — LazyRemote</title>
+  <meta name="description" content="完整展示 LazyRemote 网络适配评估所含拓扑、暴露面、身份、恢复与验收内容的项目自有样例。">
+  <meta name="theme-color" content="#162c2a"><link rel="canonical" href="https://remote.lazying.art/zh-Hans/sample-report.html">
+  <link rel="alternate" hreflang="en" href="https://remote.lazying.art/sample-report.html"><link rel="alternate" hreflang="zh-Hans" href="https://remote.lazying.art/zh-Hans/sample-report.html"><link rel="alternate" hreflang="x-default" href="https://remote.lazying.art/sample-report.html">
+  <meta property="og:type" content="article"><meta property="og:title" content="网络适配评估样例 — LazyRemote">
+  <meta property="og:description" content="先查看报告内容，再判断固定范围评估是否适合你的网络。"><meta property="og:url" content="https://remote.lazying.art/zh-Hans/sample-report.html">
+  <meta property="og:image" content="https://remote.lazying.art/assets/social-card.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/lazyremote-logo.png"><link rel="stylesheet" href="../sample-report.css">
+</head>
+<body>
+<a class="skip" href="#report">跳到报告正文</a>
+<header class="report-nav">
+  <a class="brand" href="./"><img src="../assets/lazyremote-logo.png" width="38" height="38" alt=""><span>LazyRemote<span>.</span></span></a>
+  <div><a href="sample-report.md" download>下载 Markdown</a><a href="../sample-report.html" hreflang="en" lang="en">English</a><a class="back" href="./#review">网络评估</a></div>
+</header>
+<main id="report">
+  <section class="report-hero">
+    <p class="eyebrow">项目自有样例 · 2026 年 9 月 9 日</p>
+    <h1>网络适配<br><em>评估。</em></h1>
+    <p class="lede">以一台位于 CGNAT 后的 Linux 工作站、一台现有中继服务器和两台由所有者控制的客户端为例。</p>
+    <div class="sample-boundary"><strong>这不是客户结果。</strong> 名称、地址、端口和评估结果均为虚构。此样例只展示买方会收到的报告结构；不包含任何私有设备组数据。</div>
+  </section>
+
+  <section class="decision panel">
+    <div><p class="eyebrow">判断</p><h2>有条件通过。</h2></div>
+    <p>如果每个反向监听器都只绑定在中继服务器的回环地址上，隧道和跳转角色分别使用受限身份，主机密钥已固定，并且测试后仍保留独立的管理员恢复路径，那么这条连接路径可以考虑使用。任何一项条件无法满足，都不应部署。</p>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>01</span><h2>范围与已说明的需求</h2></div>
+    <div class="section-body two-col">
+      <div class="card"><h3>需求</h3><p>从笔记本电脑和手机通过 SSH 与私有浏览器查看器访问家中的 Linux 工作站。家庭网络位于 CGNAT 后，无法接受普通的入站端口转发。</p></div>
+      <div class="card"><h3>现有条件</h3><p>一台由所有者控制且可接受公网 SSH 的中继服务器，一台能够发起出站 SSH 连接的工作站，以及两台由所有者控制的客户端设备。本次评估不包含购买硬件或提供中继托管。</p></div>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>02</span><h2>建议连接路径</h2></div>
+    <div class="section-body">
+      <div class="route" aria-label="客户端先到达公网 SSH 边界，再通过回环反向监听器到达工作站私有服务">
+        <div><b>笔记本电脑／手机</b><small>由所有者控制的客户端</small></div><i>→</i><div><b>中继 SSH</b><small>公网、已更新、已认证</small></div><i>→</i><div><b>中继回环地址</b><small>反向监听，绝不绑定通配地址</small></div><i>→</i><div><b>工作站回环地址</b><small>SSH 或私有查看器</small></div>
+      </div>
+      <p class="note">整条路径通过已审查的身份建立端到端 SSH。仅仅建立了持续连接，并不代表某个用户已获授权；中继服务器位于公网，也不代表浏览器查看器需要公开。</p>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>03</span><h2>监听暴露图</h2></div>
+    <div class="section-body table-wrap">
+      <table><thead><tr><th>边界</th><th>预期绑定</th><th>允许访问者</th><th>判断</th></tr></thead><tbody>
+        <tr><td>中继 SSH</td><td>已审查的公网地址</td><td>获准使用的 SSH 客户端</td><td><span class="conditional">有条件</span></td></tr>
+        <tr><td>反向监听器</td><td>中继服务器上的 <code>127.0.0.1</code></td><td>仅中继本机的跳转路径</td><td><span class="required">必须</span></td></tr>
+        <tr><td>端点控制器</td><td>工作站上的 <code>127.0.0.1</code></td><td>本地应用或已声明的转发</td><td><span class="required">必须</span></td></tr>
+        <tr><td>私有浏览器查看器</td><td>工作站上的 <code>127.0.0.1</code></td><td>专门且已审查的转发</td><td><span class="required">必须</span></td></tr>
+        <tr><td>原始 VNC／RDP</td><td>没有公网监听</td><td>任何互联网来源均不可访问</td><td><span class="stop">暴露则停止</span></td></tr>
+      </tbody></table>
+      <p class="caption">以上标签仅作说明，不是端口建议。付费报告会记录买方实际观察到的绑定地址和监听器所有者，不会复制秘密信息。</p>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>04</span><h2>身份与信任关系图</h2></div>
+    <div class="section-body identity-grid">
+      <article><span>A</span><h3>中继管理员</h3><p>只用于独立恢复，不作为日常跳转或隧道身份。</p></article>
+      <article><span>B</span><h3>隧道身份</h3><p>不允许 shell、TTY、X11、代理转发、通配地址监听或任意目标。</p></article>
+      <article><span>C</span><h3>跳转身份</h3><p>使用独立客户端密钥并固定中继主机密钥；访问范围止于已声明的回环路径。</p></article>
+      <article><span>D</span><h3>端点身份</h3><p>每台已注册电脑分别使用独立的主机身份和权限。</p></article>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>05</span><h2>评估结果</h2></div>
+    <div class="section-body findings">
+      <article><span class="stop">停止</span><div><h3>反向监听绑定通配地址</h3><p>如果中继服务器显示反向监听器绑定到 <code>0.0.0.0</code> 或 <code>::</code>，应停止候选方案，先修正 SSH 策略，再进行任何客户端测试。</p></div></article>
+      <article><span class="required">必须</span><div><h3>角色分离</h3><p>持续连接和日常客户端访问都不得复用中继管理员密钥。</p></div></article>
+      <article><span class="required">必须</span><div><h3>主机验证</h3><p>固定中继和端点的主机身份。指纹发生变化时应关闭连接，并通过独立渠道核实。</p></div></article>
+      <article><span class="conditional">待验证</span><div><h3>重启恢复</h3><p>服务正在运行不等于已经验证过重启。只有完成一次受控服务重启和一次获授权的系统重启，才能确认持久运行。</p></div></article>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>06</span><h2>验收清单</h2></div>
+    <div class="section-body checks">
+      <label><input type="checkbox" disabled> 每项服务和每个反向监听器都有明确所有者与预期绑定地址。</label>
+      <label><input type="checkbox" disabled> 缺失、错误、已撤销或已变更的身份均会使连接关闭。</label>
+      <label><input type="checkbox" disabled> SSH 和私有查看器可通过已声明路径工作；原始桌面端口仍不可访问。</label>
+      <label><input type="checkbox" disabled> 停止持续连接后，中继回环路径随之消失，并产生边界明确的失败。</label>
+      <label><input type="checkbox" disabled> 重启一个组件不会产生重复监听，也不会干扰其他远程访问服务。</label>
+      <label><input type="checkbox" disabled> 独立管理员路径和准确的回滚步骤已经过测试。</label>
+    </div>
+  </section>
+
+  <section class="report-section">
+    <div class="section-label"><span>07</span><h2>回滚与待确认问题</h2></div>
+    <div class="section-body two-col">
+      <div class="card"><h3>回滚顺序</h3><ol><li>关闭客户端会话。</li><li>只停止候选的持续连接进程。</li><li>确认对应的中继回环监听器已经消失。</li><li>恢复已经审查的原服务单元或配置。</li><li>重新探测原有连接路径。</li></ol></div>
+      <div class="card"><h3>付款前确认</h3><ul><li>中继服务器和网络策略由谁所有？</li><li>评估范围包含哪些操作系统？</li><li>具体需要哪条 SSH、noVNC 或私有网页访问路径？</li><li>是否存在独立恢复路径？</li><li>变更期间哪些服务必须继续运行？</li></ul></div>
+    </div>
+  </section>
+
+  <section class="next panel">
+    <div><p class="eyebrow">先做免费适配确认</p><h2>只提交网络结构，<br>不要提交秘密信息。</h2></div>
+    <div><p>请说明端点操作系统、是否已有可连接的中继服务器、NAT 或端口限制，以及计划使用的访问路径。不要提交密码、私钥、访问码或未经隐去敏感信息的配置。</p><a class="button" href="./?utm_source=sample_report&amp;utm_medium=owned_proof&amp;utm_campaign=lazyremote_network_review&amp;utm_content=complete_sample_zh_hans#review">查看固定评估范围 <span aria-hidden="true">↗</span></a></div>
+  </section>
+</main>
+<footer><a class="brand" href="./"><img src="../assets/lazyremote-logo.png" width="30" height="30" alt=""><span>LazyRemote.</span></a><p>LazyingArt 项目自有样例，不包含客户数据，也不是客户结果。</p><a href="https://github.com/lachlanchen/LazyTunnel">源码 ↗</a></footer>
+</body>
+</html>

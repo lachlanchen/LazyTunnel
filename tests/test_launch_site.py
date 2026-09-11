@@ -42,7 +42,8 @@ class LaunchSiteTests(unittest.TestCase):
         self.assertIn("工作开始前取消可全额退款", page)
         self.assertIn("十四个自然日内删除", page)
         self.assertIn("不保证未实地检查的网络", page)
-        self.assertIn('href="../sample-report.html" hreflang="en"', page)
+        self.assertIn('href="sample-report.html"', page)
+        self.assertIn("查看完整中文样例报告", page)
         self.assertIn("3819/small-team-remote-access-role-matrix.html", page)
         self.assertIn("role_matrix_zh", page)
         self.assertIn("https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0", page)
@@ -100,6 +101,43 @@ class LaunchSiteTests(unittest.TestCase):
             self.assertIn("not a customer result", text)
             self.assertIn("no private fleet data", text)
             self.assertIn("127.0.0.1", text)
+        self.assertIn("sample-report.md", page)
+        self.assertIn("utm_source=sample_report", page)
+        self.assertNotIn("0.0.0.0:</code>", page)
+        self.assertNotIn("buy.stripe.com", page)
+
+    def test_simplified_chinese_network_fit_sample_is_complete_and_truthful(self):
+        page = (ROOT / "website" / "zh-Hans" / "sample-report.html").read_text(
+            encoding="utf-8"
+        )
+        markdown = (ROOT / "website" / "zh-Hans" / "sample-report.md").read_text(
+            encoding="utf-8"
+        )
+        english = (ROOT / "website" / "sample-report.html").read_text(encoding="utf-8")
+
+        self.assertIn('<html lang="zh-Hans">', page)
+        self.assertIn(
+            '<link rel="canonical" href="https://remote.lazying.art/zh-Hans/sample-report.html">',
+            page,
+        )
+        self.assertIn(
+            'hreflang="en" href="https://remote.lazying.art/sample-report.html"',
+            page,
+        )
+        self.assertIn(
+            'hreflang="zh-Hans" href="https://remote.lazying.art/zh-Hans/sample-report.html"',
+            english,
+        )
+        for text in (page, markdown):
+            self.assertIn("有条件通过", text)
+            self.assertIn("监听暴露图", text)
+            self.assertIn("身份与信任关系图", text)
+            self.assertIn("验收清单", text)
+            self.assertIn("回滚", text)
+            self.assertIn("不是客户结果", text)
+            self.assertIn("不包含任何私有设备组数据", text)
+            self.assertIn("127.0.0.1", text)
+            self.assertIn("不要提交密码、私钥、访问码", text)
         self.assertIn("sample-report.md", page)
         self.assertIn("utm_source=sample_report", page)
         self.assertNotIn("0.0.0.0:</code>", page)
