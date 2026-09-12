@@ -103,6 +103,10 @@ class LaunchSiteTests(unittest.TestCase):
             self.assertIn("127.0.0.1", text)
         self.assertIn("sample-report.md", page)
         self.assertIn("utm_source=sample_report", page)
+        self.assertIn("data-fit-check-link", page)
+        self.assertIn("https://lazying.art/lazyremote/fit-check/", page)
+        self.assertIn('src="sample-report.js"', page)
+        self.assertIn("Start the free fit check", page)
         self.assertNotIn("0.0.0.0:</code>", page)
         self.assertNotIn("buy.stripe.com", page)
 
@@ -140,6 +144,10 @@ class LaunchSiteTests(unittest.TestCase):
             self.assertIn("不要提交密码、私钥、访问码", text)
         self.assertIn("sample-report.md", page)
         self.assertIn("utm_source=sample_report", page)
+        self.assertIn("data-fit-check-link", page)
+        self.assertIn("https://lazying.art/lazyremote/fit-check/", page)
+        self.assertIn('src="../sample-report.js"', page)
+        self.assertIn("开始免费适配确认", page)
         self.assertNotIn("0.0.0.0:</code>", page)
         self.assertNotIn("buy.stripe.com", page)
 
