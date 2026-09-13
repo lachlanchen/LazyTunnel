@@ -20,7 +20,7 @@ export function fitCheckHref(search, fallbackHref) {
 }
 
 if (typeof document !== "undefined" && typeof window !== "undefined") {
-  document.querySelectorAll("[data-fit-check-link]").forEach((link) => {
+  document.querySelectorAll("[data-fit-check-link], [data-attribution-link]").forEach((link) => {
     link.href = fitCheckHref(window.location.search, link.href);
   });
 }
