@@ -66,5 +66,17 @@ class FleetTests(unittest.TestCase):
             obj['password']='not-a-real-secret'
             with self.assertRaises(ValueError):validate(c)
 
+    def test_qos_workaround_is_opt_in_and_device_scoped(self):
+        first, second = self.c['peers']
+        before = worker_files(validate(self.c), second['name'])
+        self.assertNotIn('IPQoS', worker_files(self.c, first['name'])['carrier.conf'])
+        first['ip_qos'] = 'none'
+        files = worker_files(validate(self.c), first['name'])
+        self.assertIn(' IPQoS none\n', files['carrier.conf'])
+        self.assertIn(' IPQoS none\n', files['ssh_config'])
+        self.assertEqual(before, worker_files(self.c, second['name']))
+        first['ip_qos'] = 'none\nProxyCommand evil'
+        with self.assertRaises(ValueError): validate(self.c)
+
 
 if __name__=='__main__':unittest.main()

@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import shlex
 import socket
 import subprocess
 import sys
@@ -61,7 +62,8 @@ def main():
         bindir=Path.home()/'.local/bin';bindir.mkdir(parents=True,exist_ok=True)
         launcher=bindir/'lazytunnel'
         if launcher.is_symlink():raise RuntimeError('Refusing unrelated launcher symlink')
-        launcher.write_text('#!/bin/sh\nexec /usr/bin/python3 "'+str(CODE/'current/scripts/lazytunnel-client.py')+'" "$@"\n')
+        # macOS may have only an unusable /usr/bin/python3 developer-tools stub.
+        launcher.write_text('#!/bin/sh\nexec '+shlex.join([sys.executable,str(CODE/'current/scripts/lazytunnel-client.py')])+' "$@"\n')
         launcher.chmod(0o755)
         pathline='export PATH="$HOME/.local/bin:$PATH" # LazyTunnel client commands'
         profiles=['.profile','.bashrc']

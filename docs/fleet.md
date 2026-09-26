@@ -1,5 +1,7 @@
 # Fleet server and clients
 
+For a new Mac, also read the [enrollment and desktop checklist](macos-new-device.md).
+
 LazyTunnel connects enrolled Linux, macOS and Windows computers through an
 ordinary cloud SSH server. It does not depend on a UU desktop takeover, a
 Windows neighbor, a VPN, or a particular LAN address. A client can move networks

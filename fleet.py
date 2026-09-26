@@ -38,8 +38,10 @@ def validate(c):
     names, ports, keys, hosts, aliases = set(), set(), set(), {e['host_key']}, set()
     for p in c['peers']:
         required={'name','user','home','platform','ssh_port','relay_port','host_key','tunnel_key','jump_key','login_key'}
-        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier'}|({'account','revoked'} if v2 else set())),
+        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier','ip_qos'}|({'account','revoked'} if v2 else set())),
                 'Unexpected peer fields: keep passwords and private keys outside enrollment packets')
+        if 'ip_qos' in p:
+            require(p['ip_qos'] in ('none', 'cs0'), 'Unsupported IPQoS override')
         if v2:
             require(p.get('account') in c['accounts'], 'Device account must exist')
             require(type(p.get('revoked', False)) is bool, 'Invalid revocation flag')
@@ -145,6 +147,8 @@ def worker_files(c, name):
             ' ForwardAgent no',' ForwardX11 no',' ControlMaster no',' ControlPath none',
             ' ConnectTimeout 10',' ConnectionAttempts 1',' ServerAliveInterval 20',
             ' ServerAliveCountMax 3',' UpdateHostKeys no']
+    if 'ip_qos' in p:
+        common += [' IPQoS '+p['ip_qos']]
     hop=['Host lazy-fleet-hop',' HostName '+c['edge']['host'],' Port '+str(c['edge']['port']),
          ' User lf-hop-'+name,' HostKeyAlias lazy-fleet-edge',
          ' IdentityFile '+root+'/jump_ed25519']+common+['']
