@@ -40,3 +40,6 @@ try {
     $env:USERPROFILE=$saved
     if(Test-Path -LiteralPath $temp){Remove-Item -LiteralPath $temp -Recurse -Force}
 }
+# The deliberate negative test leaves LASTEXITCODE=1. CI's PowerShell wrapper
+# propagates it unless the successfully completed test reports its own status.
+exit 0
