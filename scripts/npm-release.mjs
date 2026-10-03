@@ -52,10 +52,15 @@ try {
     if (args.includes('--provenance')) publish.push('--provenance');
     npm(publish, { stdio: 'inherit' });
     let document;
-    for (let attempt = 0; attempt < 10; attempt++) {
+    // npm may accept an upload before its registry processing completes.
+    // Retry only read-only verification, never the publish operation.
+    for (const delay of [0, 5000, 10000, 20000, 30000, 30000, 30000, 30000, 30000, 30000, 30000]) {
+      if (delay) {
+        console.log(`Waiting for registry processing; checking again in ${delay / 1000} seconds.`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
       document = await registry();
       if (document) break;
-      await new Promise(resolve => setTimeout(resolve, 3000));
     }
     if (!document) throw new Error('Upload returned success but registry version is not visible; inspect before retrying.');
     exact(document, integrity);
