@@ -133,6 +133,10 @@ clients can use the fleet without installing the Linux controller service.
 
 ## Update and coexist with an older checkout installation
 
+CLI 0.3.1 validates candidates before promoting immutable code releases and keeps
+the prior release for rollback. See [bandwidth and fleet updates](bandwidth.md)
+for the optional idle viewer and the small, reviewed SSH update helper.
+
 ```bash
 npm install -g @lazyingart/lazytunnel@latest
 lazytunnel-client update

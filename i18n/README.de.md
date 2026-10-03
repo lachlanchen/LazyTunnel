@@ -14,6 +14,12 @@ LazyTunnel ist ein kleines OpenSSH- und systemd-Werkzeugpaket, das private Rechn
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## Bandbreite und sichere Updates
+
+CLI 0.3.1 ergänzt einen optionalen Datensparmodus für noVNC: Nach 2 Minuten ohne Eingabe oder 10 Sekunden im Hintergrund pausiert die Ansicht. Resume verbindet erneut; Keep live erlaubt das Zuschauen ohne Eingaben. Kleine, geprüfte Code-Updates laufen über bestehende SSH-Verbindungen und erhalten Zugangsdaten sowie aktive Tunnel.
+
+[Ansicht einrichten, Geräte aktualisieren und zurücksetzen](../docs/bandwidth.md).
+
 ## Native Apps, unabhängiger Kern
 
 **LazyRemote** ist das Produkt auf Basis dieses unabhängigen Kerns. [Produktwebsite](https://remote.lazying.art) · [Downloads und Versionshinweise](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). Die aktuelle native Vorschau heißt LazyTunnel; bestehende Befehle und Anwendungskennungen bleiben unverändert.

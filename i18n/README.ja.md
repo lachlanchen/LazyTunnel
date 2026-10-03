@@ -14,6 +14,12 @@ LazyTunnel は、クラウド中継サーバー経由でプライベートな端
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## 通信量と安全な更新
+
+CLI 0.3.1 は noVNC の省データ機能を追加します。操作がない状態で2分、非表示で10秒経つとビューアーを一時停止します。Resume で再接続でき、Keep live なら入力せずに画面を見続けられます。小さなコード更新を検証して既存の SSH 経路で配信し、認証情報と稼働中のトンネルを維持します。
+
+[ビューアー設定、端末更新、ロールバック](../docs/bandwidth.md).
+
 ## ネイティブアプリと独立したコア
 
 **LazyRemote** は、この独立したコアを使う製品の名称です。[公式サイト](https://remote.lazying.art) · [ダウンロードとリリース情報](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0)。現在のネイティブプレビューのアプリ名は LazyTunnel です。既存のコマンドやアプリ識別子は変更しません。

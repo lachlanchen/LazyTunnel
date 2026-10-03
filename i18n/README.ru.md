@@ -14,6 +14,12 @@ LazyTunnel — небольшой набор инструментов OpenSSH и
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## Трафик и безопасные обновления
+
+CLI 0.3.1 добавляет необязательный режим экономии трафика noVNC: просмотр приостанавливается после 2 минут без ввода или 10 секунд в скрытой вкладке. Resume восстанавливает соединение, а Keep live позволяет смотреть без ввода. Небольшие проверенные обновления кода передаются по существующим маршрутам SSH, сохраняя учётные данные и работающие туннели.
+
+[Настройка просмотра, обновление устройств и откат](../docs/bandwidth.md).
+
 ## Нативные приложения и независимое ядро
 
 **LazyRemote** — продукт на основе этого независимого ядра. [Сайт продукта](https://remote.lazying.art) · [Загрузки и примечания к выпуску](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). Текущая нативная предварительная версия называется LazyTunnel; существующие команды и идентификаторы приложений не меняются.

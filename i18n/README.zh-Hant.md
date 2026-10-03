@@ -14,6 +14,12 @@ LazyTunnel 是基於 OpenSSH 和 systemd 的小型工具集，透過雲端伺服
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## 節省頻寬與安全更新
+
+CLI 0.3.1 新增可選的 noVNC 省流量功能：2 分鐘無操作或頁面隱藏 10 秒後暫停檢視。點擊 Resume 即可重新連線，Keep live 可用於無需輸入的持續觀看。經過驗證的小型程式碼更新透過現有 SSH 通道傳輸，保留憑證與正在執行的隧道。
+
+[檢視器設定、裝置更新與回復](../docs/bandwidth.md).
+
 ## 原生應用，獨立核心
 
 **LazyRemote** 是以這個獨立核心打造的產品體驗。[產品網站](https://remote.lazying.art) · [下載與發行說明](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0)。目前原生預覽版仍名為 LazyTunnel，既有指令與應用程式識別碼保持不變。

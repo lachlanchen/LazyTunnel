@@ -12,6 +12,9 @@ import subprocess
 import sys
 import tempfile
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from lazytunnel_core.releases import install_release
+
 STATE=Path.home()/'.config/lazytunnel-fleet'
 CODE=Path.home()/'.local/share/lazytunnel/client'
 
@@ -37,6 +40,9 @@ def main():
     p=sub.add_parser('agent',help='independent core service, without either GUI')
     p.add_argument('action',nargs='?',default='status',choices=['serve','install','stop','status','code','rotate-code'])
     p.add_argument('--port',type=int,default=17766)
+    p=sub.add_parser('novnc-idle',help='prepare an idle-saving noVNC web root; never restarts a desktop')
+    p.add_argument('--source',type=Path,default=Path('/usr/share/novnc'))
+    p.add_argument('--output',type=Path,required=True)
     a=ap.parse_args();os.umask(0o077)
     if a.command in ('install','update'):
         candidate=(a.source/'scripts/lazytunnel-client.py').resolve()
@@ -45,18 +51,13 @@ def main():
             # Otherwise an old installer silently drops newly added modules.
             extra=['--no-launcher'] if a.no_launcher else []
             os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())]+extra)
-        names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web']
+        names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web','scripts/novnc-idle.py','package.json']
         names+=['gui/'+n for n in ('server.py','index.html','app.js','style.css','icon.svg')]
-        names+=['lazytunnel_core/'+n for n in ('__init__.py','controller.py','http_api.py','agent.py')]
-        texts={n:(a.source/n).read_bytes() for n in names}
-        digest=hashlib.sha256(b''.join(texts[n] for n in sorted(texts))).hexdigest()[:16]
-        release=CODE/'releases'/digest
-        for n,t in texts.items():
-            p=release/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(t);p.chmod(0o700)
-        CODE.mkdir(parents=True,exist_ok=True)
-        link=CODE/'next'
-        if link.exists() or link.is_symlink():raise RuntimeError('An update is already staged')
-        link.symlink_to(release);os.replace(link,CODE/'current')
+        names+=['lazytunnel_core/'+n for n in ('__init__.py','controller.py','http_api.py','agent.py','releases.py')]
+        names+=['viewer/'+n for n in ('idle-policy.mjs','novnc-idle.mjs','novnc-idle.css')]
+        launcher=Path.home()/'.local/bin/lazytunnel'
+        if not a.no_launcher and launcher.is_symlink():raise RuntimeError('Refusing unrelated launcher symlink')
+        digest=install_release(a.source,CODE,names,'scripts/lazytunnel-client.py')
         if a.no_launcher:
             print('Client code installed:',digest,'— npm launchers, credentials and running carrier unchanged.');return
         bindir=Path.home()/'.local/bin';bindir.mkdir(parents=True,exist_ok=True)
@@ -80,6 +81,8 @@ def main():
                 profile.write_text(old+'\n'+pathline+'\n')
         print('Client code installed:',digest,'— credentials and running carrier unchanged.');return
     code=Path(__file__).resolve().parent
+    if a.command=='novnc-idle':
+        os.execv(sys.executable,[sys.executable,str(code/'novnc-idle.py'),'--source',str(a.source),'--output',str(a.output)])
     if a.command=='gui':
         os.execv(sys.executable,[sys.executable,str(code.parent/'gui/server.py'),a.action,'--port',str(a.port)])
     if a.command=='agent':

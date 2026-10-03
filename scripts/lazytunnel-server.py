@@ -10,6 +10,11 @@ import sys
 import tempfile
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from fleet import validate,bundle
+from lazytunnel_core.releases import install_release, file_digest
+
+SERVER_FILES=['lazytunnel.py','fleet.py','accounts.py','scripts/lazytunnel-server.py','scripts/fleet-install-edge.py',
+              'scripts/account-admin.py','scripts/account-command.py','lazytunnel_core/__init__.py',
+              'lazytunnel_core/controller.py','lazytunnel_core/releases.py','package.json']
 
 
 def main():
@@ -29,22 +34,23 @@ def main():
     sub.add_parser('devices');sub.add_parser('status')
     a=ap.parse_args();os.umask(0o077)
     if a.command in ('install','update'):
-        files=['lazytunnel.py','fleet.py','accounts.py','scripts/lazytunnel-server.py','scripts/fleet-install-edge.py',
-               'scripts/account-admin.py','scripts/account-command.py']
+        candidate=(a.source/'scripts/lazytunnel-server.py').resolve()
+        if candidate != Path(__file__).resolve():
+            extra=(['--apply'] if a.apply else [])+(['--no-launcher'] if a.no_launcher else [])
+            os.execv(sys.executable,[sys.executable,str(candidate),a.command,'--source',str(a.source.resolve())]+extra)
+        files=SERVER_FILES
         contents={n:(a.source/n).read_bytes() for n in files}
-        version=hashlib.sha256(b''.join(contents[n] for n in sorted(contents))).hexdigest()[:16]
+        version=file_digest(contents)[:16]
         print('Server code release:',version)
         if not a.apply:return
         assert os.getuid()==0,'Run server installation as root'
-        base=Path('/usr/local/lib/lazytunnel/server');release=base/'releases'/version
-        for n,t in contents.items():
-            p=release/n;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(t);p.chmod(0o755)
-        link=base/'next'
-        assert not link.exists() and not link.is_symlink(),'Pending update exists'
-        link.symlink_to(release);os.replace(link,base/'current')
+        launcher=Path('/usr/local/bin/lazytunnel-server')
+        if not a.no_launcher and launcher.exists():
+            assert not launcher.is_symlink() and 'lazytunnel/server/current' in launcher.read_text(),'Unowned launcher'
+        base=Path('/usr/local/lib/lazytunnel/server')
+        version=install_release(a.source,base,files,'scripts/lazytunnel-server.py')
         if a.no_launcher:
             print('Code updated. npm launcher, identity registry and live SSH unchanged.');return
-        launcher=Path('/usr/local/bin/lazytunnel-server')
         text='#!/bin/sh\nexec /usr/bin/python3 /usr/local/lib/lazytunnel/server/current/scripts/lazytunnel-server.py "$@"\n'
         if launcher.exists():assert 'lazytunnel/server/current' in launcher.read_text(),'Unowned launcher'
         launcher.write_text(text);launcher.chmod(0o755)

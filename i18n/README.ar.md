@@ -14,6 +14,12 @@ LazyTunnel مجموعة أدوات صغيرة تعتمد على OpenSSH وsystem
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## النطاق الترددي والتحديثات الآمنة
+
+يضيف CLI 0.3.1 خيارًا لتوفير البيانات في noVNC: يتوقف العارض بعد دقيقتين من عدم التفاعل، أو بعد 10 ثوانٍ عندما تكون الصفحة مخفية. يعيد زر Resume الاتصال، ويتيح Keep live المشاهدة دون كتابة. تنتقل تحديثات الشيفرة الصغيرة بعد التحقق منها عبر مسارات SSH الحالية مع الحفاظ على بيانات الاعتماد والأنفاق الجارية.
+
+[إعداد العارض وتحديث الأجهزة والتراجع](../docs/bandwidth.md).
+
 ## تطبيقات أصلية ونواة مستقلة
 
 **LazyRemote** هو المنتج المبني على هذه النواة المستقلة. [موقع المنتج](https://remote.lazying.art) · [التنزيلات وملاحظات الإصدار](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). تحمل المعاينة الأصلية الحالية اسم LazyTunnel، وتبقى الأوامر ومعرّفات التطبيقات الحالية دون تغيير.

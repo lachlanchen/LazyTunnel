@@ -13,6 +13,7 @@ image='lazytunnel-accounts-test:0.3'
 with tempfile.TemporaryDirectory(prefix='lazytunnel-accounts-integration-') as directory:
     root=Path(directory)
     for name in ('lazytunnel.py','fleet.py','accounts.py','scripts/lazytunnel-server.py',
+                 'lazytunnel_core/__init__.py','lazytunnel_core/controller.py','lazytunnel_core/releases.py',
                  'scripts/fleet-install-edge.py','scripts/account-admin.py','scripts/account-command.py',
                  'tests/accounts_integration.py','tests/accounts.Dockerfile',
                  'package.json','bin/lazytunnel-client.mjs','lib/cli.mjs','lib/accounts.mjs'):

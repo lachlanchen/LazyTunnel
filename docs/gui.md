@@ -217,3 +217,8 @@ The tests also cover numeric device names (for example `7090`), alias grouping,
 idempotent concurrent saves, conflicting ports, URL and command injection,
 unowned service protection, access-code rotation, API authorization, Host/Origin
 boundaries, bounded requests and process-group cleanup on a timeout.
+
+## Idle viewer and code update policy
+
+See [bandwidth-efficient private access](bandwidth.md) for optional noVNC idle
+pause, nested-viewer limits, and small code updates over existing SSH routes.

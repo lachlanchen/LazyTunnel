@@ -1,6 +1,6 @@
 {
   "name": "@lazyingart/lazytunnel",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "LazyRemote\u2019s self-hosted SSH relay with independent accounts, device enrollment and private noVNC access.",
   "type": "module",
   "license": "MIT",
@@ -43,6 +43,9 @@
     "scripts/fleet-install-windows.ps1",
     "scripts/fleet-install-edge.py",
     "scripts/lazy-web",
+    "scripts/novnc-idle.py",
+    "viewer/*.mjs",
+    "viewer/*.css",
     "docs/npm.md",
     "docs/fleet.md",
     "docs/gui.md",
@@ -50,7 +53,9 @@
     "accounts.py",
     "scripts/account-admin.py",
     "scripts/account-command.py",
-    "docs/accounts.md"
+    "docs/accounts.md",
+    "scripts/update-peer.py",
+    "docs/bandwidth.md"
   ],
   "scripts": {
     "test": "node --test tests/*.test.mjs",

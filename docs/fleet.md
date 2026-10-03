@@ -42,7 +42,7 @@ entry explicitly reuses a reviewed existing listener instead of competing for it
 | --- | --- | --- |
 | Cloud | `/usr/local/lib/lazytunnel/server/releases/` and `current` | `/var/lib/lazytunnel-fleet/`, `/etc/lazytunnel-fleet/` |
 | Linux/macOS client | `~/.local/share/lazytunnel/client/releases/` and `current` | `~/.config/lazytunnel-fleet/` |
-| Windows client | `%USERPROFILE%\.local\share\lazytunnel\client\code` | `%USERPROFILE%\.config\lazytunnel-fleet` |
+| Windows client | `%USERPROFILE%\.local\share\lazytunnel\client\releases\` with `current.txt`; compatibility entry in `code` | `%USERPROFILE%\.config\lazytunnel-fleet` |
 
 Git contains code, synthetic examples, tests and sanitized documentation only.
 Real enrollment packets, bundles, host inventories, passwords, administrator
@@ -270,3 +270,8 @@ the previous owned policy and public authorization material. Preserve the old
 `lt-*` carrier, normal SSH server, UU/RDP/VNC and administrator route. Removing
 a client from the fleet requires revoking both its cloud authorization and its
 endpoint-login keys on other peers; hiding its alias is not revocation.
+
+## Idle viewer and code update policy
+
+See [bandwidth-efficient private access](bandwidth.md) for optional noVNC idle
+pause, nested-viewer limits, and small code updates over existing SSH routes.

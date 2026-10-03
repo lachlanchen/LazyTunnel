@@ -14,6 +14,12 @@ LazyTunnel là bộ công cụ nhỏ dùng OpenSSH và systemd để nối các 
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## Băng thông và cập nhật an toàn
+
+CLI 0.3.1 bổ sung tùy chọn tiết kiệm dữ liệu cho noVNC: tạm dừng sau 2 phút không tương tác hoặc 10 giây khi trang bị ẩn. Resume kết nối lại, còn Keep live cho phép xem mà không cần gõ. Các bản cập nhật mã nhỏ được kiểm tra và truyền qua đường SSH hiện có, giữ nguyên thông tin xác thực và các đường hầm đang chạy.
+
+[Thiết lập trình xem, cập nhật thiết bị và khôi phục](../docs/bandwidth.md).
+
 ## Ứng dụng gốc, lõi độc lập
 
 **LazyRemote** là trải nghiệm sản phẩm dựa trên lõi độc lập này. [Trang sản phẩm](https://remote.lazying.art) · [Tải xuống và ghi chú phát hành](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). Bản xem trước ứng dụng gốc hiện mang tên LazyTunnel; các lệnh và mã định danh ứng dụng hiện có không thay đổi.

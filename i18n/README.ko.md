@@ -14,6 +14,12 @@ LazyTunnel은 클라우드 중계 서버를 통해 사설 컴퓨터를 연결하
 | --- | --- | --- |
 | [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
 
+## 대역폭과 안전한 업데이트
+
+CLI 0.3.1은 선택적인 noVNC 데이터 절약 기능을 추가합니다. 입력이 없으면 2분 후, 페이지가 숨겨지면 10초 후 뷰어를 일시 정지합니다. Resume으로 다시 연결하고 Keep live로 입력 없이 화면을 계속 볼 수 있습니다. 작은 코드 업데이트를 검증한 뒤 기존 SSH 경로로 전송하며 인증 정보와 실행 중인 터널을 유지합니다.
+
+[뷰어 설정, 기기 업데이트 및 롤백](../docs/bandwidth.md).
+
 ## 네이티브 앱과 독립적인 코어
 
 **LazyRemote**는 이 독립 코어를 사용하는 제품입니다. [제품 웹사이트](https://remote.lazying.art) · [다운로드 및 릴리스 안내](https://github.com/lachlanchen/LazyTunnel/releases/tag/v0.2.0). 현재 네이티브 미리보기 앱 이름은 LazyTunnel이며 기존 명령과 앱 식별자는 변경되지 않습니다.
