@@ -12,6 +12,20 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PosixClientTests(unittest.TestCase):
+    def test_macos_boot_preserves_existing_carrier_domain(self):
+        spec = importlib.util.spec_from_file_location(
+            "posix_client", ROOT / "scripts/lazytunnel-client.py")
+        client = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(client)
+        label = '/art.lazying.lazytunnel-fleet'
+        for domains, expected in [([], 'bootstrap'), (['system'], 'existing'),
+                                  (['gui/501'], 'defer'), (['user/501'], 'defer')]:
+            with self.subTest(domains=domains):
+                loaded = {domain + label for domain in domains}
+                self.assertEqual(client.mac_bootstrap_decision(501, loaded.__contains__), expected)
+        with self.assertRaisesRegex(RuntimeError, 'Duplicate'):
+            client.mac_bootstrap_decision(501, {'system'+label, 'gui/501'+label}.__contains__)
+
     def test_launcher_uses_installing_python_and_quotes_paths(self):
         spec = importlib.util.spec_from_file_location(
             "posix_client", ROOT / "scripts/lazytunnel-client.py")

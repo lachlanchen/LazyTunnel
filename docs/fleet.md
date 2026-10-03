@@ -155,6 +155,9 @@ after prolonged outages while retaining one active carrier. See Microsoft's
 
 ## Daily SSH and file transfers
 
+For cross-device validation, bounded connection deadlines, and duplicate macOS
+startup jobs, see [shell checks](fleet-shell-checks.md).
+
 The same aliases are installed on every enrolled device:
 
 ```bash

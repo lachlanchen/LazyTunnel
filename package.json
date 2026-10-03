@@ -1,7 +1,7 @@
 {
   "name": "@lazyingart/lazytunnel",
-  "version": "0.3.1",
-  "description": "LazyRemote\u2019s self-hosted SSH relay with independent accounts, device enrollment and private noVNC access.",
+  "version": "0.3.2",
+  "description": "LazyRemote’s self-hosted SSH relay with independent accounts, device enrollment and private noVNC access.",
   "type": "module",
   "license": "MIT",
   "homepage": "https://remote.lazying.art",
@@ -48,6 +48,7 @@
     "viewer/*.css",
     "docs/npm.md",
     "docs/fleet.md",
+    "docs/fleet-shell-checks.md",
     "docs/gui.md",
     "docs/private-web.md",
     "accounts.py",

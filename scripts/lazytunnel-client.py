@@ -20,6 +20,26 @@ CODE=Path.home()/'.local/share/lazytunnel/client'
 
 
 def run(*args,**kwargs):return subprocess.run(args,check=True,**kwargs)
+
+
+def mac_bootstrap_decision(uid, probe=None):
+    """Never bootstrap a second carrier over a legacy user-domain job."""
+    label='art.lazying.lazytunnel-fleet'
+    if probe is None:
+        def probe(target):
+            return subprocess.run(['launchctl','print',target],
+                stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+                timeout=10).returncode == 0
+    system_active=probe('system/'+label)
+    legacy=[domain for domain in (f'gui/{uid}',f'user/{uid}')
+            if probe(domain+'/'+label)]
+    if system_active and legacy:
+        raise RuntimeError('Duplicate LazyTunnel launchd jobs: system and '+
+            ', '.join(legacy)+'. Preserve the working carrier and review the duplicate; no jobs changed.')
+    if legacy:return 'defer'
+    return 'existing' if system_active else 'bootstrap'
+
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     sub=ap.add_subparsers(dest='command',required=True)
@@ -114,15 +134,19 @@ def main():
             unit='lazytunnel.service' if p.get('external_carrier') else 'lazytunnel-fleet.service'
             run('systemctl','--user','enable','--now',unit)
         else:
+            decision=mac_bootstrap_decision(os.getuid())
             src=STATE/'art.lazying.lazytunnel-fleet.plist'
             dst=Path('/Library/LaunchDaemons')/src.name
             if dst.exists() and dst.read_bytes()!=src.read_bytes():raise ValueError('Existing daemon differs; explicit migration required')
             run('/usr/bin/plutil','-lint',str(src))
             if not dst.exists():run('sudo','/usr/bin/install','-o','root','-g','wheel','-m','0644',str(src),str(dst))
             label='system/art.lazying.lazytunnel-fleet'
-            active=subprocess.run(['launchctl','print',label],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode==0
-            if not active:run('sudo','launchctl','bootstrap','system',str(dst))
             run('sudo','launchctl','enable',label)
+            if decision=='defer':
+                print('System boot plist installed; existing user-domain carrier preserved. '
+                      'System activation deferred to the next boot to avoid a duplicate listener. '
+                      'Remove any separately configured user autostart before that boot.');return
+            if decision=='bootstrap':run('sudo','launchctl','bootstrap','system',str(dst))
         print('Boot startup configured; no reboot or desktop restart performed.');return
     if a.command=='devices':
         print('\n'.join('ssh-lazy-'+n for n in b['aliases']));return

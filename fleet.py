@@ -38,8 +38,11 @@ def validate(c):
     names, ports, keys, hosts, aliases = set(), set(), set(), {e['host_key']}, set()
     for p in c['peers']:
         required={'name','user','home','platform','ssh_port','relay_port','host_key','tunnel_key','jump_key','login_key'}
-        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier','ip_qos'}|({'account','revoked'} if v2 else set())),
+        require(required.issubset(p) and set(p).issubset(required|{'hostname','aliases','external_carrier','ip_qos','connect_timeout'}|({'account','revoked'} if v2 else set())),
                 'Unexpected peer fields: keep passwords and private keys outside enrollment packets')
+        if 'connect_timeout' in p:
+            require(type(p['connect_timeout']) is int and 5 <= p['connect_timeout'] <= 60,
+                    'Connection timeout must be an integer from 5 to 60 seconds')
         if 'ip_qos' in p:
             require(p['ip_qos'] in ('none', 'cs0'), 'Unsupported IPQoS override')
         if v2:
@@ -149,19 +152,24 @@ def worker_files(c, name):
             ' ServerAliveCountMax 3',' UpdateHostKeys no']
     if 'ip_qos' in p:
         common += [' IPQoS '+p['ip_qos']]
+    # A cold nested Windows proxy can exceed ten seconds. This opt-in applies
+    # to new outgoing sessions only; never migrate a healthy carrier for it.
+    session_common=[(' ConnectTimeout '+str(p['connect_timeout']))
+                    if line==' ConnectTimeout 10' and 'connect_timeout' in p else line
+                    for line in common]
     hop=['Host lazy-fleet-hop',' HostName '+c['edge']['host'],' Port '+str(c['edge']['port']),
          ' User lf-hop-'+name,' HostKeyAlias lazy-fleet-edge',
-         ' IdentityFile '+root+'/jump_ed25519']+common+['']
+         ' IdentityFile '+root+'/jump_ed25519']+session_common+['']
     registry=['Host lazy-fleet-registry',' HostName '+c['edge']['host'],
          ' Port '+str(c['edge']['port']),' User lf-info-'+name,
-         ' HostKeyAlias lazy-fleet-edge',' IdentityFile '+root+'/jump_ed25519',' RequestTTY no']+common+['']
+         ' HostKeyAlias lazy-fleet-edge',' IdentityFile '+root+'/jump_ed25519',' RequestTTY no']+session_common+['']
     config=hop+registry
     for q in peers:
         aliases=['lazy-'+s for s in [q['name']]+q.get('aliases',[])]
         config += ['Host '+' '.join(aliases),' HostName 127.0.0.1',' Port '+str(q['relay_port']),
                    ' User '+q['user'],' HostKeyAlias lazy-fleet-'+q['name'],
                    ' IdentityFile '+root+'/login_ed25519',
-                   ' ProxyCommand "'+exe+'" -F "'+root+'/ssh_config" -W %h:%p lazy-fleet-hop']+common+['']
+                   ' ProxyCommand "'+exe+'" -F "'+root+'/ssh_config" -W %h:%p lazy-fleet-hop']+session_common+['']
     config+=['Host *','']
     carrier=['Host lazy-fleet-carrier',' HostName '+c['edge']['host'],
              ' Port '+str(c['edge']['port']),' User lf-tun-'+name,

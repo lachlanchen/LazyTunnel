@@ -78,5 +78,19 @@ class FleetTests(unittest.TestCase):
         first['ip_qos'] = 'none\nProxyCommand evil'
         with self.assertRaises(ValueError): validate(self.c)
 
+    def test_session_timeout_preserves_carrier_and_other_peers(self):
+        first, second = self.c['peers']
+        old = worker_files(validate(self.c), first['name'])
+        other = worker_files(self.c, second['name'])
+        first['connect_timeout'] = 30
+        new = worker_files(validate(self.c), first['name'])
+        self.assertEqual(old['carrier.conf'], new['carrier.conf'])
+        self.assertEqual(other, worker_files(self.c, second['name']))
+        self.assertNotIn(' ConnectTimeout 10', new['ssh_config'])
+        self.assertIn(' ConnectTimeout 30', new['ssh_config'])
+        for invalid in (0, 61, True, '30', '30\nProxyCommand evil'):
+            first['connect_timeout'] = invalid
+            with self.assertRaises(ValueError): validate(self.c)
+
 
 if __name__=='__main__':unittest.main()
