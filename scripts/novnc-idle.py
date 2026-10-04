@@ -37,7 +37,7 @@ def install(source, output):
         if target.exists() or target.is_symlink():
             raise ValueError('Conflicting overlay asset: ' + child.name)
         target.symlink_to(child.resolve(), target_is_directory=child.is_dir())
-    assets = {name: (ASSETS/name).read_bytes() for name in ('idle-policy.mjs', 'novnc-idle.mjs', 'novnc-idle.css')}
+    assets = {name: (ASSETS/name).read_bytes() for name in ('idle-policy.mjs', 'performance-policy.mjs', 'novnc-idle.mjs', 'novnc-idle.css')}
     revision = hashlib.sha256(b''.join(assets.values())).hexdigest()[:12]
     html = html.replace('</head>', f'<link rel="stylesheet" href="novnc-idle.css?v={revision}">\n</head>')
     html = html.replace('</body>', f'<script type="module" src="novnc-idle.mjs?v={revision}"></script>\n</body>')

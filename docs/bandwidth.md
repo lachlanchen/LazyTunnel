@@ -15,7 +15,7 @@ The data saver extends the full upstream noVNC `vnc.html` page:
 
 | Condition | Behavior |
 | --- | --- |
-| Visible, used normally | Original keyboard, pointer and clipboard paths; compression level 6 |
+| Visible, used normally | Original keyboard, pointer and clipboard paths; selectable encoding quality |
 | No local input for 2 minutes | Disconnect the viewer WebSocket; show **Resume desktop** |
 | Page hidden for 10 seconds | Disconnect the viewer, including in Keep live mode |
 | Pause button, page close or freeze | Release the viewer connection |
@@ -31,6 +31,50 @@ timer throttling can delay the deadline; this is not a quota or access restricti
 Only the full noVNC UI is supported, not `vnc_lite.html`, native viewers, RDP or
 unrelated custom pages. We do not blanket-enable SSH compression for compressed
 images, reduce every desktop resolution or weaken recovery keepalives.
+
+### Quality and resolution
+
+Version 0.3.3 adds a selector in the viewer's data-saver bar:
+
+| Preset | JPEG quality (0–9) | Compression (0–9) |
+| --- | --- | --- |
+| Data saver | 2 | 7 |
+| Balanced (default) | 5 | 6 |
+| Sharper | 8 | 2 |
+| noVNC settings | Keep the user's advanced settings | Keep the user's advanced settings |
+
+Selection changes encoding negotiation on the current RFB socket, without
+disconnecting or touching input/clipboard handling. It is remembered per browser
+origin, viewer path and WebSocket path; blocked browser storage falls back to
+the in-memory choice. Advanced noVNC sliders remain usable and select the
+custom mode. Explicit `quality`/`compression` URL values take priority over the
+saved preset, unless `performance=economy`, `performance=balanced`, or
+`performance=sharp` explicitly selects a preset. Ordinary reloads reuse the
+saved choice; reload an old tab once after installing this update.
+
+These are requests to the VNC server. JPEG quality matters only when the server
+uses an encoding that supports it, and stronger compression costs server CPU.
+Do not equate smaller canvas CSS with smaller network traffic: `resize=scale`
+fits the browser image **after** receiving the original framebuffer. The addon
+never automatically resizes a shared remote desktop. See the upstream
+[noVNC API](https://github.com/novnc/noVNC/blob/master/docs/API.md) and
+[embedding options](https://novnc.com/noVNC/docs/EMBEDDING.html).
+
+For real pixel reduction, choose a lower source display mode when authorized.
+A 1920×1080 desktop reduced to 1600×900 has 30.6% fewer pixels; 1280×720 has
+55.6% fewer. Those are pixel counts, **not measured bandwidth savings**. A
+1600×900 mode is a useful compromise for ordinary text work; a lower mode can
+make toolbars or dense windows inconvenient. Prefer a true lower pixel mode,
+not a HiDPI mode that still renders a larger framebuffer.
+
+On macOS use System Settings → Displays, selecting a supported resolution.
+An operator can use Apple's transaction-based
+[CGConfigureDisplayWithDisplayMode](https://developer.apple.com/documentation/coregraphics/cgconfiguredisplaywithdisplaymode(_:_:_:_:))
+after inspecting the exact display and its usable modes. Save the previous
+mode, reject changed/mirrored display topology, verify actual pixel dimensions
+afterward, and keep a restore path. Changing a shared display also changes the
+physical monitor and other viewers, so coordinate it; do not implement a
+background loop that fights the user's display settings.
 
 ## Install at the noVNC web server
 

@@ -1,6 +1,6 @@
 {
   "name": "@lazyingart/lazytunnel",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "LazyRemote’s self-hosted SSH relay with independent accounts, device enrollment and private noVNC access.",
   "type": "module",
   "license": "MIT",

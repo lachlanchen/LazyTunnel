@@ -50,7 +50,7 @@ class RFB(socketserver.BaseRequestHandler):
                     self.read(19)
                 elif kind == 2:
                     count = struct.unpack('>xH', self.read(3))[0]
-                    self.read(4*count)
+                    self.server.encodings.append(struct.unpack('>'+'i'*count, self.read(4*count)))
                 elif kind == 3:
                     incremental = self.read(9)[0]
                     if not incremental:
@@ -85,6 +85,7 @@ def main():
         server = socketserver.ThreadingTCPServer(('127.0.0.1', 0), RFB)
         server.daemon_threads = True
         server.active = server.opened = 0
+        server.encodings = []
         threading.Thread(target=server.serve_forever, daemon=True).start()
         with socket.socket() as reservation:
             reservation.bind(('127.0.0.1', 0))
@@ -104,6 +105,22 @@ def main():
                     page.wait_for_function("document.documentElement.classList.contains('noVNC_connected')")
                     wait(lambda: server.active == 1)
                     page.clock.run_for(1100)
+                    wait(lambda: any(-27 in enc and -250 in enc for enc in server.encodings))
+                    page.locator('#lazytunnel-performance').select_option('economy')
+                    wait(lambda: any(-30 in enc and -249 in enc for enc in server.encodings))
+                    # This changes encoding negotiation on the existing socket,
+                    # not a CSS-only scale or a disconnect/reconnect.
+                    assert server.opened == 1
+                    page.reload()
+                    page.wait_for_function("document.documentElement.classList.contains('noVNC_connected')")
+                    page.clock.run_for(1100)
+                    assert page.locator('#lazytunnel-performance').input_value() == 'economy'
+                    page.locator('#lazytunnel-performance').select_option('sharp')
+                    wait(lambda: any(-24 in enc and -254 in enc for enc in server.encodings))
+                    assert page.locator('#noVNC_setting_quality').input_value() == '8'
+                    page.evaluate("const q=document.getElementById('noVNC_setting_quality'); q.value='4'; q.dispatchEvent(new Event('change'))")
+                    assert page.locator('#lazytunnel-performance').input_value() == 'custom'
+                    wait(lambda: any(-28 in enc and -254 in enc for enc in server.encodings))
                     page.clock.fast_forward(125000)
                     page.locator('#lazytunnel-idle-overlay').wait_for(state='visible')
                     wait(lambda: server.active == 0)
@@ -128,7 +145,7 @@ def main():
                     page.close()
                     wait(lambda: server.active == 0)
                     assert not errors, errors
-                    print('PASS: idle/hidden close actual RFB connections; Resume, Keep live, page close; no auto reconnect or JS errors')
+                    print('PASS: encoding presets negotiated over RFB without reconnect; preference survives reload; idle/hidden close actual RFB connections; Resume, Keep live, page close; no auto reconnect or JS errors')
                 finally:
                     browser.close()
         finally:

@@ -49,6 +49,7 @@ class PeerUpdateTests(unittest.TestCase):
             self.assertIn(b'"self_update_verified": true', result.stdout)
             current = home/'.local/share/lazytunnel/client/current'
             self.assertTrue((current/'lazytunnel_core/releases.py').is_file())
+            self.assertTrue((current/'viewer/performance-policy.mjs').is_file())
             self.assertTrue((current/'release.json').is_file())
 
 

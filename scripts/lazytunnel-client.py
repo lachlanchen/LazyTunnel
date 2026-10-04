@@ -74,7 +74,7 @@ def main():
         names=['scripts/lazytunnel-client.py','scripts/fleet-prepare.py','scripts/fleet-install-posix.py','scripts/lazy-web','scripts/novnc-idle.py','package.json']
         names+=['gui/'+n for n in ('server.py','index.html','app.js','style.css','icon.svg')]
         names+=['lazytunnel_core/'+n for n in ('__init__.py','controller.py','http_api.py','agent.py','releases.py')]
-        names+=['viewer/'+n for n in ('idle-policy.mjs','novnc-idle.mjs','novnc-idle.css')]
+        names+=['viewer/'+n for n in ('idle-policy.mjs','performance-policy.mjs','novnc-idle.mjs','novnc-idle.css')]
         launcher=Path.home()/'.local/bin/lazytunnel'
         if not a.no_launcher and launcher.is_symlink():raise RuntimeError('Refusing unrelated launcher symlink')
         digest=install_release(a.source,CODE,names,'scripts/lazytunnel-client.py')

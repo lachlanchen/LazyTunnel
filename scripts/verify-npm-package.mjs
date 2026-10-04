@@ -15,7 +15,7 @@ const allowed = [...pkg.files, 'package.json'].map(pattern => new RegExp('^' + p
   .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^/]*') + '$'));
 const required = [
   'lazytunnel_core/releases.py', 'scripts/novnc-idle.py', 'viewer/idle-policy.mjs',
-  'viewer/novnc-idle.mjs', 'viewer/novnc-idle.css',
+  'viewer/novnc-idle.mjs', 'viewer/novnc-idle.css', 'viewer/performance-policy.mjs',
   ...Object.values(pkg.bin), 'lib/cli.mjs', 'lib/accounts.mjs', 'accounts.py', 'scripts/account-admin.py', 'scripts/account-command.py', 'docs/accounts.md', 'lazytunnel.py', 'fleet.py', 'LICENSE',
   'scripts/lazytunnel-client.py', 'scripts/lazytunnel-server.py', 'scripts/lazytunnel.ps1',
   'scripts/fleet-install-posix.py', 'scripts/fleet-install-windows.ps1', 'scripts/fleet-install-edge.py',

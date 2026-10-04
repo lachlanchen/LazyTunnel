@@ -1,6 +1,7 @@
 // Adapter for the existing full noVNC UI. Never replaces its input handling.
 import UI from './app/ui.js';
 import { IdlePolicy } from './idle-policy.mjs';
+import { PERFORMANCE, performanceChoice, applyPerformance } from './performance-policy.mjs';
 
 const policy = new IdlePolicy();
 policy.visibility(document.hidden, Date.now());
@@ -12,9 +13,52 @@ const status = document.createElement('span');
 const pauseButton = document.createElement('button');
 const label = document.createElement('label');
 const keep = document.createElement('input');
+const performance = document.createElement('select');
+performance.id = 'lazytunnel-performance';
+performance.setAttribute('aria-label', 'Desktop quality');
+performance.title = 'Encoding quality: smaller updates trade some image detail for speed. Desktop resolution stays unchanged.';
+const storageKey = 'lazytunnel.performance.v1:' + location.pathname + ':' +
+    (new URLSearchParams(location.search).get('path') || 'websockify');
+let saved;
+try { saved = localStorage.getItem(storageKey); } catch { /* private browser storage may be disabled */ }
+for (const [value, preset] of Object.entries(PERFORMANCE)) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = preset.label;
+    performance.append(option);
+}
+performance.value = performanceChoice(location.search, saved);
+function savePerformance() {
+    try { localStorage.setItem(storageKey, performance.value); } catch { /* optional preference */ }
+}
+function applyChoice() {
+    applyPerformance(UI.rfb, performance.value);
+    const preset = PERFORMANCE[performance.value];
+    if (!UI.rfb || performance.value === 'custom') return;
+    // Keep upstream's advanced sliders and reconnect settings consistent.
+    for (const name of ['quality', 'compression']) {
+        const control = document.getElementById('noVNC_setting_' + name);
+        if (control) {
+            control.value = preset[name];
+            UI.saveSetting(name);
+        }
+    }
+}
+performance.addEventListener('change', () => {
+    applyChoice();
+    savePerformance();
+});
+// Advanced upstream controls remain usable; stop applying a named preset when
+// the user chooses their own values. Do not add input handlers to the canvas.
+for (const name of ['quality', 'compression']) {
+    document.getElementById('noVNC_setting_' + name)?.addEventListener('change', () => {
+        performance.value = 'custom';
+        savePerformance();
+    });
+}
 keep.type = 'checkbox';
 label.append(keep, ' Keep live while visible');
-bar.append(status, pauseButton, label);
+bar.append(status, performance, pauseButton, label);
 document.body.append(bar);
 const overlay = document.createElement('div');
 overlay.id = 'lazytunnel-idle-overlay';
@@ -76,8 +120,7 @@ setInterval(() => {
     if (UI.rfb && UI.rfb !== previousRfb) {
         previousRfb = UI.rfb;
         policy.activity(Date.now());
-        // Higher compression without changing keyboard, clipboard, dimensions or quality.
-        UI.rfb.compressionLevel = 6;
+        applyChoice();
         if (paused) UI.disconnect();
     }
     const reason = policy.reason(Date.now());
